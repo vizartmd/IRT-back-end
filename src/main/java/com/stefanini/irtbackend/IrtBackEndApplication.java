@@ -1,4 +1,4 @@
-package com.stefanini.IRTbackend;
+package com.stefanini.irtbackend;
 
 //import org.flywaydb.core.Flyway;
 import org.springframework.boot.SpringApplication;
