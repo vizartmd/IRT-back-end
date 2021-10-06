@@ -14,12 +14,12 @@ public class User {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "role")
     private Role role;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "specialty_id")
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "specialty")
     private Specialty specialty;
 
     @Column(name = "firstname")
@@ -34,9 +34,7 @@ public class User {
     @Column(name = "creationDate")
     private LocalDate creationDate;
 
-    @ManyToMany
-    @JoinTable(name = "user_ticket", joinColumns = @JoinColumn(name = "userid"),
-            inverseJoinColumns = @JoinColumn(name = "ticketid"))
+    @OneToMany
     private Set<Ticket> createdTickets = new HashSet<>();
 
     @ManyToMany

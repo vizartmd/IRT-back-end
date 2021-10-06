@@ -12,6 +12,10 @@ public class Ticket {
     @Column(name = "id")
     private Integer id;
 
+    @ManyToOne
+    @JoinColumn(name="id_creator", nullable=false)
+    private User creator;
+
     @Column(name = "title")
     private String title;
 
@@ -21,8 +25,6 @@ public class Ticket {
     @OneToMany
     Set<Action> actionHistory = new HashSet<>();
 
-    @ManyToOne
-    User creator;
 
     @ManyToOne
     User developer;
