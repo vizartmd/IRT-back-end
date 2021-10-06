@@ -52,7 +52,7 @@ public class DatabaseConfig {
     public DataSource dataSource() {
         SimpleDriverDataSource ds = new SimpleDriverDataSource();
         ds.setUrl(env.getRequiredProperty("db.url"));
-        Class<Driver> driverClass = null;
+        Class<Driver> driverClass;
         try {
             driverClass = (Class<Driver>) Class.forName("com.mysql.cj.jdbc.Driver");
             ds.setDriverClass(driverClass);
@@ -62,7 +62,6 @@ public class DatabaseConfig {
         ds.setUsername(env.getRequiredProperty("db.username"));
         ds.setPassword(env.getRequiredProperty("db.password"));
         return ds;
-
     }
 
     public Properties getHibernateProperties() {
