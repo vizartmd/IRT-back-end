@@ -1,54 +1,116 @@
 package com.stefanini.irtbackend.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable{
 
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", unique = true, nullable = false)
+    private int userId;
 
-    @Column(name = "task_title")
-    private String taskTitle;
+    @Column(name = "first_name", nullable = false, length = 50)
+    private String firstName;
 
-    @Column(name = "task_description")
-    private String taskDescription;
+    @Column(name = "last_name", nullable = false, length = 50)
+    private String lastName;
 
-    public User(long id, String taskTitle, String taskDescription) {
-        this.id = id;
-        this.taskTitle = taskTitle;
-        this.taskDescription = taskDescription;
-    }
+    @Column(name = "user_name", unique = true, nullable = false, length = 50)
+    private String userName;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Ticket> tickets;
 
     public User() {
     }
 
-    public long getId() {
-        return id;
+    public User(String firstName, String lastName, String userName) {
+        super();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void addTaskToUser(Ticket ticket) {
+        if (tickets == null) {
+            tickets = new HashSet<>();
+        }
+        tickets.add(ticket);
+        ticket.setUser(this);
     }
 
-    public String getTaskTitle() {
-        return taskTitle;
+    public void addTasksToUser(Set<Ticket> newTickets) {
+        if (tickets == null) {
+            tickets = newTickets;
+        }
+        tickets.addAll(newTickets);
+        Iterator<Ticket> i= tickets.iterator();
+        while(i.hasNext()) {
+            i.next().setUser(this);
+        }
     }
 
-    public void setTaskTitle(String taskTitle) {
-        this.taskTitle = taskTitle;
+    public int getUserId() {
+        return userId;
     }
 
-    public String getTaskDescription() {
-        return taskDescription;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public void setTaskDescription(String taskDescription) {
-        this.taskDescription = taskDescription;
+    public String getFirstName() {
+        return firstName;
     }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        if (tickets == null) {
+            this.tickets = null;
+        }
+        this.tickets = tickets;
+    }
+
+    @Override
+    public String toString() {
+        return "\nUser [userId =" + userId + ", firstName =" + firstName + ", lastName =" + lastName + ", userName ="
+                + userName + "]";
+    }
+
 }

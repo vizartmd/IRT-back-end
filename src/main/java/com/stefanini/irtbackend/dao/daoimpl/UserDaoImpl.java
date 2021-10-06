@@ -19,11 +19,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User saveUser(User user) {
+    System.out.println(user);
         entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(user);
         entityManager.getTransaction().commit();
-        System.out.println("Generated User ID = " + user.getId());
+        System.out.println("Generated User ID = " + user.getUserId());
         return user;
     }
 
@@ -31,7 +32,7 @@ public class UserDaoImpl implements UserDao {
     public User deleteUser(User user) {
         entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
-        User userForDelete = getUser(user.getId());
+        User userForDelete = getUser(user.getUserId());
         if (userForDelete != null) {
             entityManager.remove(userForDelete);
             entityManager.getTransaction().commit();
@@ -55,7 +56,7 @@ public class UserDaoImpl implements UserDao {
         User userById = entityManager.find(User.class, id);
         if(userById != null) {
             entityManager.getTransaction().commit();
-            System.out.println("Generated User ID = " + userById.getId());
+            System.out.println("Generated User ID = " + userById.getUserId());
         }
         return userById;
     }
