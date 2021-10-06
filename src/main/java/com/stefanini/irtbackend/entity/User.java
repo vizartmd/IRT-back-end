@@ -1,4 +1,4 @@
-package com.stefanini.IRTbackend.entity;
+package com.stefanini.irtbackend.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
