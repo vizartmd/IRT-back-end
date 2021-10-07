@@ -1,4 +1,4 @@
-package com.stefanini.irtbackend.model;
+package com.stefanini.irtbackend.entity;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -13,7 +13,7 @@ public class Ticket {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name="id_creator", nullable=false)
+    @Column(name="id_creator", nullable=false)
     private User creator;
 
     @Column(name = "title")
@@ -22,11 +22,22 @@ public class Ticket {
     @Column(name = "description")
     private String description;
 
-    @OneToMany
-    Set<Action> actionHistory = new HashSet<>();
-
+    @ManyToOne
+    @Column(name = "id_specialty")
+    private Specialty specialty;
 
     @ManyToOne
-    User developer;
+    @Column(name = "id_status")
+    private Status status;
+
+    @OneToMany
+    private Set<Action> actionHistory = new HashSet<>();
+
+    @ManyToOne
+    private User developer;
+
+    @ManyToOne
+    @Column(name = "priority")
+    private Priority priority;
 }
 

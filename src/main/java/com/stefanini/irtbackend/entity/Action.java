@@ -1,4 +1,4 @@
-package com.stefanini.irtbackend.model;
+package com.stefanini.irtbackend.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -6,6 +6,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "action")
 public class Action {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -17,8 +18,11 @@ public class Action {
     @ManyToOne
     private Ticket ticket;
 
+    @ManyToOne
     private Priority priority;
 
-    private LocalDate creationDate;
+    @ManyToOne
+    private Status status;
 
+    private LocalDate creationDate;
 }
