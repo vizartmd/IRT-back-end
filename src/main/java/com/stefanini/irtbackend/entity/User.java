@@ -69,8 +69,9 @@ public class User {
         this.email = email;
     }
 
-    public User(Long id, Role role, Specialty specialty, String firstName, String lastName, String userName, String password, String email, LocalDate creationDate, Set<Ticket> createdTickets, Set<Ticket> processingTickets) {
-        this.id = id;
+    public User(Role role, Specialty specialty, String firstName, String lastName, String userName, String password,
+                String email, Set<Ticket> createdTickets, Set<Ticket> processingTickets) {
+        this.creationDate = LocalDate.now();
         this.role = role;
         this.specialty = specialty;
         this.firstName = firstName;
@@ -78,7 +79,6 @@ public class User {
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.creationDate = creationDate;
         this.createdTickets = createdTickets;
         this.processingTickets = processingTickets;
     }
