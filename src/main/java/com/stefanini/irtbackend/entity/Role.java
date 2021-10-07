@@ -15,6 +15,7 @@ public class Role implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_role", nullable = false, unique = true)
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY,
@@ -25,10 +26,8 @@ public class Role implements GrantedAuthority {
     public Role() {
     }
 
-    public Role(Long id, String name, Set<User> users) {
-        this.id = id;
+    public Role(String name) {
         this.name = name;
-        this.users = users;
     }
 
     public Long getId() {

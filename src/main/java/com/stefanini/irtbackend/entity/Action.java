@@ -9,7 +9,6 @@ public class Action {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Integer id;
 
     @ManyToOne

@@ -11,33 +11,40 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
     private Role role;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "specialty_id")
     private Specialty specialty;
 
-    @Column(name = "firstname")
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "lastname")
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "username", unique = true)
+    @Column(name = "user_name", unique = true)
     private String userName;
 
-    @Column(name = "creationDate")
+    @Column(name = "email", unique = true)
+    private String email;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "creation_date")
     private LocalDate creationDate;
 
     @OneToMany(mappedBy = "creator")
     private Set<Ticket> createdTickets = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "developer_ticket", joinColumns = @JoinColumn(name = "userid"),
-            inverseJoinColumns = @JoinColumn(name = "ticketid"))
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JoinTable(name = "developer_ticket", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "ticket_id"))
     private Set<Ticket> processingTickets = new HashSet<>();
 
     public User() {
