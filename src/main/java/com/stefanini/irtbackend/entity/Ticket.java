@@ -13,7 +13,6 @@ public class Ticket {
     private Integer id;
 
     @ManyToOne
-    @Column(name="id_creator", nullable=false)
     private User creator;
 
     @Column(name = "title")
@@ -23,21 +22,18 @@ public class Ticket {
     private String description;
 
     @ManyToOne
-    @Column(name = "id_specialty")
     private Specialty specialty;
 
     @ManyToOne
-    @Column(name = "id_status")
     private Status status;
 
-    @OneToMany
+    @OneToMany(mappedBy = "ticket")
     private Set<Action> actionHistory = new HashSet<>();
 
     @ManyToOne
     private User developer;
 
     @ManyToOne
-    @Column(name = "priority")
     private Priority priority;
 }
 

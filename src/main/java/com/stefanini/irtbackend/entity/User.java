@@ -15,11 +15,9 @@ public class User {
     private Long id;
 
     @ManyToOne
-    @Column(name = "role")
     private Role role;
 
     @ManyToOne
-    @Column(name = "specialty")
     private Specialty specialty;
 
     @Column(name = "firstname")
