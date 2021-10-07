@@ -9,30 +9,44 @@ public class Action {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ticket_id")
     private Ticket ticket;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "priority_id")
     private Priority priority;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status_id")
     private Status status;
 
+    @Column(name = "creation_date")
     private LocalDate creationDate;
 
     public Action() {
     }
 
-    public Integer getId() {
+    public Action(Long id, User user, Ticket ticket, Priority priority, Status status, LocalDate creationDate) {
+        this.id = id;
+        this.user = user;
+        this.ticket = ticket;
+        this.priority = priority;
+        this.status = status;
+        this.creationDate = creationDate;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

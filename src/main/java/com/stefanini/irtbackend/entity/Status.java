@@ -12,7 +12,7 @@ public class Status {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ticket_status", nullable = false, unique = true)
+    @Column(name = "ticket_status")
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY,
@@ -23,8 +23,10 @@ public class Status {
     public Status() {
     }
 
-    public Status(String name) {
+    public Status(Long id, String name, Set<Ticket> tickets) {
+        this.id = id;
         this.name = name;
+        this.tickets = tickets;
     }
 
     public Long getId() {

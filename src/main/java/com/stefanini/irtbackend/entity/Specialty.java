@@ -12,7 +12,7 @@ public class Specialty {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "specialty", nullable = false, unique = true)
+    @Column(name = "specialty")
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY,
@@ -28,8 +28,11 @@ public class Specialty {
     public Specialty() {
     }
 
-    public Specialty(String name) {
+    public Specialty(Long id, String name, Set<User> users, Set<Ticket> tickets) {
+        this.id = id;
         this.name = name;
+        this.users = users;
+        this.tickets = tickets;
     }
 
     public Long getId() {

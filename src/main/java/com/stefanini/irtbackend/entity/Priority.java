@@ -12,8 +12,9 @@ public class Priority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ticket_priority", nullable = false, unique = true)
+    @Column(name = "ticket_priority", nullable = false)
     private String name;
+
 
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "priority",
@@ -23,7 +24,8 @@ public class Priority {
     public Priority() {
     }
 
-    public Priority(String name) {
+    public Priority(Long id, String name) {
+        this.id = id;
         this.name = name;
     }
 
@@ -31,13 +33,24 @@ public class Priority {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<Ticket> getTickets() {
         return tickets;
     }
 
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
+    }
 }
 

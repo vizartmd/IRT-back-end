@@ -9,12 +9,10 @@ import java.util.Set;
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @ManyToOne
-    private User creator;
 
-    @Column(name = "title", nullable = false, unique = true)
+    @Column(name = "title", unique = true)
     private String title;
 
     @Column(name = "description")
@@ -28,26 +26,43 @@ public class Ticket {
     @JoinColumn(name = "status_id")
     private Status status;
 
-    @OneToMany(mappedBy = "ticket")
-    private Set<Action> actionHistory = new HashSet<>();
-
-    @ManyToOne
-    private User developer;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "priority_id")
     private Priority priority;
 
-    public Ticket() {
-    }
 
-    public Ticket(User creator, String title, String description, Specialty specialty, Status status, Priority priority) {
+    @OneToMany(mappedBy = "ticket")
+    private Set<Action> actionHistory = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "creator_id")
+    private User creator;
+
+    @ManyToOne
+    private User developer;
+
+
+    public Ticket(Long id, User creator, String title, String description, Specialty specialty, Status status, Set<Action> actionHistory, User developer, Priority priority) {
+        this.id = id;
         this.creator = creator;
         this.title = title;
         this.description = description;
         this.specialty = specialty;
         this.status = status;
+        this.actionHistory = actionHistory;
+        this.developer = developer;
         this.priority = priority;
+    }
+
+    public Ticket() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public User getCreator() {

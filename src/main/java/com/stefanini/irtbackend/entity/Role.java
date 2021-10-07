@@ -1,11 +1,14 @@
 package com.stefanini.irtbackend.entity;
 
 
+import com.sun.istack.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Entity
 @Table(name = "role")
@@ -15,19 +18,32 @@ public class Role implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_role", nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY,
-                mappedBy = "role",
-                cascade = CascadeType.ALL)
-    private Set<User> users = new HashSet<>();
+            mappedBy = "role",
+            cascade = CascadeType.ALL)
+    private List<User> users = new ArrayList<>();
+
+
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name=" + name + '\'' +
+                ", users=" + users.stream().map(User::getId).collect(Collectors.toList()) +
+                '}';
+    }
 
     public Role() {
     }
 
-    public Role(String name) {
+    public Role(Long id, String name, List<User> users) {
+        this.id = id;
         this.name = name;
+        this.users = users;
     }
 
     public Long getId() {
@@ -46,11 +62,11 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-    public Set<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 
