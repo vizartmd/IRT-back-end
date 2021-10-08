@@ -36,15 +36,13 @@ public class Ticket extends AbstractEntity {
     @ManyToOne
     private User developer;
 
-    public Ticket(User creator, String title, String description, Specialty specialty, Status status, Set<Action> actionHistory, User developer, Priority priority) {
+    public Ticket(User creator, String title, String description, Specialty specialty,
+                  User developer) {
         this.creator = creator;
         this.title = title;
         this.description = description;
         this.specialty = specialty;
-        this.status = status;
-        this.actionHistory = actionHistory;
         this.developer = developer;
-        this.priority = priority;
     }
 
     public Ticket() {

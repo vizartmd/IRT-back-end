@@ -3,6 +3,7 @@ package com.stefanini.irtbackend.service.impl;
 import com.stefanini.irtbackend.dao.UserDao;
 import com.stefanini.irtbackend.entity.User;
 import com.stefanini.irtbackend.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,6 +14,7 @@ class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
 
+    @Autowired
     public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
