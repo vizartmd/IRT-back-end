@@ -10,6 +10,7 @@ import java.util.Objects;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     protected Long id;
@@ -17,6 +18,10 @@ public abstract class AbstractEntity {
     @CreatedDate
     @Column(name = "created_date")
     private LocalDate createdDate;
+
+    public Long getId() {
+        return id;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -28,10 +33,6 @@ public abstract class AbstractEntity {
 
     public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public boolean equals(Object other) {

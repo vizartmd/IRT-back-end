@@ -58,7 +58,7 @@ public class DatabaseConfig {
         try {
             driverClass = (Class<Driver>) Class.forName("com.mysql.cj.jdbc.Driver");
             ds.setDriverClass(driverClass);
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException|ClassCastException e) {
             e.printStackTrace();
         }
         ds.setUsername(env.getRequiredProperty("db.username"));
