@@ -20,7 +20,7 @@ public class IrtBackEndApplication {
     public CommandLineRunner init(UserDao userDao) {
         return args -> {
             System.out.println("IrtBackEndApplication.init");
-            userDao.create(new User("ttt", "tttt", "tttt", "12345", "ttt@email.com"));
+            userDao.create(new User("ggg", "gg", "gg", "12345", "gggg@email.com"));
         };
     }
 }
