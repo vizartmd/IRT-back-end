@@ -1,4 +1,4 @@
-package com.stefanini.irtbackend.controllers;
+package com.stefanini.irtbackend.controller;
 
 import com.stefanini.irtbackend.entity.User;
 import com.stefanini.irtbackend.service.UserService;
@@ -29,9 +29,7 @@ public class UserController {
     @PostMapping
     ResponseEntity<User> create(@RequestBody User user) {
         User createdUser = userService.create(user);
-        return ResponseEntity.created(URI.create("/users/" + createdUser.getId())).body(createdUser
-
-        );
+        return ResponseEntity.created(URI.create("/users/" + createdUser.getId())).body(createdUser);
     }
 
     @PutMapping
