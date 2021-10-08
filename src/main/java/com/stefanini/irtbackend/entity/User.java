@@ -1,76 +1,121 @@
 package com.stefanini.irtbackend.entity;
 
-import java.io.Serializable;
+import com.sun.istack.NotNull;
+
+import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "users")
-public class User implements Serializable{
+@Table(name = "user")
+public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", unique = true, nullable = false)
-    private int userId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    protected Long id;
 
-    @Column(name = "first_name", nullable = false, length = 50)
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "role_id")
+//    private Role role;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "specialty_id")
+//    private Specialty specialty;
+
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name", nullable = false, length = 50)
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "user_name", unique = true, nullable = false, length = 50)
+    @Column(name = "user_name", unique = true)
     private String userName;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<Ticket> tickets;
+//    @Column(nullable = false)
+//    private String password;
+//
+//    @Column(unique = true, nullable = false)
+//    private String email;
+//
+//
+//    @OneToMany(mappedBy = "creator")
+//    private Set<Ticket> createdTickets = new HashSet<>();
+//
+//    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+//    @JoinTable(name = "developer_ticket",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "ticket_id"))
+//    private Set<Ticket> processingTickets = new HashSet<>();
 
     public User() {
     }
 
     public User(String firstName, String lastName, String userName) {
-        super();
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
     }
 
-    public void addTaskToUser(Ticket ticket) {
-        if (tickets == null) {
-            tickets = new HashSet<>();
-        }
-        tickets.add(ticket);
-        ticket.setUser(this);
+    public User(Long id, String firstName, String lastName, String userName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
     }
 
-    public void addTasksToUser(Set<Ticket> newTickets) {
-        if (tickets == null) {
-            tickets = newTickets;
-        }
-        tickets.addAll(newTickets);
-        Iterator<Ticket> i= tickets.iterator();
-        while(i.hasNext()) {
-            i.next().setUser(this);
-        }
+    public Long getId() {
+        return id;
     }
 
-    public int getUserId() {
-        return userId;
+    public void setId(Long id) {
+        this.id = id;
     }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+    //
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
+//
+//    public String getEmail() {
+//        return email;
+//    }
+//
+//    public void setEmail(String email) {
+//        this.email = email;
+//    }
+//
+//    public User(String firstName, String lastName, String userName, String password, String email) {
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.userName = userName;
+//        this.password = password;
+//        this.email = email;
+//    }
+//
+//    public Role getRole() {
+//        return role;
+//    }
+//
+//    public void setRole(Role role) {
+//        this.role = role;
+//    }
+//
+//    public Specialty getSpecialty() {
+//        return specialty;
+//    }
+//
+//    public void setSpecialty(Specialty specialty) {
+//        this.specialty = specialty;
+//    }
 
     public String getFirstName() {
         return firstName;
@@ -95,22 +140,20 @@ public class User implements Serializable{
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
-    public Set<Ticket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(Set<Ticket> tickets) {
-        if (tickets == null) {
-            this.tickets = null;
-        }
-        this.tickets = tickets;
-    }
-
-    @Override
-    public String toString() {
-        return "\nUser [userId =" + userId + ", firstName =" + firstName + ", lastName =" + lastName + ", userName ="
-                + userName + "]";
-    }
-
+//
+//    public Set<Ticket> getCreatedTickets() {
+//        return createdTickets;
+//    }
+//
+//    public void setCreatedTickets(Set<Ticket> createdTickets) {
+//        this.createdTickets = createdTickets;
+//    }
+//
+//    public Set<Ticket> getProcessingTickets() {
+//        return processingTickets;
+//    }
+//
+//    public void setProcessingTickets(Set<Ticket> processingTickets) {
+//        this.processingTickets = processingTickets;
+//    }
 }

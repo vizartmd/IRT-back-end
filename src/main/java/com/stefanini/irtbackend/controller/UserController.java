@@ -3,61 +3,52 @@ package com.stefanini.irtbackend.controller;
 import com.stefanini.irtbackend.entity.User;
 import com.stefanini.irtbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.net.URI;
+import java.util.List;
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @RequestMapping(value = "/get", method = RequestMethod.GET)
-    @ResponseBody
-    public User getMockUser() {
-        return createMockUser();
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
-    private User createMockUser() {
-        User user = new User();
-        user.setFirstName("MockName");
-        user.setLastName("Fffffff");
-        user.setUserName("Uuuuuuuuu");
-        return user;
+    @RequestMapping("/findall")
+    @GetMapping
+    ResponseEntity<List<User>> findAll() {
+        return ResponseEntity.ok(userService.findAll());
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    @ResponseBody
-    public User saveUser(@RequestBody User user) {
-        User userResponse = (User) userService.saveUser(user);
-        return userResponse;
+    @RequestMapping("/find_by_id")
+    @GetMapping("/{id}")
+    ResponseEntity<User> findById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(userService.findById(id));
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    @ResponseBody
-    public User updateUser(@RequestBody User user) {
-        User userResponse = (User) userService.updateUser(user);
-        return userResponse;
+    @RequestMapping("/create")
+    @PostMapping
+    ResponseEntity<User> create(@RequestBody User user) {
+        User createdUser = userService.create(user);
+        return ResponseEntity.created(URI.create("/users/" + createdUser.getId())).body(createdUser);
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    @ResponseBody
-    public User deleteUser(@RequestBody User user) {
-        User userResponse = (User) userService.deleteUser(user);
-        return userResponse;
+    @RequestMapping("/update")
+    @PutMapping
+    ResponseEntity<User> update(@RequestBody User user) {
+        return ResponseEntity.ok(userService.update(user));
     }
 
-    @RequestMapping(value = "/find/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public User getUser(@PathVariable long id) {
-
-        User userResponse = (User) userService.getUser(id);
-        return userResponse;
+    @RequestMapping("/delete")
+    @DeleteMapping("/{id}")
+    ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+        userService.deleteById(id);
+        return ResponseEntity.ok().build();
     }
-
 }
+

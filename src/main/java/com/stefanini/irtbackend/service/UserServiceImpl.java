@@ -1,42 +1,56 @@
 package com.stefanini.irtbackend.service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import com.stefanini.irtbackend.dao.daoimpl.UserDaoImpl;
+import com.stefanini.irtbackend.dao.UserDao;
 import com.stefanini.irtbackend.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import com.stefanini.irtbackend.service.UserService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-@Service("userServiceImpl")
-public class UserServiceImpl implements UserService {
+import javax.transaction.Transactional;
+import java.util.List;
 
-    @Autowired
-    private UserDaoImpl userDaoImpl;
+@Service
+class UserServiceImpl implements UserService {
 
-    @Transactional
-    public User saveUser(User user) {
-        userDaoImpl.saveUser(user);
-        return user;
+    private final UserDao userDao;
+
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Transactional
-    public User updateUser(User user) {
-        userDaoImpl.updateUser(user);
-        return user;
+    @Override
+    public User create(User user) {
+        return userDao.create(user);
     }
 
     @Transactional
-    public User deleteUser(User user) {
-        return userDaoImpl.deleteUser(user);
+    @Override
+    public User update(User user) {
+        return userDao.update(user);
     }
 
     @Transactional
-    public User getUser(long id) {
-        return userDaoImpl.getUser(id);
+    @Override
+    public void delete(User user) {
+        userDao.delete(user);
     }
 
+    @Transactional
+    @Override
+    public User findById(Long id) {
+        return userDao.findById(id);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        User byId = userDao.findById(id);
+        userDao.delete(byId);
+    }
+
+    @Transactional
+    @Override
+    public List<User> findAll() {
+        return userDao.findAll();
+    }
 }
+

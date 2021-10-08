@@ -1,72 +1,89 @@
 package com.stefanini.irtbackend.entity;
 
-import java.io.Serializable;
-import java.util.Objects;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "ticket")
-public class Ticket implements Serializable {
+public class Ticket extends AbstractEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ticket_id", unique = true, nullable = false)
-    private int ticketId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    protected Long id;
 
-    @Column(name = "title", unique = false, nullable = false, length = 100)
+    @Column(name = "title", unique = true)
     private String title;
 
-    @Column(name = "description", unique = false, nullable = false, length = 250)
+    @Column(name = "description")
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH })
-    @JoinColumn(name = "user_id")
-    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "specialty_id")
+    private Specialty specialty;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status_id")
+    private Status status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "priority_id")
+    private Priority priority;
+
+    @OneToMany(mappedBy = "ticket")
+    private Set<Action> actionHistory = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "creator_id")
+    private User creator;
+
+    @ManyToOne
+    private User developer;
+
+
+
+    public Ticket(User creator, String title, String description, Specialty specialty, Status status, Set<Action> actionHistory, User developer, Priority priority) {
+        this.creator = creator;
+        this.title = title;
+        this.description = description;
+        this.specialty = specialty;
+        this.status = status;
+        this.actionHistory = actionHistory;
+        this.developer = developer;
+        this.priority = priority;
+    }
+
+    public Ticket(Long id, String title, String description, Specialty specialty, Status status, Priority priority, Set<Action> actionHistory, User creator, User developer) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.specialty = specialty;
+        this.status = status;
+        this.priority = priority;
+        this.actionHistory = actionHistory;
+        this.creator = creator;
+        this.developer = developer;
+    }
 
     public Ticket() {
     }
 
-    public Ticket(String title, String description) {
-        this.title = title;
-        this.description = description;
+    @Override
+    public Long getId() {
+        return id;
     }
 
-    public Ticket(int ticketId, String title, String description) {
-        this.ticketId = ticketId;
-        this.title = title;
-        this.description = description;
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Ticket(int user_id, int ticketId, String title, String description) {
-        this.ticketId = ticketId;
-        this.title = title;
-        this.description = description;
+    public User getCreator() {
+        return creator;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public int getTicketId() {
-        return ticketId;
-    }
-
-    public void setTicketId(int taskId) {
-        this.ticketId = taskId;
+    public void setCreator(User creator) {
+        this.creator = creator;
     }
 
     public String getTitle() {
@@ -85,9 +102,43 @@ public class Ticket implements Serializable {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "\nTask [ticketId=" + ticketId + ", title=" + title + ", description=" + description + "]";
+    public Specialty getSpecialty() {
+        return specialty;
     }
 
+    public void setSpecialty(Specialty specialty) {
+        this.specialty = specialty;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Set<Action> getActionHistory() {
+        return actionHistory;
+    }
+
+    public void setActionHistory(Set<Action> actionHistory) {
+        this.actionHistory = actionHistory;
+    }
+
+    public User getDeveloper() {
+        return developer;
+    }
+
+    public void setDeveloper(User developer) {
+        this.developer = developer;
+    }
+
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
 }
