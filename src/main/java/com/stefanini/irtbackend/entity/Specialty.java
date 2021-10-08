@@ -6,11 +6,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "specialty")
-public class Specialty {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Specialty extends AbstractEntity {
 
     @Column(name = "specialty")
     private String name;
@@ -28,19 +24,10 @@ public class Specialty {
     public Specialty() {
     }
 
-    public Specialty(Long id, String name, Set<User> users, Set<Ticket> tickets) {
-        this.id = id;
+    public Specialty(String name, Set<User> users, Set<Ticket> tickets) {
         this.name = name;
         this.users = users;
         this.tickets = tickets;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {

@@ -1,7 +1,6 @@
 package com.stefanini.irtbackend.entity;
 
 
-import com.sun.istack.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -12,11 +11,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "role")
-public class Role implements GrantedAuthority {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Role extends AbstractEntity implements GrantedAuthority {
 
     @Column(nullable = false)
     private String name;
@@ -25,7 +20,6 @@ public class Role implements GrantedAuthority {
             mappedBy = "role",
             cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<>();
-
 
 
     @Override
@@ -40,18 +34,8 @@ public class Role implements GrantedAuthority {
     public Role() {
     }
 
-    public Role(Long id, String name, List<User> users) {
-        this.id = id;
+    public Role(String name) {
         this.name = name;
-        this.users = users;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -68,6 +52,11 @@ public class Role implements GrantedAuthority {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public void addUser(User user){
+        users.add(user);
+        user.setRole(this);
     }
 
     @Override

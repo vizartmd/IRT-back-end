@@ -6,11 +6,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "status")
-public class Status {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Status extends AbstractEntity {
 
     @Column(name = "ticket_status")
     private String name;
@@ -20,21 +16,12 @@ public class Status {
             cascade = CascadeType.ALL)
     private Set<Ticket> tickets = new HashSet<>();
 
-    public Status() {
+    protected Status() {
     }
 
-    public Status(Long id, String name, Set<Ticket> tickets) {
-        this.id = id;
+    public Status(String name, Set<Ticket> tickets) {
         this.name = name;
         this.tickets = tickets;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {

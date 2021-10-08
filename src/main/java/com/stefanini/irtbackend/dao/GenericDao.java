@@ -8,9 +8,9 @@ public interface GenericDao<T> {
 
     List<T> findAll();
 
-    void create(T t);
+    T create(T t);
 
-    void update(T t);
+    T update(T t);
 
     void delete(T t);
 }

@@ -5,11 +5,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "action")
-public class Action {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Action extends AbstractEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -27,27 +23,15 @@ public class Action {
     @JoinColumn(name = "status_id")
     private Status status;
 
-    @Column(name = "creation_date")
-    private LocalDate creationDate;
 
     public Action() {
     }
 
-    public Action(Long id, User user, Ticket ticket, Priority priority, Status status, LocalDate creationDate) {
-        this.id = id;
+    public Action(User user, Ticket ticket, Priority priority, Status status) {
         this.user = user;
         this.ticket = ticket;
         this.priority = priority;
         this.status = status;
-        this.creationDate = creationDate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public User getUser() {
@@ -80,13 +64,5 @@ public class Action {
 
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
     }
 }

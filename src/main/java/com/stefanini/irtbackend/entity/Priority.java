@@ -6,11 +6,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "priority")
-public class Priority {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Priority extends AbstractEntity {
 
     @Column(name = "ticket_priority", nullable = false)
     private String name;
@@ -24,8 +20,7 @@ public class Priority {
     public Priority() {
     }
 
-    public Priority(Long id, String name) {
-        this.id = id;
+    public Priority(String name) {
         this.name = name;
     }
 

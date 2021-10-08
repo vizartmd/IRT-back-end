@@ -1,7 +1,5 @@
 package com.stefanini.irtbackend.entity;
 
-import com.sun.istack.NotNull;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -9,11 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "user")
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class User extends AbstractEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
@@ -38,13 +32,11 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(name = "creation_date")
-    private LocalDate creationDate;
 
     @OneToMany(mappedBy = "creator")
     private Set<Ticket> createdTickets = new HashSet<>();
 
-    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinTable(name = "developer_ticket",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "ticket_id"))
@@ -69,26 +61,12 @@ public class User {
         this.email = email;
     }
 
-    public User(Role role, Specialty specialty, String firstName, String lastName, String userName, String password,
-                String email, Set<Ticket> createdTickets, Set<Ticket> processingTickets) {
-        this.creationDate = LocalDate.now();
-        this.role = role;
-        this.specialty = specialty;
+    public User(String firstName, String lastName, String userName, String password, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.createdTickets = createdTickets;
-        this.processingTickets = processingTickets;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Role getRole() {
@@ -129,14 +107,6 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
     }
 
     public Set<Ticket> getCreatedTickets() {

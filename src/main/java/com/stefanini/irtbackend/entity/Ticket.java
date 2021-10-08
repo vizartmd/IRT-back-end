@@ -6,11 +6,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "ticket")
-public class Ticket {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Ticket extends AbstractEntity {
 
     @Column(name = "title", unique = true)
     private String title;
@@ -30,7 +26,6 @@ public class Ticket {
     @JoinColumn(name = "priority_id")
     private Priority priority;
 
-
     @OneToMany(mappedBy = "ticket")
     private Set<Action> actionHistory = new HashSet<>();
 
@@ -41,9 +36,7 @@ public class Ticket {
     @ManyToOne
     private User developer;
 
-
-    public Ticket(Long id, User creator, String title, String description, Specialty specialty, Status status, Set<Action> actionHistory, User developer, Priority priority) {
-        this.id = id;
+    public Ticket(User creator, String title, String description, Specialty specialty, Status status, Set<Action> actionHistory, User developer, Priority priority) {
         this.creator = creator;
         this.title = title;
         this.description = description;
@@ -55,14 +48,6 @@ public class Ticket {
     }
 
     public Ticket() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public User getCreator() {
