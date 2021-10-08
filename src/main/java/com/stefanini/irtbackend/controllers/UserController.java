@@ -2,7 +2,7 @@ package com.stefanini.irtbackend.controllers;
 
 import com.stefanini.irtbackend.entity.User;
 import com.stefanini.irtbackend.service.UserService;
-import org.springframework.http.MediaType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,11 +12,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private final UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    @Autowired
+    UserService userService;
 
     @GetMapping
     ResponseEntity<List<User>> findAll() {

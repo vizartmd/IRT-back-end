@@ -1,7 +1,6 @@
 package com.stefanini.irtbackend.entity;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "action")

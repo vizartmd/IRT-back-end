@@ -24,7 +24,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 @PropertySource("classpath:db.properties")
 @ComponentScan("com.stefanini.irtbackend")
-@EnableJpaRepositories(basePackages = { "com.stefanini.irtbackend.dao"})
+@EnableJpaRepositories(basePackages = {"com.stefanini.irtbackend.dao"})
 public class DatabaseConfig {
 
     @Resource
