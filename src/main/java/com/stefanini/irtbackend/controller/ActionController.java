@@ -1,4 +1,4 @@
-package com.stefanini.irtbackend.controllers;
+package com.stefanini.irtbackend.controller;
 
 import com.stefanini.irtbackend.entity.Action;
 import com.stefanini.irtbackend.entity.Priority;
@@ -15,8 +15,12 @@ import java.util.List;
 @RequestMapping("/action")
 public class ActionController {
 
+    private ActionService actionService;
+
     @Autowired
-    ActionService actionService;
+    public ActionController(ActionService actionService) {
+        this.actionService = actionService;
+    }
 
     @GetMapping
     ResponseEntity<List<Action>> findAll() {
