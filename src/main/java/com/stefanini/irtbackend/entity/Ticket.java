@@ -1,5 +1,9 @@
 package com.stefanini.irtbackend.entity;
 
+import com.stefanini.irtbackend.enums.Priority;
+import com.stefanini.irtbackend.enums.Specialty;
+import com.stefanini.irtbackend.enums.Status;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,26 +12,22 @@ import java.util.Set;
 @Table(name = "ticket")
 public class Ticket extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    protected Long id;
-
     @Column(name = "title", unique = true)
     private String title;
 
     @Column(name = "description")
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "specialty_id")
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "specialty")
     private Specialty specialty;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "status_id")
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "status_id")
     private Status status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "priority_id")
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "priority_id")
     private Priority priority;
 
     @OneToMany(mappedBy = "ticket")
@@ -40,42 +40,16 @@ public class Ticket extends AbstractEntity {
     @ManyToOne
     private User developer;
 
-
-
-    public Ticket(User creator, String title, String description, Specialty specialty, Status status, Set<Action> actionHistory, User developer, Priority priority) {
+    public Ticket(User creator, String title, String description, Specialty specialty,
+                  User developer) {
         this.creator = creator;
         this.title = title;
         this.description = description;
         this.specialty = specialty;
-        this.status = status;
-        this.actionHistory = actionHistory;
-        this.developer = developer;
-        this.priority = priority;
-    }
-
-    public Ticket(Long id, String title, String description, Specialty specialty, Status status, Priority priority, Set<Action> actionHistory, User creator, User developer) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.specialty = specialty;
-        this.status = status;
-        this.priority = priority;
-        this.actionHistory = actionHistory;
-        this.creator = creator;
         this.developer = developer;
     }
 
     public Ticket() {
-    }
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public User getCreator() {

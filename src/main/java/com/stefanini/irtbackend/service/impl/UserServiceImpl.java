@@ -1,4 +1,4 @@
-package com.stefanini.irtbackend.service;
+package com.stefanini.irtbackend.service.impl;
 
 import com.stefanini.irtbackend.dao.UserDao;
 import com.stefanini.irtbackend.entity.User;
@@ -17,25 +17,21 @@ class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
-    @Transactional
     @Override
-    public User create(User user) {
+    public boolean create(User user) {
         return userDao.create(user);
     }
 
-    @Transactional
     @Override
     public User update(User user) {
         return userDao.update(user);
     }
 
-    @Transactional
     @Override
     public void delete(User user) {
         userDao.delete(user);
     }
 
-    @Transactional
     @Override
     public User findById(Long id) {
         return userDao.findById(id);
@@ -53,4 +49,3 @@ class UserServiceImpl implements UserService {
         return userDao.findAll();
     }
 }
-

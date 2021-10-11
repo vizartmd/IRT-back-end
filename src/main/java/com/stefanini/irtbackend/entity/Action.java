@@ -1,7 +1,8 @@
 package com.stefanini.irtbackend.entity;
 
+import com.stefanini.irtbackend.enums.Priority;
+import com.stefanini.irtbackend.enums.Status;
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "action")
@@ -15,13 +16,13 @@ public class Action extends AbstractEntity {
     @JoinColumn(name = "ticket_id")
     private Ticket ticket;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "priority_id")
-    private Priority priority;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "status_id")
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "status_id")
     private Status status;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "priority_id")
+    private Priority priority;
 
 
     public Action() {

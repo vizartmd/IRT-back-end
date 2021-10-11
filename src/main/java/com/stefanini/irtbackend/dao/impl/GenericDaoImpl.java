@@ -1,8 +1,10 @@
-package com.stefanini.irtbackend.dao.daoimpl;
+package com.stefanini.irtbackend.dao.impl;
 
 import com.stefanini.irtbackend.dao.GenericDao;
 import org.hibernate.HibernateException;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -43,15 +45,16 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
     }
 
     @Override
-    public T create(T t) {
+    public boolean create(T t) {
         entityManager.persist(t);
         entityManager.flush();
-        return t;
+        return entityManager.contains(t);
     }
 
     @Override
     public T update(T t) {
-        return entityManager.merge(t);
+        T t2 = entityManager.merge(t);
+        return t2;
     }
 
     @Override

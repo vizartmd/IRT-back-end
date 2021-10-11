@@ -8,7 +8,7 @@ public interface GenericDao<T> {
 
     List<T> findAll();
 
-    T create(T t);
+    boolean create(T t);
 
     T update(T t);
 
