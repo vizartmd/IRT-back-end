@@ -17,5 +17,4 @@ public interface TicketService {
 
     List<Ticket> findAll();
 
-    void assignTicket(Long userId, Long ticketId);
 }

@@ -14,7 +14,6 @@ class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
 
-    @Autowired
     public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
@@ -37,19 +36,18 @@ class UserServiceImpl implements UserService {
         userDao.delete(user);
     }
 
-    @Transactional
     @Override
     public User findById(Long id) {
         return userDao.findById(id);
     }
 
+    @Transactional
     @Override
     public void deleteById(Long id) {
         User byId = userDao.findById(id);
         userDao.delete(byId);
     }
 
-    @Transactional
     @Override
     public List<User> findAll() {
         return userDao.findAll();

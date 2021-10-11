@@ -15,7 +15,6 @@ public class TicketController {
 
     private final TicketService ticketService;
 
-    @Autowired
     public TicketController(TicketService ticketService){
         this.ticketService = ticketService;
     }

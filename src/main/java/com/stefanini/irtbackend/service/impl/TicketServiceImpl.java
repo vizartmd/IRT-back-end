@@ -6,28 +6,31 @@ import com.stefanini.irtbackend.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 public class TicketServiceImpl implements TicketService {
 
-    private TicketDao ticketDao;
+    private final TicketDao ticketDao;
 
-    @Autowired
     public TicketServiceImpl(TicketDao ticketDao){
         this.ticketDao = ticketDao;
     }
 
+    @Transactional
     @Override
     public Ticket create(Ticket ticket) {
         return ticketDao.create(ticket);
     }
 
+    @Transactional
     @Override
     public Ticket update(Ticket ticket) {
         return ticketDao.update(ticket);
     }
 
+    @Transactional
     @Override
     public void delete(Ticket ticket) {
         ticketDao.delete(ticket);
@@ -38,6 +41,7 @@ public class TicketServiceImpl implements TicketService {
         return ticketDao.findById(id);
     }
 
+    @Transactional
     @Override
     public void deleteById(Long id) {
         ticketDao.delete(findById(id));
@@ -48,8 +52,4 @@ public class TicketServiceImpl implements TicketService {
         return ticketDao.findAll();
     }
 
-    @Override
-    public void assignTicket(Long userId, Long ticketId) {
-        //to be implemented
-    }
 }

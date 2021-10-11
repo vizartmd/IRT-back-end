@@ -18,16 +18,19 @@ public class ActionServiceImpl implements ActionService {
     @Autowired
    ActionDao actionDao;
 
+    @Transactional
     @Override
     public Action create(Action action) {
         return actionDao.create(action);
     }
 
+    @Transactional
     @Override
     public Action update(Action action) {
         return actionDao.update(action);
     }
 
+    @Transactional
     @Override
     public void delete(Action action) {
         actionDao.delete(action);
@@ -38,6 +41,7 @@ public class ActionServiceImpl implements ActionService {
         return actionDao.findById(id);
     }
 
+    @Transactional
     @Override
     public void deleteById(Long id) {
         Action byId = actionDao.findById(id);
@@ -49,12 +53,13 @@ public class ActionServiceImpl implements ActionService {
         return actionDao.findAll();
     }
 
-    @Transactional
+
     @Override
     public List<Action> findAllActionsByTicketId(Long ticket_id) {
         return actionDao.findAllActionsByTicketId(ticket_id);
     }
 
+    @Transactional
     @Override
     public Action changePriority(Long action_id, Priority priority) {
         Action actionToChange = actionDao.findById(action_id);
