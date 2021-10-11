@@ -1,5 +1,6 @@
 package com.stefanini.irtbackend.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
@@ -8,14 +9,14 @@ import java.util.Date;
 import java.util.Objects;
 
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
+//@EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     protected Long id;
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(name = "created_date", updatable = false)
     private LocalDate createdDate;
 

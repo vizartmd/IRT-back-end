@@ -1,5 +1,6 @@
 package com.stefanini.irtbackend.conf;
 
+import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -25,11 +26,11 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaAuditing
+//@EnableJpaAuditing
 @PropertySource("classpath:db.properties")
 @PropertySource("classpath:hibernate.properties")
-@ComponentScan("com.stefanini.irtbackend")
-@EnableJpaRepositories(basePackages = {"com.stefanini.irtbackend.dao"})
+//@ComponentScan("com.stefanini.irtbackend")
+//@EnableJpaRepositories(basePackages = {"com.stefanini.irtbackend.dao"})
 public class DatabaseConfig {
 
     @Resource
@@ -57,15 +58,10 @@ public class DatabaseConfig {
 
     @Bean
     public DataSource dataSource() {
-        SimpleDriverDataSource ds = new SimpleDriverDataSource();
+
+        BasicDataSource ds = new BasicDataSource();
         ds.setUrl(env.getRequiredProperty("db.url"));
-        Class<Driver> driverClass;
-        try {
-            driverClass = (Class<Driver>) Class.forName("com.mysql.cj.jdbc.Driver");
-            ds.setDriverClass(driverClass);
-        } catch (ClassNotFoundException|ClassCastException e) {
-            e.printStackTrace();
-        }
+        ds.setDriverClassName(env.getRequiredProperty("db.driver"));
         ds.setUsername(env.getRequiredProperty("db.username"));
         ds.setPassword(env.getRequiredProperty("db.password"));
         return ds;
