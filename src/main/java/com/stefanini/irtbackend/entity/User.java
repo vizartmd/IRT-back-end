@@ -1,17 +1,21 @@
 package com.stefanini.irtbackend.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "user")
 public class User extends AbstractEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles = new ArrayList<>();
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "specialty_id")
@@ -46,7 +50,7 @@ public class User extends AbstractEntity {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", role=" + role +
+                ", role=" + roles +
                 ", specialty=" + specialty +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -85,13 +89,6 @@ public class User extends AbstractEntity {
         this.email = email;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
 
     public Specialty getSpecialty() {
         return specialty;
