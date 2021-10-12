@@ -1,5 +1,5 @@
 package com.stefanini.irtbackend.enums;
 
-public enum Status {
+public enum TicketStatus {
     BACKLOG, ASIGNED, FINISHED, CLOSED
 }

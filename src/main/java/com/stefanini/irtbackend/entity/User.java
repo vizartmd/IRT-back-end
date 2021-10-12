@@ -2,6 +2,8 @@ package com.stefanini.irtbackend.entity;
 
 import com.stefanini.irtbackend.enums.Role;
 import com.stefanini.irtbackend.enums.Specialty;
+import com.stefanini.irtbackend.enums.UserStatus;
+import jdk.net.SocketFlow;
 
 import javax.persistence.*;
 
@@ -35,6 +37,10 @@ public class User extends AbstractEntity {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "specialty")
     private Specialty specialty;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "user_status")
+    private UserStatus userStatus;
 
 
     @OneToMany(mappedBy = "creator")
@@ -87,6 +93,14 @@ public class User extends AbstractEntity {
 
     public void setSpecialty(Specialty specialty) {
         this.specialty = specialty;
+    }
+
+    public UserStatus getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(UserStatus userStatus) {
+        this.userStatus = userStatus;
     }
 
     public String getFirstName() {

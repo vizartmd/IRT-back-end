@@ -3,6 +3,7 @@ package com.stefanini.irtbackend.service;
 import com.stefanini.irtbackend.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
@@ -17,4 +18,6 @@ public interface UserService {
     void deleteById(Long id);
 
     List<User> findAll();
+
+    Optional<User> findByUserName(String userName);
 }

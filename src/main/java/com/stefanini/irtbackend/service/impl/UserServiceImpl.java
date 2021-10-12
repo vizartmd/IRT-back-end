@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 class UserServiceImpl implements UserService {
@@ -47,5 +48,10 @@ class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return userDao.findAll();
+    }
+
+    @Override
+    public Optional<User> findByUserName(String userName) {
+        return userDao.findByUserName(userName);
     }
 }
