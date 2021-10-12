@@ -5,7 +5,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -24,7 +23,6 @@ import java.util.Properties;
 @EnableTransactionManagement
 @PropertySource("classpath:db.properties")
 @ComponentScan("com.stefanini.irtbackend")
-@EnableJpaRepositories(basePackages = {"com.stefanini.irtbackend.dao"})
 public class DatabaseConfig {
 
     @Resource
@@ -58,7 +56,7 @@ public class DatabaseConfig {
         try {
             driverClass = (Class<Driver>) Class.forName("com.mysql.cj.jdbc.Driver");
             ds.setDriverClass(driverClass);
-        } catch (ClassNotFoundException|ClassCastException e) {
+        } catch (ClassNotFoundException | ClassCastException e) {
             e.printStackTrace();
         }
         ds.setUsername(env.getRequiredProperty("db.username"));

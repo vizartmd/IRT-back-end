@@ -45,6 +45,21 @@ public class Ticket extends AbstractEntity {
         this.developer = developer;
     }
 
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", specialty=" + specialty +
+                ", status=" + status +
+                ", priority=" + priority +
+                ", actionHistory=" + actionHistory +
+                ", creator=" + creator +
+                ", developer=" + developer +
+                '}';
+    }
+
     public Ticket() {
     }
 

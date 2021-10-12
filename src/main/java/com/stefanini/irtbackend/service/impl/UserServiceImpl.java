@@ -3,7 +3,6 @@ package com.stefanini.irtbackend.service.impl;
 import com.stefanini.irtbackend.dao.UserDao;
 import com.stefanini.irtbackend.entity.User;
 import com.stefanini.irtbackend.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -39,6 +38,11 @@ class UserServiceImpl implements UserService {
     @Override
     public User findById(Long id) {
         return userDao.findById(id);
+    }
+
+    @Override
+    public User findByUsername(String userName) {
+        return userDao.findByUsername(userName);
     }
 
     @Transactional

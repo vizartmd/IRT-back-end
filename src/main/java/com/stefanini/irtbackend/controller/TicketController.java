@@ -2,7 +2,6 @@ package com.stefanini.irtbackend.controller;
 
 import com.stefanini.irtbackend.entity.Ticket;
 import com.stefanini.irtbackend.service.TicketService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +14,7 @@ public class TicketController {
 
     private final TicketService ticketService;
 
-    public TicketController(TicketService ticketService){
+    public TicketController(TicketService ticketService) {
         this.ticketService = ticketService;
     }
 

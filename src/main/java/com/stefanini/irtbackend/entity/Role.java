@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Table(name = "role")
 public class Role extends AbstractEntity implements GrantedAuthority {
 
-    @Column(nullable = false)
+    @Column(name = "name")
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY,
@@ -54,7 +54,7 @@ public class Role extends AbstractEntity implements GrantedAuthority {
         this.users = users;
     }
 
-    public void addUser(User user){
+    public void addUser(User user) {
         users.add(user);
         user.setRole(this);
     }

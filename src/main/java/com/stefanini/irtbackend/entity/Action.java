@@ -22,6 +22,16 @@ public class Action extends AbstractEntity {
     @JoinColumn(name = "status_id")
     private Status status;
 
+    @Override
+    public String toString() {
+        return "Action{" +
+                "id=" + id +
+                ", user=" + user +
+                ", ticket=" + ticket +
+                ", priority=" + priority +
+                ", status=" + status +
+                '}';
+    }
 
     public Action() {
     }

@@ -19,6 +19,14 @@ public abstract class AbstractEntity {
     @Column(name = "created_date")
     private LocalDate createdDate;
 
+    @Override
+    public String toString() {
+        return "AbstractEntity{" +
+                "id=" + id +
+                ", createdDate=" + createdDate +
+                '}';
+    }
+
     public Long getId() {
         return id;
     }

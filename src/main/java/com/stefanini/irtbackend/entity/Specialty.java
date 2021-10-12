@@ -21,6 +21,16 @@ public class Specialty extends AbstractEntity {
             cascade = CascadeType.ALL)
     private Set<Ticket> tickets = new HashSet<>();
 
+    @Override
+    public String toString() {
+        return "Specialty{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", users=" + users +
+                ", tickets=" + tickets +
+                '}';
+    }
+
     public Specialty() {
     }
 

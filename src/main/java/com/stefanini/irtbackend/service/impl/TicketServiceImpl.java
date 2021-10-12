@@ -3,7 +3,6 @@ package com.stefanini.irtbackend.service.impl;
 import com.stefanini.irtbackend.dao.TicketDao;
 import com.stefanini.irtbackend.entity.Ticket;
 import com.stefanini.irtbackend.service.TicketService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,7 +13,7 @@ public class TicketServiceImpl implements TicketService {
 
     private final TicketDao ticketDao;
 
-    public TicketServiceImpl(TicketDao ticketDao){
+    public TicketServiceImpl(TicketDao ticketDao) {
         this.ticketDao = ticketDao;
     }
 

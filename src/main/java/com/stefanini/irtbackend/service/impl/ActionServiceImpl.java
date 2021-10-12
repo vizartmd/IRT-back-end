@@ -1,10 +1,8 @@
 package com.stefanini.irtbackend.service.impl;
 
 import com.stefanini.irtbackend.dao.ActionDao;
-import com.stefanini.irtbackend.dao.UserDao;
 import com.stefanini.irtbackend.entity.Action;
 import com.stefanini.irtbackend.entity.Priority;
-import com.stefanini.irtbackend.entity.User;
 import com.stefanini.irtbackend.service.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +14,7 @@ import java.util.List;
 public class ActionServiceImpl implements ActionService {
 
     @Autowired
-   ActionDao actionDao;
+    ActionDao actionDao;
 
     @Transactional
     @Override

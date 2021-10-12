@@ -17,6 +17,15 @@ public class Priority extends AbstractEntity {
             cascade = CascadeType.ALL)
     private Set<Ticket> tickets = new HashSet<>();
 
+    @Override
+    public String toString() {
+        return "Priority{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", tickets=" + tickets +
+                '}';
+    }
+
     public Priority() {
     }
 

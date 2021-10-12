@@ -2,7 +2,6 @@ package com.stefanini.irtbackend.controller;
 
 import com.stefanini.irtbackend.entity.Action;
 import com.stefanini.irtbackend.entity.Priority;
-import com.stefanini.irtbackend.entity.User;
 import com.stefanini.irtbackend.service.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -58,11 +57,6 @@ public class ActionController {
     ResponseEntity<Action> changePriority(@RequestBody Long action_id, Priority priority) {
         return ResponseEntity.ok(actionService.changePriority(action_id, priority));
     }
-
-
-
-
-
 
 
 }

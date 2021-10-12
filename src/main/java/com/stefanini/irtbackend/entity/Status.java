@@ -16,6 +16,15 @@ public class Status extends AbstractEntity {
             cascade = CascadeType.ALL)
     private Set<Ticket> tickets = new HashSet<>();
 
+    @Override
+    public String toString() {
+        return "Status{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", tickets=" + tickets +
+                '}';
+    }
+
     protected Status() {
     }
 

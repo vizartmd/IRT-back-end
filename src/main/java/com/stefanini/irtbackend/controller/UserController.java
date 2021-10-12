@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
@@ -27,6 +28,11 @@ public class UserController {
         return ResponseEntity.ok(userService.findById(id));
     }
 
+    @PutMapping("/userName")
+    public User getUserByUsername(@RequestBody Map<String, String> request) {
+        return userService.findByUsername(request.get("userName"));
+    }
+
     @PostMapping
     ResponseEntity<User> create(@RequestBody User user) {
         User createdUser = userService.create(user);
@@ -43,4 +49,5 @@ public class UserController {
         userService.deleteById(id);
         return ResponseEntity.ok().build();
     }
+
 }
