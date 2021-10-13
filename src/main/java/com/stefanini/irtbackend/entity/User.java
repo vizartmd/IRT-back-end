@@ -1,25 +1,23 @@
 package com.stefanini.irtbackend.entity;
 
+import com.stefanini.irtbackend.entity.enums.RoleName;
+import com.stefanini.irtbackend.entity.enums.SpecialtyName;
+
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "user")
 public class User extends AbstractEntity {
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles = new ArrayList<>();
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "role")
+    private RoleName role;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "specialty_id")
-    private Specialty specialty;
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "user_specialty")
+    private SpecialtyName specialty;
 
     @Column(name = "first_name")
     private String firstName;
@@ -50,7 +48,7 @@ public class User extends AbstractEntity {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", role=" + roles +
+                ", role=" + role +
                 ", specialty=" + specialty +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -63,6 +61,14 @@ public class User extends AbstractEntity {
     }
 
     public User() {
+    }
+
+    public User(String firstName, String lastName, String userName, String password, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
     }
 
     public String getPassword() {
@@ -81,20 +87,11 @@ public class User extends AbstractEntity {
         this.email = email;
     }
 
-    public User(String firstName, String lastName, String userName, String password, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
-    }
-
-
-    public Specialty getSpecialty() {
+    public SpecialtyName getSpecialty() {
         return specialty;
     }
 
-    public void setSpecialty(Specialty specialty) {
+    public void setSpecialty(SpecialtyName specialty) {
         this.specialty = specialty;
     }
 

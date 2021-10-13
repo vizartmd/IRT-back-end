@@ -1,5 +1,8 @@
 package com.stefanini.irtbackend.entity;
 
+import com.stefanini.irtbackend.entity.enums.PriorityName;
+import com.stefanini.irtbackend.entity.enums.StatusName;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,13 +17,13 @@ public class Action extends AbstractEntity {
     @JoinColumn(name = "ticket_id")
     private Ticket ticket;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "priority_id")
-    private Priority priority;
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "action_priority")
+    private PriorityName priority;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "status_id")
-    private Status status;
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "action_status")
+    private StatusName status;
 
     @Override
     public String toString() {
@@ -36,7 +39,7 @@ public class Action extends AbstractEntity {
     public Action() {
     }
 
-    public Action(User user, Ticket ticket, Priority priority, Status status) {
+    public Action(User user, Ticket ticket, PriorityName priority, StatusName status) {
         this.user = user;
         this.ticket = ticket;
         this.priority = priority;
@@ -59,19 +62,19 @@ public class Action extends AbstractEntity {
         this.ticket = ticket;
     }
 
-    public Priority getPriority() {
+    public PriorityName getPriority() {
         return priority;
     }
 
-    public void setPriority(Priority priority) {
+    public void setPriority(PriorityName priority) {
         this.priority = priority;
     }
 
-    public Status getStatus() {
+    public StatusName getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(StatusName status) {
         this.status = status;
     }
 }
