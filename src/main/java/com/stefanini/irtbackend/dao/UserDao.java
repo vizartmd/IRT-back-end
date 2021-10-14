@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface UserDao extends GenericDao<User> {
     Optional<User> findByUserName(String userName);
+    User findByEmail(String userName);
 }

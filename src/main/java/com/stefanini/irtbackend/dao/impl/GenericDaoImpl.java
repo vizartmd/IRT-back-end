@@ -3,8 +3,6 @@ package com.stefanini.irtbackend.dao.impl;
 import com.stefanini.irtbackend.dao.GenericDao;
 import org.hibernate.HibernateException;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

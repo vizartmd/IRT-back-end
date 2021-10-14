@@ -21,14 +21,14 @@ public class User extends AbstractEntity {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "user_name", unique = true)
+    @Column(name = "user_name", unique = true, nullable = false)
     private String userName;
 
-    @Column(nullable = false)
-    private String password;
-
-    @Column(unique = true, nullable = false)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
+
+    @Column(name = "password", nullable = false)
+    private String password;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")

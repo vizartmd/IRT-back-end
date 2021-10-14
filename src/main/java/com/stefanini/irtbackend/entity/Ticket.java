@@ -2,7 +2,7 @@ package com.stefanini.irtbackend.entity;
 
 import com.stefanini.irtbackend.enums.Priority;
 import com.stefanini.irtbackend.enums.Specialty;
-import com.stefanini.irtbackend.enums.Status;
+import com.stefanini.irtbackend.enums.TicketStatus;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -24,7 +24,7 @@ public class Ticket extends AbstractEntity {
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status_id")
-    private Status status;
+    private TicketStatus status;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "priority_id")
@@ -40,6 +40,17 @@ public class Ticket extends AbstractEntity {
     @ManyToOne
     private User developer;
 
+    public Ticket() {
+    }
+
+    public Ticket(String title, String description, Specialty specialty, TicketStatus status, Priority priority) {
+        this.title = title;
+        this.description = description;
+        this.specialty = specialty;
+        this.status = status;
+        this.priority = priority;
+    }
+
     public Ticket(User creator, String title, String description, Specialty specialty,
                   User developer) {
         this.creator = creator;
@@ -47,9 +58,6 @@ public class Ticket extends AbstractEntity {
         this.description = description;
         this.specialty = specialty;
         this.developer = developer;
-    }
-
-    public Ticket() {
     }
 
     public User getCreator() {
@@ -84,11 +92,11 @@ public class Ticket extends AbstractEntity {
         this.specialty = specialty;
     }
 
-    public Status getStatus() {
+    public TicketStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(TicketStatus status) {
         this.status = status;
     }
 

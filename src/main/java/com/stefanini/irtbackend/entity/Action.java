@@ -1,7 +1,8 @@
 package com.stefanini.irtbackend.entity;
 
 import com.stefanini.irtbackend.enums.Priority;
-import com.stefanini.irtbackend.enums.Status;
+import com.stefanini.irtbackend.enums.TicketStatus;
+
 import javax.persistence.*;
 
 @Entity
@@ -18,7 +19,7 @@ public class Action extends AbstractEntity {
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status_id")
-    private Status status;
+    private TicketStatus status;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "priority_id")
@@ -28,7 +29,7 @@ public class Action extends AbstractEntity {
     public Action() {
     }
 
-    public Action(User user, Ticket ticket, Priority priority, Status status) {
+    public Action(User user, Ticket ticket, Priority priority, TicketStatus status) {
         this.user = user;
         this.ticket = ticket;
         this.priority = priority;
@@ -59,11 +60,11 @@ public class Action extends AbstractEntity {
         this.priority = priority;
     }
 
-    public Status getStatus() {
+    public TicketStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(TicketStatus status) {
         this.status = status;
     }
 }
