@@ -11,6 +11,7 @@ import java.util.Optional;
 
 //@Repository
 public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
+
     @PersistenceContext
     protected EntityManager entityManager;
 

@@ -11,10 +11,14 @@ import static com.stefanini.irtbackend.security.UserPermission.*;
 
 
 public enum UserRole {
-    USER(Sets.newHashSet(TICKET_CREATE, TICKET_LEAVE_COMMENT, USER_SELF_MODIFY)),
-    DEVELOPER(Sets.newHashSet(TICKET_CREATE, TICKET_MODIFY, TICKET_LEAVE_COMMENT, USER_SELF_MODIFY)),
-    ADMIN(Sets.newHashSet(TICKET_CREATE, TICKET_MODIFY, TICKET_LEAVE_COMMENT, TICKET_DELETE,
-                          USER_CREATE, USER_MODIFY, USER_DELETE));
+
+    USER(Sets.newHashSet(USER_READ)),
+    ADMIN(Sets.newHashSet(USER_READ, USER_WRITE));
+
+//    USER(Sets.newHashSet(TICKET_CREATE, TICKET_LEAVE_COMMENT, USER_SELF_MODIFY)),
+//    DEVELOPER(Sets.newHashSet(TICKET_CREATE, TICKET_MODIFY, TICKET_LEAVE_COMMENT, USER_SELF_MODIFY)),
+//    ADMIN(Sets.newHashSet(TICKET_CREATE, TICKET_MODIFY, TICKET_LEAVE_COMMENT, TICKET_DELETE,
+//                          USER_CREATE, USER_MODIFY, USER_DELETE));
 
     private final Set<UserPermission> permissions;
 

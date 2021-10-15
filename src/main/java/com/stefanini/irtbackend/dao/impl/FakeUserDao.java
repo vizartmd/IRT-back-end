@@ -43,15 +43,15 @@ public class FakeUserDao implements UserDao {
                         true,
                         true
                 ),
-                new User(
-                        "developer1",
-                        passwordEncoder.encode("pass123"),
-                        UserRole.DEVELOPER.getGrantedAuthorities(),
-                        true,
-                        true,
-                        true,
-                        true
-                ),
+//                new User(
+//                        "developer1",
+//                        passwordEncoder.encode("pass123"),
+//                        UserRole.DEVELOPER.getGrantedAuthorities(),
+//                        true,
+//                        true,
+//                        true,
+//                        true
+//                ),
                 new User(
                         "admin1",
                         passwordEncoder.encode("pass123"),

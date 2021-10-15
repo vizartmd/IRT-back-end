@@ -58,19 +58,16 @@ public class User extends AbstractEntity implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", role=" + role +
-                ", specialty=" + specialty +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
                 ", userName='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", createdTickets=" + createdTickets +
-                ", processingTickets=" + processingTickets +
                 '}';
     }
 
     public User() {
+    }
+
+    public User(Long id, String username){
+        this.id = id;
+        this.username = username;
     }
 
     public User(String username,
