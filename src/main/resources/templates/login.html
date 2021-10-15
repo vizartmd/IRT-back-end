@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Login Customer</title>
+</head>
+<body>
+
+<form class="form-signin" method="post" action="/api/v1/auth/login" style="width: 400px; margin: 100px auto">
+    <div class="form-group">
+        <label for="email">Username</label>
+        <input type="text" class="form-control" id="email" name="email" placeholder="Username" required>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Sign in</button>
+</form>
+
+</body>
+</html>

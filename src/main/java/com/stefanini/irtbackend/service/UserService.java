@@ -3,7 +3,6 @@ package com.stefanini.irtbackend.service;
 import com.stefanini.irtbackend.entity.User;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
 
@@ -19,5 +18,7 @@ public interface UserService {
 
     List<User> findAll();
 
-    Optional<User> findByUserName(String userName);
+    User findByUserName(String userName);
+
+    User findByEmail(String email);
 }

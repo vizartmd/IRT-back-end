@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,37 +21,25 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 
     // TODO
     @Override
-    public Optional<User> findByUserName(String userName) {
-        User user = null;
-        try {
-            TypedQuery<User> query = entityManager.createQuery( "select u from User u where u.userName = :userName", User.class );
-            query.setParameter( "userName", userName.toLowerCase() );
-            user = query.getSingleResult();
+    public User findByUserName(String userName) {
+        List<User> users = findAll();
+        for (User u : users) {
+            System.out.println("User from findByUserName(): " + u);
         }
-        catch ( Exception e ) {
-//            log.error( e.getMessage() );
-        }
-        finally {
-            entityManager.close();
-        }
-        return null;
+        User user = users.stream().filter(u -> u.getUserName().equals(userName)).findFirst().orElse(null);
+        System.out.println("User after filter users.stream().filter: " + user);
+        return user;
     }
 
+    // TODO
     @Override
     public User findByEmail(String email) {
-        Optional<User> optionalUser  = null;
-        try {
-            TypedQuery<User> query = entityManager.createQuery( "select u from User u where u.email = :email", User.class );
-            query.setParameter( "email", email.toLowerCase() );
-            optionalUser = Optional.ofNullable(query.getSingleResult());
+        List<User> users = findAll();
+        for (User u : users) {
+            System.out.println("User from findByEmail(): " + u);
         }
-        catch ( Exception e ) {
-//            log.error( e.getMessage() );
-        }
-        finally {
-            entityManager.close();
-        }
-        User user = optionalUser.orElse(null);
+        User user = users.stream().filter(u -> u.getEmail().equals(email)).findFirst().orElse(null);
+        System.out.println("User after filter users.stream().filter: " + user);
         return user;
     }
 }

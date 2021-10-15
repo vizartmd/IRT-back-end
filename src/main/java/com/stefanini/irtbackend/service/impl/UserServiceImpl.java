@@ -6,10 +6,9 @@ import com.stefanini.irtbackend.service.UserService;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
 
@@ -49,11 +48,11 @@ class UserServiceImpl implements UserService {
         return userDao.findAll();
     }
 
-    public Optional<User> findByUserName(String userName) {
+    public User findByUserName(String userName) {
         return userDao.findByUserName(userName);
     }
 
-    public Optional<User> findByEmail(String userName) {
-        return userDao.findByUserName(userName);
+    public User findByEmail(String email) {
+        return userDao.findByEmail(email);
     }
 }
