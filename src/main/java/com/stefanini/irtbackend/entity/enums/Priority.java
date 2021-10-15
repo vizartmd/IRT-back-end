@@ -1,6 +1,6 @@
 package com.stefanini.irtbackend.entity.enums;
 
-public enum PriorityName {
+public enum Priority {
     LOW,
     MEDIUM,
     HIGH

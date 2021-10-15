@@ -1,6 +1,6 @@
 package com.stefanini.irtbackend.entity.enums;
 
-public enum SpecialtyName {
+public enum Specialty {
     FRONTEND,
     BACKEND
 }

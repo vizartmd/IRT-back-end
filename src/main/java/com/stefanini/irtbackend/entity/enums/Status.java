@@ -1,8 +1,8 @@
 package com.stefanini.irtbackend.entity.enums;
 
-public enum StatusName {
+public enum Status {
     BACKLOG,
-    ASIGNED,
+    ASSIGNED,
     FINISHED,
     CLOSED
 }

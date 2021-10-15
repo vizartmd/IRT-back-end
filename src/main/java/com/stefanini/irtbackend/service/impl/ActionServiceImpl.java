@@ -2,7 +2,7 @@ package com.stefanini.irtbackend.service.impl;
 
 import com.stefanini.irtbackend.dao.ActionDao;
 import com.stefanini.irtbackend.entity.Action;
-import com.stefanini.irtbackend.entity.enums.PriorityName;
+import com.stefanini.irtbackend.entity.enums.Priority;
 import com.stefanini.irtbackend.service.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,7 +59,7 @@ public class ActionServiceImpl implements ActionService {
 
     @Transactional
     @Override
-    public Action changePriority(Long action_id, PriorityName priority) {
+    public Action changePriority(Long action_id, Priority priority) {
         Action actionToChange = actionDao.findById(action_id);
         actionToChange.setPriority(priority);
         return actionDao.update(actionToChange);

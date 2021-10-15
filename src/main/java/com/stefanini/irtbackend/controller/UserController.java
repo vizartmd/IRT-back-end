@@ -30,7 +30,7 @@ public class UserController {
 
     @PutMapping("/userName")
     public User getUserByUsername(@RequestBody Map<String, String> request) {
-        return userService.findByUsername(request.get("userName"));
+        return (User) userService.loadUserByUsername(request.get("userName"));
     }
 
     @PostMapping

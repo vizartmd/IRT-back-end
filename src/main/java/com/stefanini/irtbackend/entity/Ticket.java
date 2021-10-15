@@ -1,8 +1,8 @@
 package com.stefanini.irtbackend.entity;
 
-import com.stefanini.irtbackend.entity.enums.PriorityName;
-import com.stefanini.irtbackend.entity.enums.SpecialtyName;
-import com.stefanini.irtbackend.entity.enums.StatusName;
+import com.stefanini.irtbackend.entity.enums.Priority;
+import com.stefanini.irtbackend.entity.enums.Specialty;
+import com.stefanini.irtbackend.entity.enums.Status;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -20,15 +20,15 @@ public class Ticket extends AbstractEntity {
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "ticket_specialty")
-    private SpecialtyName specialty;
+    private Specialty specialty;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "ticket_status")
-    private StatusName status;
+    private Status status;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "ticket_priority")
-    private PriorityName priority;
+    private Priority priority;
 
     @OneToMany(mappedBy = "ticket")
     private Set<Action> actionHistory = new HashSet<>();
@@ -40,7 +40,7 @@ public class Ticket extends AbstractEntity {
     @ManyToOne
     private User developer;
 
-    public Ticket(User creator, String title, String description, SpecialtyName specialty,
+    public Ticket(User creator, String title, String description, Specialty specialty,
                   User developer) {
         this.creator = creator;
         this.title = title;
@@ -91,19 +91,19 @@ public class Ticket extends AbstractEntity {
         this.description = description;
     }
 
-    public SpecialtyName getSpecialty() {
+    public Specialty getSpecialty() {
         return specialty;
     }
 
-    public void setSpecialty(SpecialtyName specialty) {
+    public void setSpecialty(Specialty specialty) {
         this.specialty = specialty;
     }
 
-    public StatusName getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(StatusName status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -123,11 +123,11 @@ public class Ticket extends AbstractEntity {
         this.developer = developer;
     }
 
-    public PriorityName getPriority() {
+    public Priority getPriority() {
         return priority;
     }
 
-    public void setPriority(PriorityName priority) {
+    public void setPriority(Priority priority) {
         this.priority = priority;
     }
 }

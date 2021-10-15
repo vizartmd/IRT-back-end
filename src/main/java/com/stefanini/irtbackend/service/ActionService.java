@@ -1,7 +1,7 @@
 package com.stefanini.irtbackend.service;
 
 import com.stefanini.irtbackend.entity.Action;
-import com.stefanini.irtbackend.entity.enums.PriorityName;
+import com.stefanini.irtbackend.entity.enums.Priority;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public interface ActionService {
 
     List<Action> findAllActionsByTicketId(Long ticket_id);
 
-    Action changePriority(Long action_id, PriorityName priority);
+    Action changePriority(Long action_id, Priority priority);
 
 
 

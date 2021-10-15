@@ -1,23 +1,26 @@
 package com.stefanini.irtbackend.entity;
 
-import com.stefanini.irtbackend.entity.enums.RoleName;
-import com.stefanini.irtbackend.entity.enums.SpecialtyName;
+import com.stefanini.irtbackend.security.UserRole;
+import com.stefanini.irtbackend.entity.enums.Specialty;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "user")
-public class User extends AbstractEntity {
+public class User extends AbstractEntity implements UserDetails {
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
-    private RoleName role;
+    private UserRole role;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "user_specialty")
-    private SpecialtyName specialty;
+    private Specialty specialty;
 
     @Column(name = "first_name")
     private String firstName;
@@ -26,13 +29,20 @@ public class User extends AbstractEntity {
     private String lastName;
 
     @Column(name = "user_name", unique = true)
-    private String userName;
+    private String username;
 
     @Column(nullable = false)
     private String password;
 
     @Column(unique = true, nullable = false)
     private String email;
+
+    @Transient
+    private Set<? extends GrantedAuthority> grantedAuthorities;
+    private boolean isAccountNonExpired;
+    private boolean isAccountNonLocked;
+    private boolean isCredentialsNonExpired;
+    private boolean isEnabled;
 
 
     @OneToMany(mappedBy = "creator")
@@ -52,7 +62,7 @@ public class User extends AbstractEntity {
                 ", specialty=" + specialty +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", userName='" + userName + '\'' +
+                ", userName='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", createdTickets=" + createdTickets +
@@ -63,16 +73,49 @@ public class User extends AbstractEntity {
     public User() {
     }
 
-    public User(String firstName, String lastName, String userName, String password, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.userName = userName;
+    public User(String username,
+                           String password,
+                           Set<? extends GrantedAuthority> grantedAuthorities,
+                           boolean isAccountNonExpired,
+                           boolean isAccountNonLocked,
+                           boolean isCredentialsNonExpired,
+                           boolean isEnabled) {
+        this.grantedAuthorities = grantedAuthorities;
+        this.username = username;
         this.password = password;
-        this.email = email;
+        this.isAccountNonExpired = isAccountNonExpired;
+        this.isAccountNonLocked = isAccountNonLocked;
+        this.isCredentialsNonExpired = isCredentialsNonExpired;
+        this.isEnabled = isEnabled;
     }
 
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return grantedAuthorities;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return isAccountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return isAccountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return isCredentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isEnabled;
     }
 
     public void setPassword(String password) {
@@ -87,11 +130,11 @@ public class User extends AbstractEntity {
         this.email = email;
     }
 
-    public SpecialtyName getSpecialty() {
+    public Specialty getSpecialty() {
         return specialty;
     }
 
-    public void setSpecialty(SpecialtyName specialty) {
+    public void setSpecialty(Specialty specialty) {
         this.specialty = specialty;
     }
 
@@ -111,12 +154,12 @@ public class User extends AbstractEntity {
         this.lastName = lastName;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
     public Set<Ticket> getCreatedTickets() {
