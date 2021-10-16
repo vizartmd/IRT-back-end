@@ -1,7 +1,7 @@
-package com.stefanini.irtbackend.entity;
+package com.stefanini.irtbackend.domain.entity;
 
-import com.stefanini.irtbackend.entity.enums.RoleName;
-import com.stefanini.irtbackend.entity.enums.SpecialtyName;
+import com.stefanini.irtbackend.domain.entity.enums.RoleName;
+import com.stefanini.irtbackend.domain.entity.enums.SpecialtyName;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -26,7 +26,7 @@ public class User extends AbstractEntity {
     private String lastName;
 
     @Column(name = "user_name", unique = true)
-    private String userName;
+    private String username;
 
     @Column(nullable = false)
     private String password;
@@ -52,7 +52,7 @@ public class User extends AbstractEntity {
                 ", specialty=" + specialty +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", userName='" + userName + '\'' +
+                ", userName='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", createdTickets=" + createdTickets +
@@ -63,12 +63,20 @@ public class User extends AbstractEntity {
     public User() {
     }
 
-    public User(String firstName, String lastName, String userName, String password, String email) {
+    public User(String firstName, String lastName, String username, String password, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.userName = userName;
+        this.username = username;
         this.password = password;
         this.email = email;
+    }
+
+    public RoleName getRole() {
+        return role;
+    }
+
+    public void setRole(RoleName role) {
+        this.role = role;
     }
 
     public String getPassword() {
@@ -111,12 +119,12 @@ public class User extends AbstractEntity {
         this.lastName = lastName;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Set<Ticket> getCreatedTickets() {

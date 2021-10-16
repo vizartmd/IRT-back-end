@@ -1,7 +1,8 @@
 package com.stefanini.irtbackend.service.impl;
 
 import com.stefanini.irtbackend.dao.UserDao;
-import com.stefanini.irtbackend.entity.User;
+import com.stefanini.irtbackend.domain.NotFoundException;
+import com.stefanini.irtbackend.domain.entity.User;
 import com.stefanini.irtbackend.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -37,10 +38,11 @@ class UserServiceImpl implements UserService {
 
     @Override
     public User findById(Long id) {
-        return userDao.findById(id);
+        return userDao.findById(id).orElseThrow(() -> new NotFoundException("Not found user with id = " + id));
     }
 
     @Override
+    @Transactional
     public User findByUsername(String userName) {
         return userDao.findByUsername(userName);
     }
@@ -48,7 +50,7 @@ class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void deleteById(Long id) {
-        User byId = userDao.findById(id);
+        User byId = userDao.findById(id).orElseThrow(() -> new NotFoundException("Not found user with id = " + id));
         userDao.delete(byId);
     }
 

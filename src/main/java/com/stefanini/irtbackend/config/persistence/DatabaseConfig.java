@@ -1,4 +1,4 @@
-package com.stefanini.irtbackend.config;
+package com.stefanini.irtbackend.config.persistence;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -22,7 +22,6 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:db.properties")
-@ComponentScan("com.stefanini.irtbackend")
 public class DatabaseConfig {
 
     @Resource

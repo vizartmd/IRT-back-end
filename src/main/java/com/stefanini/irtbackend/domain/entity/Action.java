@@ -1,7 +1,7 @@
-package com.stefanini.irtbackend.entity;
+package com.stefanini.irtbackend.domain.entity;
 
-import com.stefanini.irtbackend.entity.enums.PriorityName;
-import com.stefanini.irtbackend.entity.enums.StatusName;
+import com.stefanini.irtbackend.domain.entity.enums.PriorityName;
+import com.stefanini.irtbackend.domain.entity.enums.StatusName;
 
 import javax.persistence.*;
 

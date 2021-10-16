@@ -1,6 +1,6 @@
 package com.stefanini.irtbackend.service;
 
-import com.stefanini.irtbackend.entity.Ticket;
+import com.stefanini.irtbackend.domain.entity.Ticket;
 
 import java.util.List;
 

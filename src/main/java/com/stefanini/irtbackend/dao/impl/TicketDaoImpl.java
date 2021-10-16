@@ -1,7 +1,7 @@
 package com.stefanini.irtbackend.dao.impl;
 
 import com.stefanini.irtbackend.dao.TicketDao;
-import com.stefanini.irtbackend.entity.Ticket;
+import com.stefanini.irtbackend.domain.entity.Ticket;
 import org.springframework.stereotype.Repository;
 
 @Repository

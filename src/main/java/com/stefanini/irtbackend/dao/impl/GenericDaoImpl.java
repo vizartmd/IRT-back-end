@@ -8,8 +8,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public abstract class GenericDaoImpl<T> implements GenericDao<T> {
@@ -24,8 +26,8 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
     }
 
     @Override
-    public T findById(Long id) {
-        return entityManager.find(clazz, id);
+    public Optional<T> findById(Long id) {
+        return Optional.ofNullable(entityManager.find(clazz, id));
     }
 
     @Override

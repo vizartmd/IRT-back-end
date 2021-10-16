@@ -1,7 +1,7 @@
 package com.stefanini.irtbackend.dao.impl;
 
 import com.stefanini.irtbackend.dao.ActionDao;
-import com.stefanini.irtbackend.entity.Action;
+import com.stefanini.irtbackend.domain.entity.Action;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;

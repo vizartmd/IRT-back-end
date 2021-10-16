@@ -1,6 +1,6 @@
 package com.stefanini.irtbackend.service;
 
-import com.stefanini.irtbackend.entity.User;
+import com.stefanini.irtbackend.domain.entity.User;
 
 import java.util.List;
 

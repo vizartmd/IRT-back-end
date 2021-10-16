@@ -1,7 +1,7 @@
-package com.stefanini.irtbackend.controller;
+package com.stefanini.irtbackend.web;
 
-import com.stefanini.irtbackend.entity.Action;
-import com.stefanini.irtbackend.entity.enums.PriorityName;
+import com.stefanini.irtbackend.domain.entity.Action;
+import com.stefanini.irtbackend.domain.entity.enums.PriorityName;
 import com.stefanini.irtbackend.service.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/action")
+@RequestMapping("/api/action")
 public class ActionController {
 
     private ActionService actionService;

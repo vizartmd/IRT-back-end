@@ -1,6 +1,6 @@
-package com.stefanini.irtbackend.controller;
+package com.stefanini.irtbackend.web;
 
-import com.stefanini.irtbackend.entity.Ticket;
+import com.stefanini.irtbackend.domain.entity.Ticket;
 import com.stefanini.irtbackend.service.TicketService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +9,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tickets")
+@RequestMapping("/api/tickets")
 public class TicketController {
 
     private final TicketService ticketService;

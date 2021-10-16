@@ -1,8 +1,9 @@
-package com.stefanini.irtbackend.controller;
+package com.stefanini.irtbackend.web;
 
-import com.stefanini.irtbackend.entity.User;
+import com.stefanini.irtbackend.domain.entity.User;
 import com.stefanini.irtbackend.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -10,10 +11,9 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
-
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -24,27 +24,32 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('developers:read')")
     ResponseEntity<User> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(userService.findById(id));
     }
 
     @PutMapping("/userName")
+    @PreAuthorize("hasAuthority('developers:read')")
     public User getUserByUsername(@RequestBody Map<String, String> request) {
         return userService.findByUsername(request.get("userName"));
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('developers:write')")
     ResponseEntity<User> create(@RequestBody User user) {
         User createdUser = userService.create(user);
         return ResponseEntity.created(URI.create("/users/" + createdUser.getId())).body(createdUser);
     }
 
     @PutMapping
+    @PreAuthorize("hasAuthority('developers:write')")
     ResponseEntity<User> update(@RequestBody User user) {
         return ResponseEntity.ok(userService.update(user));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('developers:write')")
     ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         userService.deleteById(id);
         return ResponseEntity.ok().build();

@@ -1,6 +1,6 @@
 package com.stefanini.irtbackend.dao;
 
-import com.stefanini.irtbackend.entity.Action;
+import com.stefanini.irtbackend.domain.entity.Action;
 
 import java.util.List;
 

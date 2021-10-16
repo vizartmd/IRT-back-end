@@ -1,7 +1,7 @@
 package com.stefanini.irtbackend.service;
 
-import com.stefanini.irtbackend.entity.Action;
-import com.stefanini.irtbackend.entity.enums.PriorityName;
+import com.stefanini.irtbackend.domain.entity.Action;
+import com.stefanini.irtbackend.domain.entity.enums.PriorityName;
 
 import java.util.List;
 

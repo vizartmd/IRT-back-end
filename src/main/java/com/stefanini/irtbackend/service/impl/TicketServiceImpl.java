@@ -1,7 +1,8 @@
 package com.stefanini.irtbackend.service.impl;
 
 import com.stefanini.irtbackend.dao.TicketDao;
-import com.stefanini.irtbackend.entity.Ticket;
+import com.stefanini.irtbackend.domain.NotFoundException;
+import com.stefanini.irtbackend.domain.entity.Ticket;
 import com.stefanini.irtbackend.service.TicketService;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-public class TicketServiceImpl implements TicketService {
+class TicketServiceImpl implements TicketService {
 
     private final TicketDao ticketDao;
 
@@ -36,14 +37,16 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    @Transactional
     public Ticket findById(Long id) {
-        return ticketDao.findById(id);
+        return ticketDao.findById(id).orElseThrow(() -> new NotFoundException("Not found ticket with id = " + id));
     }
 
     @Transactional
     @Override
     public void deleteById(Long id) {
-        ticketDao.delete(findById(id));
+        Ticket ticket = ticketDao.findById(id).orElseThrow(() -> new NotFoundException("Not found ticket with id = " + id));
+        ticketDao.delete(ticket);
     }
 
     @Override

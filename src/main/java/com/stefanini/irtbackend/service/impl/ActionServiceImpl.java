@@ -1,8 +1,9 @@
 package com.stefanini.irtbackend.service.impl;
 
 import com.stefanini.irtbackend.dao.ActionDao;
-import com.stefanini.irtbackend.entity.Action;
-import com.stefanini.irtbackend.entity.enums.PriorityName;
+import com.stefanini.irtbackend.domain.NotFoundException;
+import com.stefanini.irtbackend.domain.entity.Action;
+import com.stefanini.irtbackend.domain.entity.enums.PriorityName;
 import com.stefanini.irtbackend.service.ActionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-public class ActionServiceImpl implements ActionService {
+class ActionServiceImpl implements ActionService {
 
     @Autowired
     ActionDao actionDao;
@@ -36,13 +37,13 @@ public class ActionServiceImpl implements ActionService {
 
     @Override
     public Action findById(Long id) {
-        return actionDao.findById(id);
+        return actionDao.findById(id).orElseThrow(() -> new NotFoundException("Not found action with id = " + id));
     }
 
     @Transactional
     @Override
     public void deleteById(Long id) {
-        Action byId = actionDao.findById(id);
+        Action byId = actionDao.findById(id).orElseThrow(() -> new NotFoundException("Not found action with id = " + id));
         actionDao.delete(byId);
     }
 
@@ -53,14 +54,14 @@ public class ActionServiceImpl implements ActionService {
 
 
     @Override
-    public List<Action> findAllActionsByTicketId(Long ticket_id) {
-        return actionDao.findAllActionsByTicketId(ticket_id);
+    public List<Action> findAllActionsByTicketId(Long id) {
+        return actionDao.findAllActionsByTicketId(id);
     }
 
     @Transactional
     @Override
-    public Action changePriority(Long action_id, PriorityName priority) {
-        Action actionToChange = actionDao.findById(action_id);
+    public Action changePriority(Long id, PriorityName priority) {
+        Action actionToChange = actionDao.findById(id).orElseThrow(() -> new NotFoundException("Not found action with id = " + id));
         actionToChange.setPriority(priority);
         return actionDao.update(actionToChange);
     }
