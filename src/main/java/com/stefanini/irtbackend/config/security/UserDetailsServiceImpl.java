@@ -11,14 +11,12 @@ import org.springframework.stereotype.Service;
 @Service("userDetailsServiceImpl")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-
     private final UserService userService;
 
     @Autowired
     public UserDetailsServiceImpl(UserService userService) {
         this.userService = userService;
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

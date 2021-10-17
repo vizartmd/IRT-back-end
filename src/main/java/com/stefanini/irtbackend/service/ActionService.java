@@ -22,7 +22,4 @@ public interface ActionService {
     List<Action> findAllActionsByTicketId(Long ticket_id);
 
     Action changePriority(Long action_id, PriorityName priority);
-
-
-
 }

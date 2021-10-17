@@ -1,6 +1,5 @@
 package com.stefanini.irtbackend.config.security.jwt;
 
-
 import com.stefanini.irtbackend.config.security.jwt.exception.JwtAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

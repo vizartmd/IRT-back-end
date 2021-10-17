@@ -23,12 +23,12 @@ public class Ticket extends AbstractEntity {
     private SpecialtyName specialty;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "ticket_status")
-    private StatusName status;
-
-    @Enumerated(value = EnumType.STRING)
     @Column(name = "ticket_priority")
     private PriorityName priority;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "ticket_status")
+    private StatusName status;
 
     @OneToMany(mappedBy = "ticket")
     private Set<Action> actionHistory = new HashSet<>();

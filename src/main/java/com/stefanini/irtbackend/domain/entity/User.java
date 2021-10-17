@@ -11,14 +11,6 @@ import java.util.Set;
 @Table(name = "user")
 public class User extends AbstractEntity {
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "role")
-    private RoleName role;
-
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "user_specialty")
-    private SpecialtyName specialty;
-
     @Column(name = "first_name")
     private String firstName;
 
@@ -34,6 +26,13 @@ public class User extends AbstractEntity {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "role")
+    private RoleName role;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "user_specialty")
+    private SpecialtyName specialty;
 
     @OneToMany(mappedBy = "creator")
     private Set<Ticket> createdTickets = new HashSet<>();
@@ -69,6 +68,15 @@ public class User extends AbstractEntity {
         this.username = username;
         this.password = password;
         this.email = email;
+    }
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public RoleName getRole() {
@@ -119,13 +127,6 @@ public class User extends AbstractEntity {
         this.lastName = lastName;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public Set<Ticket> getCreatedTickets() {
         return createdTickets;

@@ -74,6 +74,7 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest request) {
-        return request.getHeader(authorizationHeader).split(" ")[1];
+        return request.getHeader(authorizationHeader) == null ? null :
+                request.getHeader(authorizationHeader).split(" ")[1];
     }
 }

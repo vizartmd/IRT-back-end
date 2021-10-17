@@ -52,7 +52,6 @@ class ActionServiceImpl implements ActionService {
         return actionDao.findAll();
     }
 
-
     @Override
     public List<Action> findAllActionsByTicketId(Long id) {
         return actionDao.findAllActionsByTicketId(id);
@@ -65,6 +64,4 @@ class ActionServiceImpl implements ActionService {
         actionToChange.setPriority(priority);
         return actionDao.update(actionToChange);
     }
-
-
 }

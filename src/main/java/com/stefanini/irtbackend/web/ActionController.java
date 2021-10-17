@@ -57,6 +57,4 @@ public class ActionController {
     ResponseEntity<Action> changePriority(@RequestBody Long action_id, PriorityName priority) {
         return ResponseEntity.ok(actionService.changePriority(action_id, priority));
     }
-
-
 }

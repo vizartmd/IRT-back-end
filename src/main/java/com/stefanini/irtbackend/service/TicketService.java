@@ -16,5 +16,4 @@ public interface TicketService {
     void deleteById(Long id);
 
     List<Ticket> findAll();
-
 }

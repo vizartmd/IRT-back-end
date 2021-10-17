@@ -4,10 +4,10 @@ import com.stefanini.irtbackend.config.security.jwt.exception.JwtAuthenticationE
 import com.stefanini.irtbackend.domain.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice(basePackages = "com.stefanini.irtbackend.web")
+@RestControllerAdvice(basePackages = "com.stefanini.irtbackend.web")
 public class GlobalControllerAdvice {
 
     @ExceptionHandler(value = NotFoundException.class)
@@ -19,5 +19,4 @@ public class GlobalControllerAdvice {
     public ResponseEntity<ErrorResponse> handleJwtAuthenticationException(JwtAuthenticationException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(e.getMessage()));
     }
-
 }
