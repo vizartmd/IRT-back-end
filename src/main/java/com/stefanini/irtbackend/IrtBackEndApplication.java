@@ -1,7 +1,6 @@
 package com.stefanini.irtbackend;
 
 import com.stefanini.irtbackend.dao.UserDao;
-import com.stefanini.irtbackend.entity.User;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +13,7 @@ public class IrtBackEndApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(IrtBackEndApplication.class, args);
+
     }
 
     @Bean

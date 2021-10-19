@@ -2,7 +2,10 @@ package com.stefanini.irtbackend.controller;
 
 import com.stefanini.irtbackend.entity.User;
 import com.stefanini.irtbackend.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -13,12 +16,16 @@ import java.util.Map;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+    private final UserDetailsService userDetailsService;
 
-    public UserController(UserService userService) {
+    @Autowired
+    public UserController(UserService userService, UserDetailsService userDetailsService) {
         this.userService = userService;
+        this.userDetailsService = userDetailsService;
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
     ResponseEntity<List<User>> findAll() {
         return ResponseEntity.ok(userService.findAll());
     }
@@ -30,7 +37,7 @@ public class UserController {
 
     @PutMapping("/userName")
     public User getUserByUsername(@RequestBody Map<String, String> request) {
-        return (User) userService.loadUserByUsername(request.get("userName"));
+        return (User) userDetailsService.loadUserByUsername(request.get("userName"));
     }
 
     @PostMapping

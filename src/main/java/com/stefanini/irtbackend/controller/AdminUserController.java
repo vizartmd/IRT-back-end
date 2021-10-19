@@ -12,9 +12,9 @@ import java.util.List;
 public class AdminUserController {
 
     private static final List<User> USERS = Arrays.asList(
-            new User(1l,"James Bond"),
-            new User(2l,"Maria Jones"),
-            new User(3l,"Anna Smith")
+//            new User(1l,"James Bond"),
+//            new User(2l,"Maria Jones"),
+//            new User(3l,"Anna Smith")
     );
 
     @GetMapping

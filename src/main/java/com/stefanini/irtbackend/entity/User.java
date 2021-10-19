@@ -1,26 +1,17 @@
 package com.stefanini.irtbackend.entity;
 
-import com.stefanini.irtbackend.security.UserRole;
 import com.stefanini.irtbackend.entity.enums.Specialty;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.stefanini.irtbackend.security.UserRole;
 
+import javax.management.relation.Role;
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+
 @Entity
 @Table(name = "user")
-public class User extends AbstractEntity implements UserDetails {
-
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "role")
-    private UserRole role;
-
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "user_specialty")
-    private Specialty specialty;
+public class User extends AbstractEntity {
 
     @Column(name = "first_name")
     private String firstName;
@@ -37,18 +28,18 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Transient
-    private Set<? extends GrantedAuthority> grantedAuthorities;
-    private boolean isAccountNonExpired;
-    private boolean isAccountNonLocked;
-    private boolean isCredentialsNonExpired;
-    private boolean isEnabled;
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "role")
+    private UserRole role;
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "user_specialty")
+    private Specialty specialty;
 
     @OneToMany(mappedBy = "creator")
     private Set<Ticket> createdTickets = new HashSet<>();
 
-    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(name = "developer_ticket",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "ticket_id"))
@@ -58,61 +49,48 @@ public class User extends AbstractEntity implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
+                ", role=" + role +
+                ", specialty=" + specialty +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", userName='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", createdTickets=" + createdTickets +
+                ", processingTickets=" + processingTickets +
                 '}';
     }
 
     public User() {
     }
 
-    public User(Long id, String username){
-        this.id = id;
+    public User(String firstName, String lastName, String username, String password, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public User(String username,
-                           String password,
-                           Set<? extends GrantedAuthority> grantedAuthorities,
-                           boolean isAccountNonExpired,
-                           boolean isAccountNonLocked,
-                           boolean isCredentialsNonExpired,
-                           boolean isEnabled) {
-        this.grantedAuthorities = grantedAuthorities;
-        this.username = username;
-        this.password = password;
-        this.isAccountNonExpired = isAccountNonExpired;
-        this.isAccountNonLocked = isAccountNonLocked;
-        this.isCredentialsNonExpired = isCredentialsNonExpired;
-        this.isEnabled = isEnabled;
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 
     public String getPassword() {
         return password;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return grantedAuthorities;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return isAccountNonExpired;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return isAccountNonLocked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return isCredentialsNonExpired;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return isEnabled;
     }
 
     public void setPassword(String password) {
@@ -149,14 +127,6 @@ public class User extends AbstractEntity implements UserDetails {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String userName) {
-        this.username = userName;
     }
 
     public Set<Ticket> getCreatedTickets() {

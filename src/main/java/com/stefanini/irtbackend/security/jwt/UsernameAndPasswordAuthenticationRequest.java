@@ -1,4 +1,4 @@
-package com.stefanini.irtbackend.jwt;
+package com.stefanini.irtbackend.security.jwt;
 
 public class UsernameAndPasswordAuthenticationRequest {
     private String username;

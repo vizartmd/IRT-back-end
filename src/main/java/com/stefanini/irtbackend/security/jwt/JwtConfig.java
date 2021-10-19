@@ -1,8 +1,12 @@
-package com.stefanini.irtbackend.jwt;
+package com.stefanini.irtbackend.security.jwt;
 
 import com.google.common.net.HttpHeaders;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+
+import javax.crypto.SecretKey;
 
 @Component
 @ConfigurationProperties(prefix = "application.jwt")
@@ -13,6 +17,11 @@ public class JwtConfig {
     private Integer tokenExpirationAfterDays;
 
     public JwtConfig() {
+    }
+
+    @Bean
+    public SecretKey getSecretKeyBytes() {
+        return Keys.hmacShaKeyFor(getSecretKey().getBytes());
     }
 
     public String getSecretKey() {

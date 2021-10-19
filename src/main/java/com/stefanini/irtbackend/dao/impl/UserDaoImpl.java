@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.Optional;
 
-//@Repository
+@Repository
 public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 
     @PersistenceContext

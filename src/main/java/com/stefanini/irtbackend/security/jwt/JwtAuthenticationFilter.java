@@ -1,4 +1,4 @@
-package com.stefanini.irtbackend.jwt;
+package com.stefanini.irtbackend.security.jwt;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,15 +18,15 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
     private final JwtConfig jwtConfig;
     private final SecretKey secretKey;
 
-    public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authenticationManager,
-                                                      JwtConfig jwtConfig,
-                                                      SecretKey secretKey) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager,
+                                   JwtConfig jwtConfig,
+                                   SecretKey secretKey) {
         this.authenticationManager = authenticationManager;
         this.jwtConfig = jwtConfig;
         this.secretKey = secretKey;

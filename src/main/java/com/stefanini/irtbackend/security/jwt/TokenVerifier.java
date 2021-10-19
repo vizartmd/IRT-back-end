@@ -1,7 +1,7 @@
-package com.stefanini.irtbackend.jwt;
+package com.stefanini.irtbackend.security.jwt;
 
 import com.google.common.base.Strings;
-import com.stefanini.irtbackend.jwt.JwtConfig;
+import com.stefanini.irtbackend.security.jwt.JwtConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
