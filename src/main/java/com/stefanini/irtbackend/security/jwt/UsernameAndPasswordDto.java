@@ -1,10 +1,10 @@
 package com.stefanini.irtbackend.security.jwt;
 
-public class UsernameAndPasswordAuthenticationRequest {
+public class UsernameAndPasswordDto {
     private String username;
     private String password;
 
-    public UsernameAndPasswordAuthenticationRequest() {
+    public UsernameAndPasswordDto() {
     }
 
     public String getUsername() {
