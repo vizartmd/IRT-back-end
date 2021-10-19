@@ -14,6 +14,7 @@ import java.util.Map;
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -24,32 +25,32 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('developers:read')")
+    @PreAuthorize("hasAuthority('users:read')")
     ResponseEntity<User> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(userService.findById(id));
     }
 
     @PutMapping("/userName")
-    @PreAuthorize("hasAuthority('developers:read')")
+    @PreAuthorize("hasAuthority('users:read')")
     public User getUserByUsername(@RequestBody Map<String, String> request) {
         return userService.findByUsername(request.get("userName"));
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('developers:write')")
+    @PreAuthorize("hasAuthority('users:write')")
     ResponseEntity<User> create(@RequestBody User user) {
         User createdUser = userService.create(user);
         return ResponseEntity.created(URI.create("/users/" + createdUser.getId())).body(createdUser);
     }
 
     @PutMapping
-    @PreAuthorize("hasAuthority('developers:write')")
+    @PreAuthorize("hasAuthority('users:write')")
     ResponseEntity<User> update(@RequestBody User user) {
         return ResponseEntity.ok(userService.update(user));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('developers:write')")
+    @PreAuthorize("hasAuthority('users:write')")
     ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         userService.deleteById(id);
         return ResponseEntity.ok().build();
