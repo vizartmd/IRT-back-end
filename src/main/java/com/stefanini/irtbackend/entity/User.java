@@ -1,9 +1,7 @@
 package com.stefanini.irtbackend.entity;
 
 import com.stefanini.irtbackend.entity.enums.Specialty;
-import com.stefanini.irtbackend.security.UserRole;
-
-import javax.management.relation.Role;
+import com.stefanini.irtbackend.entity.enums.Role;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,7 +28,7 @@ public class User extends AbstractEntity {
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
-    private UserRole role;
+    private Role role;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "user_specialty")
@@ -81,11 +79,11 @@ public class User extends AbstractEntity {
         this.username = username;
     }
 
-    public UserRole getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(UserRole role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

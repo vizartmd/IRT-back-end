@@ -1,8 +1,6 @@
 package com.stefanini.irtbackend.service;
 
 import com.stefanini.irtbackend.entity.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,4 +18,6 @@ public interface UserService {
     void deleteById(Long id);
 
     List<User> findAll();
+
+    Optional<User> findByUsername(String username);
 }

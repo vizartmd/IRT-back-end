@@ -7,8 +7,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
-@Service
+@Service("userServiceImpl")
 class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
@@ -50,5 +51,10 @@ class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return userDao.findAll();
+    }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
+        return userDao.selectUserByUsername(username);
     }
 }

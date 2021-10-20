@@ -25,33 +25,38 @@ public class UserController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PreAuthorize("hasAuthority('users:read')")
     ResponseEntity<List<User>> findAll() {
         return ResponseEntity.ok(userService.findAll());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('users:read')")
     ResponseEntity<User> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(userService.findById(id));
     }
 
     @PutMapping("/userName")
+    @PreAuthorize("hasAuthority('users:read')")
     public User getUserByUsername(@RequestBody Map<String, String> request) {
         return (User) userDetailsService.loadUserByUsername(request.get("userName"));
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('users:write')")
     ResponseEntity<User> create(@RequestBody User user) {
         User createdUser = userService.create(user);
         return ResponseEntity.created(URI.create("/users/" + createdUser.getId())).body(createdUser);
     }
 
     @PutMapping
+    @PreAuthorize("hasAuthority('users:write')")
     ResponseEntity<User> update(@RequestBody User user) {
         return ResponseEntity.ok(userService.update(user));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('users:write')")
     ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         userService.deleteById(id);
         return ResponseEntity.ok().build();
