@@ -2,12 +2,14 @@ package com.stefanini.irtbackend.service.impl;
 
 import com.stefanini.irtbackend.config.security.jwt.JwtTokenProvider;
 import com.stefanini.irtbackend.domain.dto.AuthenticationRequestDTO;
+import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.domain.entity.User;
 import com.stefanini.irtbackend.service.AuthenticationService;
 import com.stefanini.irtbackend.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
 
@@ -25,9 +27,12 @@ class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     @Transactional
-    public String authenticate(AuthenticationRequestDTO request) {
+    public UserDto authenticate(AuthenticationRequestDTO request) {
         User user = userService.findByUsername(request.getUsername());
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        return jwtTokenProvider.createToken(request.getUsername(), user.getRole().name());
+        String token = jwtTokenProvider.createToken(request.getUsername(), user.getRole().name());
+        UserDto userDto = UserDto.from(user);
+        userDto.setAccessToken(token);
+        return userDto;
     }
 }
