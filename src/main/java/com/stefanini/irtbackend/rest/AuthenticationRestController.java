@@ -1,5 +1,7 @@
 package com.stefanini.irtbackend.rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stefanini.irtbackend.entity.User;
 import com.stefanini.irtbackend.sequrity.jwt.JwtTokenProvider;
 import com.stefanini.irtbackend.service.impl.UserServiceImpl;
@@ -10,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +22,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/auth")
 public class AuthenticationRestController {
 
     private final AuthenticationManager authenticationManager;
@@ -32,18 +34,29 @@ public class AuthenticationRestController {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> authenticate(AuthenticationRequestDTO request) {
+//    @PostMapping("/login")
+    @PostMapping("/login/{formData}")
+//    public ResponseEntity<?> authenticate(AuthenticationRequestDTO request) {
+    public ResponseEntity<?> authenticate(@PathVariable String formData) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        AuthenticationRequestDTO loginUserDto = objectMapper.readValue(formData, AuthenticationRequestDTO.class);
         try{
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-            User user = userService.findByEmail(request.getEmail());
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUserDto.getEmail(), loginUserDto.getPassword()));
+            User user = userService.findByEmail(loginUserDto.getEmail());
             if (user == null) {
                 throw new UsernameNotFoundException("User doesn't exists");
             }
-            String token = jwtTokenProvider.createToken(request.getEmail(), user.getRole().name());
+            String token = jwtTokenProvider.createToken(loginUserDto.getEmail(), user.getRole().name());
             Map<Object, Object> response = new HashMap<>();
-            response.put("email", request.getEmail());
+            response.put("createdDate", user.getCreatedDate());
+            response.put("email", user.getEmail());
+            response.put("firstName", user.getFirstName());
+            response.put("lastName", user.getLastName());
+            response.put("userName", user.getUserName());
             response.put("token", token);
+            response.put("role", user.getRole().name());
+            response.put("specialty", user.getSpecialty());
+            response.put("userStatus", user.getUserStatus());
 
             return ResponseEntity.ok(response);
         }catch (AuthenticationException exception) {

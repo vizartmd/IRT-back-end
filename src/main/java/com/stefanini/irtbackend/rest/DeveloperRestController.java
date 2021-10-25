@@ -32,7 +32,7 @@ public class DeveloperRestController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('developers:write')")
+    @PreAuthorize("hasRole('ADMIN')")
     public Developer create(@RequestBody Developer developer) {
         this.DEVELOPERS.add(developer);
         return developer;
