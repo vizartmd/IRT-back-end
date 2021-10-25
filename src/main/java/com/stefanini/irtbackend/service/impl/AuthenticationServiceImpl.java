@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
+import java.util.function.DoubleToIntFunction;
 
 @Service
 class AuthenticationServiceImpl implements AuthenticationService {
@@ -28,7 +29,10 @@ class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     @Transactional
     public UserDto authenticate(AuthenticationRequestDTO request) {
+        System.out.println("request: " + request);
+        System.out.println("request.getUsername(): " + request.getUsername());
         User user = userService.findByUsername(request.getUsername());
+        System.out.println("user: " + user);
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         String token = jwtTokenProvider.createToken(request.getUsername(), user.getRole().name());
         UserDto userDto = UserDto.from(user);

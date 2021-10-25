@@ -5,14 +5,12 @@ import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/api/auth")
 public class AuthenticationRestController {
@@ -22,6 +20,7 @@ public class AuthenticationRestController {
         this.authenticationService = authenticationService;
     }
 
+    @CrossOrigin
     @PostMapping("/login")
     public ResponseEntity<UserDto> authenticate(@RequestBody AuthenticationRequestDTO request) {
         return ResponseEntity.ok(authenticationService.authenticate(request));

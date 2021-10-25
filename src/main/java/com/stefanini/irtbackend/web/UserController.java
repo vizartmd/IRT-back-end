@@ -10,6 +10,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -19,6 +20,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @CrossOrigin
     @GetMapping
     ResponseEntity<List<User>> findAll() {
         return ResponseEntity.ok(userService.findAll());
