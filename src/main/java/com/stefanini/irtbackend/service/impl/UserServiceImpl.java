@@ -48,11 +48,13 @@ public class UserServiceImpl implements UserService {
         return userDao.findAll();
     }
 
-    public User findByUserName(String userName) {
-        return userDao.findByUserName(userName);
-    }
-
     public User findByEmail(String email) {
         return userDao.findByEmail(email);
+    }
+
+    @Override
+    @Transactional
+    public User findByUsername(String userName) {
+        return userDao.findByUsername(userName);
     }
 }

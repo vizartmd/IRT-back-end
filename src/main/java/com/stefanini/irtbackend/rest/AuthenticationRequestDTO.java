@@ -1,15 +1,7 @@
 package com.stefanini.irtbackend.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@JsonPropertyOrder({"email", "password"})
 public class AuthenticationRequestDTO {
 
     @JsonProperty("email")
@@ -17,5 +9,37 @@ public class AuthenticationRequestDTO {
 
     @JsonProperty("password")
     private String password;
+
+    public AuthenticationRequestDTO() {
+    }
+
+    public AuthenticationRequestDTO(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "AuthenticationRequestDTO{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
 

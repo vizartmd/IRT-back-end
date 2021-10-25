@@ -27,6 +27,7 @@ public class UserController {
 //    ResponseEntity<List<User>> findAll() {
 //        return ResponseEntity.ok(userService.findAll());
 //    }
+    @CrossOrigin
     @GetMapping("/users")
     public ResponseEntity<Iterable<User>> getAllUsers() throws IOException {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);

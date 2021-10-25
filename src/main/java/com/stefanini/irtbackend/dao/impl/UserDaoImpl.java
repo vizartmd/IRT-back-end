@@ -21,7 +21,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 
     // TODO
     @Override
-    public User findByUserName(String userName) {
+    public User findByUsername(String userName) {
         List<User> users = findAll();
         for (User u : users) {
             System.out.println("User from findByUserName(): " + u);
@@ -39,7 +39,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
             System.out.println("User from findByEmail(): " + u);
         }
         User user = users.stream().filter(u -> u.getEmail().equals(email)).findFirst().orElse(null);
-        System.out.println("User after filter users.stream().filter: " + user);
+        System.out.println("User after filter users.stream().filter: " + user.toString());
         return user;
     }
 }

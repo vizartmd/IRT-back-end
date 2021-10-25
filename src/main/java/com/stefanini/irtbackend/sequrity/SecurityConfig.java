@@ -15,6 +15,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -23,9 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtConfigurer jwtConfigurer;
 
-    private static final String ADMIN_ENDPOINT = "/api/v1/admin/**";
-    private static final String LOGIN_ENDPOINT = "/api/v1/auth/login";
-
     public SecurityConfig(JwtConfigurer jwtConfigurer) {
         this.jwtConfigurer = jwtConfigurer;
     }
@@ -33,12 +35,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .cors().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login/**").permitAll()
-                .antMatchers(LOGIN_ENDPOINT).permitAll()
+                .antMatchers("/auth/login").permitAll()
+                .antMatchers("/auth/login/**").permitAll()
+                .antMatchers("/api/auth/login/**").permitAll()
+//                .antMatchers("/admin/**").hasRole(Role.ADMIN.name())
                 .antMatchers("/admin/**").permitAll()
 //                .antMatchers(LOGIN_ENDPOINT).permitAll()
                 .anyRequest()
