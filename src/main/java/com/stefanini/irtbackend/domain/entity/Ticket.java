@@ -37,7 +37,8 @@ public class Ticket extends AbstractEntity {
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "developer_id")
     private User developer;
 
     public Ticket(User creator, String title, String description, SpecialtyName specialty,

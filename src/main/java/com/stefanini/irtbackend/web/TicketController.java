@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/tickets")
 public class TicketController {
@@ -18,6 +19,7 @@ public class TicketController {
         this.ticketService = ticketService;
     }
 
+    @CrossOrigin
     @GetMapping
     ResponseEntity<List<Ticket>> findAll() {
         return ResponseEntity.ok(ticketService.findAll());

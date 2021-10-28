@@ -2,6 +2,8 @@ package com.stefanini.irtbackend.dao.impl;
 
 import com.stefanini.irtbackend.dao.GenericDao;
 import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -53,6 +55,7 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 
     @Override
     public T update(T t) {
+        System.out.println("In GenericDaoImpl update()");
         return entityManager.merge(t);
     }
 

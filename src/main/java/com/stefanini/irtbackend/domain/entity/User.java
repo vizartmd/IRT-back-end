@@ -70,6 +70,15 @@ public class User extends AbstractEntity {
         this.email = email;
     }
 
+    public User(String firstName, String lastName, String username, String password, String email, RoleName role, SpecialtyName specialty) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.specialty = specialty;
+    }
 
     public String getUsername() {
         return username;
