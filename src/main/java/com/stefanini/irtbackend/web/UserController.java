@@ -89,8 +89,9 @@ public class UserController {
     @CrossOrigin
     @DeleteMapping("/{id}")
 //    @PreAuthorize("hasAuthority('users:write')")
-    ResponseEntity<Void> delete(@PathVariable("id") Long id) {
-        userService.deleteById(id);
+    ResponseEntity<Void> delete(@PathVariable("id") String id) {
+        Long _id = Long.parseLong(id.replaceAll("\\D+",""));
+        userService.deleteById(_id);
         return ResponseEntity.ok().build();
     }
 
