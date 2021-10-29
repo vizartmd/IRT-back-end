@@ -29,7 +29,7 @@ class AuthenticationServiceImpl implements AuthenticationService {
     @Transactional
     public UserDto authenticate(AuthenticationRequestDTO request) {
         User user = userService.findByEmail(request.getEmail());
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), request.getPassword()));
         String token = jwtTokenProvider.createToken(user.getUsername(), user.getRole().name());
         UserDto userDto = UserDto.from(user);
         userDto.setAccessToken(token);
