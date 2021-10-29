@@ -1,5 +1,6 @@
 package com.stefanini.irtbackend.config.security;
 
+import com.stefanini.irtbackend.dao.UserDao;
 import com.stefanini.irtbackend.domain.entity.User;
 import com.stefanini.irtbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,16 +12,16 @@ import org.springframework.stereotype.Service;
 @Service("userDetailsServiceImpl")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserService userService;
+    private final UserDao userDao;
 
     @Autowired
-    public UserDetailsServiceImpl(UserService userService) {
-        this.userService = userService;
+    public UserDetailsServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.findByUsername(username);
+        User user = userDao.findByUsername(username);
         return SecurityUser.fromUser(user);
     }
 }
