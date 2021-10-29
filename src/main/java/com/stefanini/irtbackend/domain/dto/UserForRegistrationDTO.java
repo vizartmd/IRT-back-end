@@ -16,7 +16,8 @@ public class UserForRegistrationDTO {
     public UserForRegistrationDTO() {
     }
 
-    public UserForRegistrationDTO(String id, String firstName, String lastName, String userName, String email, String password, RoleName role, SpecialtyName specialty) {
+    public UserForRegistrationDTO(String id, String firstName, String lastName, String userName,
+                                  String email, String password, RoleName role, SpecialtyName specialty) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,12 +28,23 @@ public class UserForRegistrationDTO {
         this.specialty = specialty;
     }
 
-    public UserForRegistrationDTO(String firstName, String lastName, String userName, String email, String password, RoleName role, SpecialtyName specialty) {
+    public UserForRegistrationDTO(String firstName, String lastName, String userName, String email,
+                                  String password, RoleName role, SpecialtyName specialty) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
         this.email = email;
         this.password = password;
+        this.role = role;
+        this.specialty = specialty;
+    }
+
+    public UserForRegistrationDTO(String firstName, String lastName, String userName, String email,
+                                  RoleName role, SpecialtyName specialty) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
+        this.email = email;
         this.role = role;
         this.specialty = specialty;
     }
