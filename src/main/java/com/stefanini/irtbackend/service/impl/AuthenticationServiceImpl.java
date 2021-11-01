@@ -8,8 +8,8 @@ import com.stefanini.irtbackend.service.AuthenticationService;
 import com.stefanini.irtbackend.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
 
@@ -28,9 +28,9 @@ class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     @Transactional
     public UserDto authenticate(AuthenticationRequestDTO request) {
-        User user = userService.findByUsername(request.getUsername());
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        String token = jwtTokenProvider.createToken(request.getUsername(), user.getRole().name());
+        User user = userService.findByEmail(request.getEmail());
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), request.getPassword()));
+        String token = jwtTokenProvider.createToken(user.getUsername(), user.getRole().name());
         UserDto userDto = UserDto.from(user);
         userDto.setAccessToken(token);
         return userDto;
