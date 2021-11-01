@@ -7,7 +7,6 @@ import com.stefanini.irtbackend.domain.entity.enums.SpecialtyName;
 import java.util.Objects;
 
 public class UserDto {
-    private Long id;
     private String firstName;
     private String lastName;
     private String username;
@@ -18,7 +17,6 @@ public class UserDto {
 
     public static UserDto from(User user) {
         UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setUsername(user.getUsername());
@@ -28,39 +26,20 @@ public class UserDto {
         return userDto;
     }
 
-    public UserDto() {
-    }
-
-    public UserDto(Long id, String firstName, String lastName, String username, String email, RoleName role, SpecialtyName specialty, String accessToken) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-        this.email = email;
-        this.role = role;
-        this.specialty = specialty;
-        this.accessToken = accessToken;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserDto userDto = (UserDto) o;
-        return Objects.equals(id, userDto.id) && Objects.equals(firstName, userDto.firstName) && Objects.equals(lastName, userDto.lastName) && Objects.equals(username, userDto.username) && Objects.equals(email, userDto.email) && role == userDto.role && specialty == userDto.specialty && Objects.equals(accessToken, userDto.accessToken);
+        return Objects.equals(firstName, userDto.firstName) && Objects.equals(lastName, userDto.lastName) && Objects.equals(username, userDto.username) && Objects.equals(email, userDto.email) && role == userDto.role && specialty == userDto.specialty && Objects.equals(accessToken, userDto.accessToken);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, username, email, role, specialty, accessToken);
+        return Objects.hash(firstName, lastName, username, email, role, specialty, accessToken);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public UserDto() {
     }
 
     public String getFirstName() {
@@ -116,6 +95,16 @@ public class UserDto {
     }
 
     public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public UserDto(String firstName, String lastName, String username, String email, RoleName role, SpecialtyName specialty, String accessToken) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.email = email;
+        this.role = role;
+        this.specialty = specialty;
         this.accessToken = accessToken;
     }
 }
