@@ -29,6 +29,8 @@ class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     @Transactional
     public UserDto authenticate(AuthenticationRequestDTO request) {
+        System.out.println("AuthenticationRequestDTO: " + request.toString());
+        System.out.println("userName: " + request.getUsername());
         User user = userService.findByUsername(request.getUsername());
         System.out.println("user: " + user);
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));

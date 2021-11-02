@@ -12,21 +12,18 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@CrossOrigin
 @RestController
 @RequestMapping(value = "/api/auth")
 public class AuthenticationRestController {
     private final AuthenticationService authenticationService;
-    private final PasswordEncoder bc;
 
-    public AuthenticationRestController(AuthenticationService authenticationService, PasswordEncoder bc) {
+    public AuthenticationRestController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
-        this.bc = bc;
     }
 
-    @CrossOrigin
     @PostMapping("/login")
     public ResponseEntity<UserDto> authenticate(@RequestBody AuthenticationRequestDTO request) {
+        System.out.println("AuthenticationRequestDTO: " + request.toString());
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 

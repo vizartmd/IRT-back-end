@@ -39,6 +39,7 @@ public class UserController {
     @GetMapping("/{id}")
 //    @PreAuthorize("hasAuthority('users:read')")
     ResponseEntity<User> findById(@PathVariable("id") String id) {
+        System.out.println("id: " + id);
         String _id = id.replaceAll("\\D+","");
         System.out.println("id: " + id);
         return ResponseEntity.ok(userService.findById(Long.parseLong(_id)));
