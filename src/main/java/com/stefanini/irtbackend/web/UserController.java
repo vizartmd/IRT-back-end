@@ -1,5 +1,6 @@
 package com.stefanini.irtbackend.web;
 
+import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.domain.entity.User;
 import com.stefanini.irtbackend.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('users:read')")
+    //@PreAuthorize("hasAuthority('users:read')")
     ResponseEntity<User> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(userService.findById(id));
     }
@@ -44,10 +45,10 @@ public class UserController {
         return ResponseEntity.created(URI.create("/users/" + createdUser.getId())).body(createdUser);
     }
 
-    @PutMapping
-    @PreAuthorize("hasAuthority('users:write')")
-    ResponseEntity<User> update(@RequestBody User user) {
-        return ResponseEntity.ok(userService.update(user));
+    @PutMapping("/{id}")
+    //@PreAuthorize("hasAuthority('users:write')")
+    ResponseEntity<User> update(@RequestBody UserDto userDto) {
+        return ResponseEntity.ok(userService.updateWithDto(userDto));
     }
 
     @DeleteMapping("/{id}")
