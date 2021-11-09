@@ -1,8 +1,5 @@
 package com.stefanini.irtbackend.web;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.stefanini.irtbackend.domain.dto.AuthenticationRequestDTO;
 import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.domain.dto.UserForRegistrationDTO;
 import com.stefanini.irtbackend.domain.entity.User;
@@ -38,11 +35,14 @@ public class UserController {
     @CrossOrigin
     @GetMapping("/{id}")
 //    @PreAuthorize("hasAuthority('users:read')")
-    ResponseEntity<User> findById(@PathVariable("id") String id) {
-        System.out.println("id: " + id);
-        String _id = id.replaceAll("\\D+","");
-        System.out.println("id: " + id);
-        return ResponseEntity.ok(userService.findById(Long.parseLong(_id)));
+//    ResponseEntity<User> findById(@PathVariable("id") String id) {
+//        System.out.println("id: " + id);
+//        String _id = id.replaceAll("\\D+","");
+//        System.out.println("id: " + id);
+//        return ResponseEntity.ok(userService.findById(Long.parseLong(_id)));
+    //@PreAuthorize("hasAuthority('users:read')")
+    ResponseEntity<User> findById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(userService.findById(id));
     }
 
 //    @PutMapping("/userName")
@@ -68,23 +68,27 @@ public class UserController {
         return ResponseEntity.created(URI.create("/users/" + createdUser.getId())).body(createdUser);
     }
 
-    @CrossOrigin
-    @PutMapping("/update")
+//    @CrossOrigin
+//    @PutMapping("/update")
 //    @PreAuthorize("hasAuthority('users:write')")
-    ResponseEntity<User> update(@RequestBody UserForRegistrationDTO userDto) {
+//    ResponseEntity<User> update(@RequestBody UserForRegistrationDTO userDto) {
 //        System.out.println("userDto.toString() : " + userDto.toString());
-        Long id = Long.parseLong(userDto.getId().replaceAll("\\D+",""));
-        User userFromDb = userService.findById(id);
-        userFromDb.setFirstName(userDto.getFirstName());
-        userFromDb.setLastName(userDto.getLastName());
-        userFromDb.setUsername(userDto.getUserName());
-        userFromDb.setEmail(userDto.getEmail());
-        userFromDb.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        userFromDb.setRole(userDto.getRole());
-        userFromDb.setSpecialty(userDto.getSpecialty());
-        System.out.println("updatedUser.toString() : " + userFromDb.toString());
-        User userAfterUpdate = userService.update(userFromDb);
-        return ResponseEntity.created(URI.create("/users/" + userAfterUpdate.getId())).body(userAfterUpdate);
+//        Long id = Long.parseLong(userDto.getId().replaceAll("\\D+",""));
+//        User userFromDb = userService.findById(id);
+//        userFromDb.setFirstName(userDto.getFirstName());
+//        userFromDb.setLastName(userDto.getLastName());
+//        userFromDb.setUsername(userDto.getUserName());
+//        userFromDb.setEmail(userDto.getEmail());
+//        userFromDb.setPassword(passwordEncoder.encode(userDto.getPassword()));
+//        userFromDb.setRole(userDto.getRole());
+//        userFromDb.setSpecialty(userDto.getSpecialty());
+//        System.out.println("updatedUser.toString() : " + userFromDb.toString());
+//        User userAfterUpdate = userService.update(userFromDb);
+//        return ResponseEntity.created(URI.create("/users/" + userAfterUpdate.getId())).body(userAfterUpdate);
+    @PutMapping("/{id}")
+    //@PreAuthorize("hasAuthority('users:write')")
+    ResponseEntity<User> update(@RequestBody UserDto userDto) {
+        return ResponseEntity.ok(userService.updateWithDto(userDto));
     }
 
     @CrossOrigin

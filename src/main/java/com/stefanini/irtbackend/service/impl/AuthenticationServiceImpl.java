@@ -8,8 +8,8 @@ import com.stefanini.irtbackend.service.AuthenticationService;
 import com.stefanini.irtbackend.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
 import java.util.function.DoubleToIntFunction;
@@ -30,11 +30,11 @@ class AuthenticationServiceImpl implements AuthenticationService {
     @Transactional
     public UserDto authenticate(AuthenticationRequestDTO request) {
         System.out.println("AuthenticationRequestDTO: " + request.toString());
-        System.out.println("userName: " + request.getUsername());
-        User user = userService.findByUsername(request.getUsername());
+        System.out.println("userName: " + request.getEmail());
+        User user = userService.findByUsername(request.getEmail());
         System.out.println("user: " + user);
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        String token = jwtTokenProvider.createToken(request.getUsername(), user.getRole().name());
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), request.getPassword()));
+        String token = jwtTokenProvider.createToken(user.getUsername(), user.getRole().name());
         UserDto userDto = UserDto.from(user);
         userDto.setAccessToken(token);
         return userDto;
