@@ -44,6 +44,7 @@ class UserServiceImpl implements UserService {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
+        user.setSpecialty(userDto.getSpecialty());
 
         return userDao.update(user);
     }
