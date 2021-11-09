@@ -1,5 +1,6 @@
 package com.stefanini.irtbackend.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stefanini.irtbackend.domain.entity.enums.PriorityName;
 import com.stefanini.irtbackend.domain.entity.enums.SpecialtyName;
 import com.stefanini.irtbackend.domain.entity.enums.StatusName;
@@ -33,10 +34,12 @@ public class Ticket extends AbstractEntity {
     @OneToMany(mappedBy = "ticket")
     private Set<Action> actionHistory = new HashSet<>();
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private User creator;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "developer_id")
     private User developer;
