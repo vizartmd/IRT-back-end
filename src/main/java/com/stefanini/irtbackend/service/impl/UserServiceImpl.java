@@ -2,6 +2,7 @@ package com.stefanini.irtbackend.service.impl;
 
 import com.stefanini.irtbackend.dao.UserDao;
 import com.stefanini.irtbackend.domain.NotFoundException;
+import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.domain.entity.User;
 import com.stefanini.irtbackend.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,6 +32,19 @@ class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public User update(User user) {
+        return userDao.update(user);
+    }
+
+    @Override
+    public User updateWithDto(UserDto userDto) {
+        Long id = userDto.getId();
+        User user = findById(id);
+
+        user.setUsername(userDto.getUsername());
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setEmail(userDto.getEmail());
+
         return userDao.update(user);
     }
 
