@@ -5,6 +5,7 @@ import com.stefanini.irtbackend.domain.NotFoundException;
 import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.domain.entity.User;
 import com.stefanini.irtbackend.service.UserService;
+import org.hibernate.HibernateException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +36,9 @@ class UserServiceImpl implements UserService {
         return userDao.update(user);
     }
 
+    @Transactional
     @Override
-    public User updateWithDto(UserDto userDto) {
+    public User updateWithDto(UserDto userDto){
         Long id = userDto.getId();
         User user = findById(id);
 
@@ -44,6 +46,7 @@ class UserServiceImpl implements UserService {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
+        user.setRole(userDto.getRole());
         user.setSpecialty(userDto.getSpecialty());
 
         return userDao.update(user);

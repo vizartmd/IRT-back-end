@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 public enum RoleName {
     USER(new HashSet<>(Collections.singletonList(Permission.USERS_READ))),
+    DEVELOPER(new HashSet<>(Arrays.asList(Permission.USERS_READ))),
     ADMIN(new HashSet<>(Arrays.asList(Permission.USERS_READ, Permission.USERS_WRITE)));
 
     private final Set<Permission> permissions;
