@@ -3,11 +3,17 @@ package com.stefanini.irtbackend.web;
 import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.domain.entity.User;
 import com.stefanini.irtbackend.service.UserService;
+import org.hibernate.HibernateException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.transaction.UnexpectedRollbackException;
+
+
 
 import java.net.URI;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Map;
 
@@ -47,8 +53,14 @@ public class UserController {
 
     @PutMapping("/{id}")
     //@PreAuthorize("hasAuthority('users:write')")
-    ResponseEntity<User> update(@RequestBody UserDto userDto) {
-        return ResponseEntity.ok(userService.updateWithDto(userDto));
+    ResponseEntity<?> update(@RequestBody UserDto userDto) {
+        User user = null;
+        try {
+            user = (userService.updateWithDto(userDto));
+            return ResponseEntity.ok(user);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Duplicate entry");
+        }
     }
 
     @DeleteMapping("/{id}")
