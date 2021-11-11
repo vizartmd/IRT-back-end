@@ -84,4 +84,9 @@ class UserServiceImpl implements UserService {
     public User findByEmail(String email) {
         return userDao.findByEmail(email).orElseThrow(() -> new NotFoundException("Invalid email [" + email + "]"));
     }
+
+    @Override
+    public List<User> findAllBySpecialty(String specialty) {
+        return userDao.findAllBySpecialty(specialty);
+    }
 }
