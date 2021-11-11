@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.swing.text.html.Option;
+import java.util.Optional;
 
 @Repository
 public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
@@ -27,10 +30,10 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
     }
 
     @Override
-    public User findByEmail(String email) {
-        Query query = entityManager.createQuery("SELECT u FROM User u WHERE u.email=:email");
+    public Optional<User> findByEmail(String email) {
+        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.email=:email", User.class);
         query.setParameter("email", email);
 
-        return (User) query.getSingleResult();
+        return query.getResultList().stream().findFirst();
     }
 }

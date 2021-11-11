@@ -12,12 +12,4 @@ public class IrtBackEndApplication {
         SpringApplication.run(IrtBackEndApplication.class, args);
     }
 
-//    @Bean
-//    public CommandLineRunner init(UserDao userDao) {
-//        return args -> {
-//            System.out.println("IrtBackEndApplication.init");
-//            userDao.create(new User("EEE", "ppp", "ppp", "12345", "ppp@email.com"));
-//        };
-//    }
-
 }

@@ -5,7 +5,6 @@ import com.stefanini.irtbackend.domain.NotFoundException;
 import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.domain.entity.User;
 import com.stefanini.irtbackend.service.UserService;
-import org.hibernate.HibernateException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -83,6 +82,6 @@ class UserServiceImpl implements UserService {
 
     @Override
     public User findByEmail(String email) {
-        return userDao.findByEmail(email);
+        return userDao.findByEmail(email).orElseThrow(() -> new NotFoundException("Invalid email [" + email + "]"));
     }
 }

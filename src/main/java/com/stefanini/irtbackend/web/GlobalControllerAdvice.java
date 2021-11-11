@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.naming.AuthenticationException;
+
 @RestControllerAdvice(basePackages = "com.stefanini.irtbackend.web")
 public class GlobalControllerAdvice {
 
@@ -18,5 +20,15 @@ public class GlobalControllerAdvice {
     @ExceptionHandler(value = JwtAuthenticationException.class)
     public ResponseEntity<ErrorResponse> handleJwtAuthenticationException(JwtAuthenticationException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler(value = AuthenticationException.class)
+    public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException e) {
+        return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler(value = Exception.class)
+    public ResponseEntity<ErrorResponse> handleException(Exception e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(e.getMessage()));
     }
 }
