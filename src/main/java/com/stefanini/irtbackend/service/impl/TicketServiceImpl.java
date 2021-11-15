@@ -66,8 +66,8 @@ class TicketServiceImpl implements TicketService {
             case "BACKLOG":
                 ticket.setStatus(StatusName.BACKLOG);
                 break;
-            case "ASIGNED":
-                ticket.setStatus(StatusName.ASIGNED);
+            case "ASSIGNED":
+                ticket.setStatus(StatusName.ASSIGNED);
                 break;
             case "FINISHED":
                 ticket.setStatus(StatusName.FINISHED);
