@@ -2,10 +2,14 @@ package com.stefanini.irtbackend.web;
 
 import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.domain.entity.User;
+import com.stefanini.irtbackend.domain.entity.enums.RoleName;
+import com.stefanini.irtbackend.domain.entity.enums.SpecialtyName;
 import com.stefanini.irtbackend.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.net.URI;
 import java.util.List;
@@ -21,13 +25,29 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/roles")
+    public ResponseEntity<RoleName[]> getRoleNames() {
+        return ResponseEntity.ok(RoleName.values());
+    }
+
+    @GetMapping("/specialties")
+    public ResponseEntity<SpecialtyName[]> getSpecialtyNames() {
+        return ResponseEntity.ok(SpecialtyName.values());
+    }
+
     @GetMapping
     ResponseEntity<List<User>> findAll() {
         return ResponseEntity.ok(userService.findAll());
     }
+    @GetMapping("/specialty/{specialty}")
+    ResponseEntity<List<User>> findAllBySpecialty(@PathVariable("specialty") String specialty) {
+        return ResponseEntity.ok(userService.findAllBySpecialty(specialty));
+    }
+
+
 
     @GetMapping("/{id}")
-    //@PreAuthorize("hasAuthority('users:read')")
+    @PreAuthorize("hasAuthority('users:read')")
     ResponseEntity<User> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(userService.findById(id));
     }
@@ -46,9 +66,15 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    //@PreAuthorize("hasAuthority('users:write')")
-    ResponseEntity<User> update(@RequestBody UserDto userDto) {
-        return ResponseEntity.ok(userService.updateWithDto(userDto));
+    @PreAuthorize("hasAuthority('users:write')")
+    ResponseEntity<?> update(@RequestBody UserDto userDto) {
+        User user = null;
+        try {
+            user = (userService.updateWithDto(userDto));
+            return ResponseEntity.ok(user);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Duplicate entry");
+        }
     }
 
     @DeleteMapping("/{id}")

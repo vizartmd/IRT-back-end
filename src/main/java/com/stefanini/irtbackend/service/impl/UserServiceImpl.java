@@ -35,8 +35,9 @@ class UserServiceImpl implements UserService {
         return userDao.update(user);
     }
 
+    @Transactional
     @Override
-    public User updateWithDto(UserDto userDto) {
+    public User updateWithDto(UserDto userDto){
         Long id = userDto.getId();
         User user = findById(id);
 
@@ -44,6 +45,7 @@ class UserServiceImpl implements UserService {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
+        user.setRole(userDto.getRole());
         user.setSpecialty(userDto.getSpecialty());
 
         return userDao.update(user);
@@ -80,6 +82,11 @@ class UserServiceImpl implements UserService {
 
     @Override
     public User findByEmail(String email) {
-        return userDao.findByEmail(email);
+        return userDao.findByEmail(email).orElseThrow(() -> new NotFoundException("Invalid email [" + email + "]"));
+    }
+
+    @Override
+    public List<User> findAllBySpecialty(String specialty) {
+        return userDao.findAllBySpecialty(specialty);
     }
 }
