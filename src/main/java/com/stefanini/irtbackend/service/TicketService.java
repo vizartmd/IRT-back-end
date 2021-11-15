@@ -1,6 +1,6 @@
 package com.stefanini.irtbackend.service;
 
-import com.stefanini.irtbackend.domain.dto.TicketDTO;
+import com.stefanini.irtbackend.domain.dto.TicketDto;
 import com.stefanini.irtbackend.domain.entity.Ticket;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public interface TicketService {
 
     List<Ticket> findAll();
 
-    TicketDTO updateTicketStatus(Long id, String status);
+    List<TicketDto> updateTicketStatus(Long id, String status);
 
-    List<TicketDTO> fromListTicketToListTicketDTO(List<Ticket> ticket);
+    List<TicketDto> getListTicketDTO();
 }

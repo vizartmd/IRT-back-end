@@ -1,18 +1,16 @@
 package com.stefanini.irtbackend.web;
 
-import com.stefanini.irtbackend.domain.dto.TicketDTO;
-import com.stefanini.irtbackend.domain.dto.UserDto;
+import com.stefanini.irtbackend.domain.dto.TicketDto;
 import com.stefanini.irtbackend.domain.entity.Ticket;
-import com.stefanini.irtbackend.domain.entity.User;
 import com.stefanini.irtbackend.service.TicketService;
 import com.stefanini.irtbackend.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sun.util.resources.LocaleData;
 
 import java.net.URI;
-import java.sql.SQLOutput;
-import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -28,8 +26,8 @@ public class TicketController {
     }
 
     @GetMapping
-    ResponseEntity<List<TicketDTO>> findAll() {
-        return ResponseEntity.ok(ticketService.fromListTicketToListTicketDTO(ticketService.findAll()));
+    ResponseEntity<List<TicketDto>> findAll() {
+        return ResponseEntity.ok(ticketService.getListTicketDTO());
     }
 
     @GetMapping("/{id}")
@@ -50,7 +48,7 @@ public class TicketController {
     }
 
     @PutMapping("/{id}/{status}")
-    ResponseEntity<TicketDTO> updateTicketStatus(@PathVariable("id") Long id, @PathVariable("status") String status) {
+    ResponseEntity<List<TicketDto>> updateTicketStatus(@PathVariable("id") Long id, @PathVariable("status") String status) {
         System.out.println("in updateTicketStatus, id: " + id + " status: " + status);
         return ResponseEntity.ok(ticketService.updateTicketStatus(id, status));
     }

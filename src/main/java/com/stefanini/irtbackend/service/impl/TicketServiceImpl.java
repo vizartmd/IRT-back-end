@@ -2,14 +2,15 @@ package com.stefanini.irtbackend.service.impl;
 
 import com.stefanini.irtbackend.dao.TicketDao;
 import com.stefanini.irtbackend.domain.NotFoundException;
-import com.stefanini.irtbackend.domain.dto.TicketDTO;
+import com.stefanini.irtbackend.domain.dto.TicketDto;
 import com.stefanini.irtbackend.domain.entity.Ticket;
 import com.stefanini.irtbackend.domain.entity.enums.StatusName;
 import com.stefanini.irtbackend.service.TicketService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import sun.util.resources.LocaleData;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,18 +60,8 @@ class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public TicketDTO updateTicketStatus(Long id, String status) {
+    public List<TicketDto> updateTicketStatus(Long id, String status) {
         Ticket ticket = findById(id);
-        TicketDTO updatedTicket = new TicketDTO();
-        updatedTicket.setCreatedDate(ticket.getCreatedDate().toString());
-        updatedTicket.setId(ticket.getId().toString());
-        updatedTicket.setTitle(ticket.getTitle());
-        updatedTicket.setDescription(ticket.getDescription());
-        updatedTicket.setSpecialty(ticket.getSpecialty().toString());
-        updatedTicket.setStatus(status);
-        updatedTicket.setPriority(ticket.getPriority().toString());
-        updatedTicket.setCreator(ticket.getCreator().getUsername());
-        updatedTicket.setDeveloper(ticket.getDeveloper().toString());
         switch (status) {
             case "BACKLOG":
                 ticket.setStatus(StatusName.BACKLOG);
@@ -83,21 +74,22 @@ class TicketServiceImpl implements TicketService {
                 break;
             case "CLOSED":
                 ticket.setStatus(StatusName.CLOSED);
+                ticket.setClosedDate(LocalDate.now());
                 break;
             default:
-                break;
+                ticketDao.update(ticket);
         }
-        System.out.println("ticket: " + ticket.getCreator().getUsername());
-        ticketDao.update(ticket);
-        return updatedTicket;
+        return getListTicketDTO();
     }
 
     @Override
-    public List<TicketDTO> fromListTicketToListTicketDTO(List<Ticket> tickets) {
-        List<TicketDTO> listTicketDTO = new ArrayList<>();
+    public List<TicketDto> getListTicketDTO() {
+        List<Ticket> tickets = ticketDao.findAll();
+        List<TicketDto> listTicketDto = new ArrayList<>();
         for(int i = 0; i < tickets.size(); i++) {
-            TicketDTO ticketDTO = new TicketDTO();
+            TicketDto ticketDTO = new TicketDto();
             ticketDTO.setCreatedDate(tickets.get(i).getCreatedDate().toString());
+            ticketDTO.setClosedDate(tickets.get(i).getClosedDate().toString());
             ticketDTO.setId(tickets.get(i).getId().toString());
             ticketDTO.setTitle(tickets.get(i).getTitle());
             ticketDTO.setDescription(tickets.get(i).getDescription());
@@ -109,13 +101,12 @@ class TicketServiceImpl implements TicketService {
             if(tickets.get(i).getDeveloper() == null) {
                 developer = "";
             } else {
-                developer = tickets.get(i).getCreator().getUsername();
+                developer = tickets.get(i).getDeveloper().getUsername();
             }
             ticketDTO.setDeveloper(developer);
-            ticketDTO.setDeveloper(tickets.get(i).getDeveloper().getUsername());
-            listTicketDTO.add(ticketDTO);
+            listTicketDto.add(ticketDTO);
         }
-        return listTicketDTO;
+        return listTicketDto;
     }
 
 }

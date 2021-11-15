@@ -1,7 +1,8 @@
 package com.stefanini.irtbackend.domain.dto;
 
-public class TicketDTO {
+public class TicketDto {
     private String createdDate;
+    private String closedDate;
     private String id;
     private String title;
     private String description;
@@ -11,10 +12,10 @@ public class TicketDTO {
     private String creator;
     private String developer;
 
-    public TicketDTO() {
+    public TicketDto() {
     }
 
-    public TicketDTO(String createdDate, String title, String description, String specialty, String priority, String status, String creator, String developer) {
+    public TicketDto(String createdDate, String title, String description, String specialty, String priority, String status, String creator, String developer) {
         this.createdDate = createdDate;
         this.title = title;
         this.description = description;
@@ -25,8 +26,21 @@ public class TicketDTO {
         this.developer = developer;
     }
 
-    public TicketDTO(String createdDate, String id, String title, String description, String specialty, String priority, String status, String creator, String developer) {
+    public TicketDto(String createdDate, String closedDate, String title, String description, String specialty, String priority, String status, String creator, String developer) {
         this.createdDate = createdDate;
+        this.closedDate = closedDate;
+        this.title = title;
+        this.description = description;
+        this.specialty = specialty;
+        this.priority = priority;
+        this.status = status;
+        this.creator = creator;
+        this.developer = developer;
+    }
+
+    public TicketDto(String createdDate, String closedDate, String id, String title, String description, String specialty, String priority, String status, String creator, String developer) {
+        this.createdDate = createdDate;
+        this.closedDate = closedDate;
         this.id = id;
         this.title = title;
         this.description = description;
@@ -43,6 +57,14 @@ public class TicketDTO {
 
     public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public String getClosedDate() {
+        return closedDate;
+    }
+
+    public void setClosedDate(String closedDate) {
+        this.closedDate = closedDate;
     }
 
     public String getId() {
@@ -111,8 +133,9 @@ public class TicketDTO {
 
     @Override
     public String toString() {
-        return "TicketDTO{" +
+        return "TicketDto{" +
                 "createdDate='" + createdDate + '\'' +
+                ", closedDate='" + closedDate + '\'' +
                 ", id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +

@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stefanini.irtbackend.domain.entity.enums.PriorityName;
 import com.stefanini.irtbackend.domain.entity.enums.SpecialtyName;
 import com.stefanini.irtbackend.domain.entity.enums.StatusName;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,44 +46,47 @@ public class Ticket extends AbstractEntity {
     @JoinColumn(name = "developer_id")
     private User developer;
 
-    public Ticket(String title, String description, SpecialtyName specialty, PriorityName priority, StatusName status, User creator, User developer) {
+    @Column(name = "closed_date")
+    private LocalDate closedDate;
+
+    public Ticket(String title, String description, SpecialtyName specialty, PriorityName priority, StatusName status, Set<Action> actionHistory, User creator, User developer) {
         this.title = title;
         this.description = description;
         this.specialty = specialty;
         this.priority = priority;
         this.status = status;
+        this.actionHistory = actionHistory;
         this.creator = creator;
         this.developer = developer;
     }
 
-    //    public Ticket(User creator, String title, String description, SpecialtyName specialty,
-//                  User developer) {
-//        this.creator = creator;
-//        this.title = title;
-//        this.description = description;
-//        this.specialty = specialty;
-//        this.developer = developer;
-//    }
-
-    @Override
-    public String toString() {
-        return "Ticket{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", specialty=" + specialty +
-                ", status=" + status +
-                ", priority=" + priority +
-                ", actionHistory=" + actionHistory +
-                ", creator=" + creator +
-                ", developer=" + developer +
-                '}';
+    public Ticket(String title, String description, SpecialtyName specialty, PriorityName priority, StatusName status, Set<Action> actionHistory, User creator, User developer, LocalDate closedDate) {
+        this.title = title;
+        this.description = description;
+        this.specialty = specialty;
+        this.priority = priority;
+        this.status = status;
+        this.actionHistory = actionHistory;
+        this.creator = creator;
+        this.developer = developer;
+        this.closedDate = closedDate;
     }
 
     public Ticket() {
     }
 
+    public LocalDate getClosedDate() {
+        return closedDate;
+    }
+
+    public void setClosedDate(LocalDate closedDate) {
+        this.closedDate = closedDate;
+    }
+
     public User getCreator() {
+        if (creator.getUsername() == null) {
+            creator.setUsername("");
+        }
         return creator;
     }
 
@@ -130,6 +135,9 @@ public class Ticket extends AbstractEntity {
     }
 
     public User getDeveloper() {
+        if (developer.getUsername() == null) {
+            developer.setUsername("");
+        }
         return developer;
     }
 
@@ -143,6 +151,20 @@ public class Ticket extends AbstractEntity {
 
     public void setPriority(PriorityName priority) {
         this.priority = priority;
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", specialty=" + specialty +
+                ", priority=" + priority +
+                ", status=" + status +
+                ", creator=" + creator.getUsername() +
+                ", developer=" + developer.getUsername() +
+                ", closedDate=" + closedDate +
+                '}';
     }
 }
 
