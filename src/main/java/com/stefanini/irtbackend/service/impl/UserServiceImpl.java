@@ -2,6 +2,7 @@ package com.stefanini.irtbackend.service.impl;
 
 import com.stefanini.irtbackend.dao.UserDao;
 import com.stefanini.irtbackend.domain.NotFoundException;
+import com.stefanini.irtbackend.domain.dto.ChangePasswordRequest;
 import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.domain.entity.User;
 import com.stefanini.irtbackend.service.UserService;
@@ -37,7 +38,7 @@ class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User updateWithDto(UserDto userDto){
+    public User updateWithDto(UserDto userDto) {
         Long id = userDto.getId();
         User user = findById(id);
 
@@ -49,6 +50,14 @@ class UserServiceImpl implements UserService {
         user.setSpecialty(userDto.getSpecialty());
 
         return userDao.update(user);
+    }
+
+    @Override
+    @Transactional
+    public void changePassword(Long userId, ChangePasswordRequest request) {
+        User user = userDao.findById(userId).orElseThrow(() -> new NotFoundException("Not found user with id = " + userId));
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userDao.update(user);
     }
 
     @Transactional
