@@ -1,12 +1,7 @@
 package com.stefanini.irtbackend.domain.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 public class TicketDto {
     private String createdDate;
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-
     private String closedDate;
     private String id;
     private String title;
