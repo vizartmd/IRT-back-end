@@ -1,6 +1,6 @@
 package com.stefanini.irtbackend.service.impl;
 
-import com.stefanini.irtbackend.domain.entity.Email;
+import com.stefanini.irtbackend.config.GenerateSecurePassword;
 import com.stefanini.irtbackend.domain.entity.Response;
 import com.stefanini.irtbackend.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,33 +8,24 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import javax.mail.Message;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
 @Service("emailService")
 public class EmailServiceImpl implements EmailService {
+
+    GenerateSecurePassword generateSecurePassword;
 
     @Autowired
     public JavaMailSender emailSender;
 
     @Override
-    public Response sendEmail(Email mail) {
+    public Response sendEmail(String email) {
         Response response = new Response();
         try {
-            MimeMessage mm = new MimeMessage(session);
-
-            mm.addRecipient(Message.RecipientType.TO, new InternetAddress("sandra.rusu17@gmail.com"));
-
-            mm.setSubject("subject");
-
-            mm.setText("message");
-
-
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setTo("sandra.rusu17@gmail.com");
-            message.setSubject("subject");
-            message.setText("text");
+            message.setTo(email);
+            message.setSubject("This is your temporary password. Please update it after sign into your account !");
+
+            String password = GenerateSecurePassword.generatePassword(5);
+            message.setText("Temporary password : " + password);
 
             emailSender.send(message);
 

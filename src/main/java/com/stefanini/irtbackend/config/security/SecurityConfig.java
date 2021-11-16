@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/auth/login", "/email/sendMailSimple").permitAll()
+                .antMatchers("/api/auth/login", "/api/users/{email}/emails/reset-password").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .apply(jwtConfigurer);
