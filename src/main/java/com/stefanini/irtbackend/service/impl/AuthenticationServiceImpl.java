@@ -8,7 +8,6 @@ import com.stefanini.irtbackend.service.AuthenticationService;
 import com.stefanini.irtbackend.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
