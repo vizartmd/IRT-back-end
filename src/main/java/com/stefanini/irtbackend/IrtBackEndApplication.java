@@ -18,7 +18,7 @@ public class IrtBackEndApplication {
     @Bean
     public HttpFirewall allowUrlSemicolonHttpFirewall() {
         StrictHttpFirewall firewall = new StrictHttpFirewall();
-        firewall.setAllowSemicolon(true);
+        firewall.setAllowUrlEncodedDoubleSlash(true);
         return firewall;
     }
 
