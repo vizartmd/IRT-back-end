@@ -3,6 +3,7 @@ package com.stefanini.irtbackend.service;
 import com.stefanini.irtbackend.domain.dto.TicketDto;
 import com.stefanini.irtbackend.domain.entity.Ticket;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface TicketService {
@@ -21,4 +22,6 @@ public interface TicketService {
     List<TicketDto> updateTicketStatus(Long id, String status);
 
     List<TicketDto> getListTicketDTO();
+
+    Ticket createTicketFromDTO(TicketDto ticketDto) throws ParseException;
 }

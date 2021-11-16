@@ -1,15 +1,21 @@
 package com.stefanini.irtbackend.service.impl;
 
 import com.stefanini.irtbackend.dao.TicketDao;
+import com.stefanini.irtbackend.dao.UserDao;
 import com.stefanini.irtbackend.domain.NotFoundException;
 import com.stefanini.irtbackend.domain.dto.TicketDto;
 import com.stefanini.irtbackend.domain.entity.Ticket;
+import com.stefanini.irtbackend.domain.entity.enums.PriorityName;
+import com.stefanini.irtbackend.domain.entity.enums.SpecialtyName;
 import com.stefanini.irtbackend.domain.entity.enums.StatusName;
 import com.stefanini.irtbackend.service.TicketService;
+import com.stefanini.irtbackend.service.UserService;
 import org.springframework.stereotype.Service;
-import sun.util.resources.LocaleData;
+
 
 import javax.transaction.Transactional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +24,11 @@ import java.util.List;
 class TicketServiceImpl implements TicketService {
 
     private final TicketDao ticketDao;
+    private final UserDao userDao;
 
-    public TicketServiceImpl(TicketDao ticketDao) {
+    public TicketServiceImpl(TicketDao ticketDao, UserDao userDao) {
         this.ticketDao = ticketDao;
+        this.userDao = userDao;
     }
 
     @Transactional
@@ -89,7 +97,10 @@ class TicketServiceImpl implements TicketService {
         for(int i = 0; i < tickets.size(); i++) {
             TicketDto ticketDTO = new TicketDto();
             ticketDTO.setCreatedDate(tickets.get(i).getCreatedDate().toString());
-            ticketDTO.setClosedDate(tickets.get(i).getClosedDate().toString());
+            if (tickets.get(i).getClosedDate() != null){
+                ticketDTO.setClosedDate(tickets.get(i).getClosedDate().toString());
+            }
+            //ticketDTO.setClosedDate(tickets.get(i).getClosedDate().toString());
             ticketDTO.setId(tickets.get(i).getId().toString());
             ticketDTO.setTitle(tickets.get(i).getTitle());
             ticketDTO.setDescription(tickets.get(i).getDescription());
@@ -107,6 +118,20 @@ class TicketServiceImpl implements TicketService {
             listTicketDto.add(ticketDTO);
         }
         return listTicketDto;
+    }
+
+    @Override
+    public Ticket createTicketFromDTO(TicketDto ticketDto) throws ParseException {
+       Ticket ticket = new Ticket();
+
+       ticket.setTitle(ticketDto.getTitle());
+       ticket.setDescription((ticketDto.getDescription()));
+       ticket.setStatus(StatusName.valueOf(ticketDto.getStatus()));
+       ticket.setPriority(PriorityName.valueOf(ticketDto.getPriority()));
+       ticket.setSpecialty(SpecialtyName.valueOf(ticketDto.getSpecialty()));
+       ticket.setCreator(userDao.findByUsername(ticketDto.getCreator()));
+       ticket.setDeveloper(userDao.findByUsername(ticketDto.getDeveloper()));
+       return ticketDao.create(ticket);
     }
 
 }
