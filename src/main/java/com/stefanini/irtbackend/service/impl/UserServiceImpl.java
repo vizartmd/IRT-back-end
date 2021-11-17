@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 class UserServiceImpl implements UserService {
@@ -92,5 +93,11 @@ class UserServiceImpl implements UserService {
     @Override
     public User findByEmail(String email) {
         return userDao.findByEmail(email).orElseThrow(() -> new NotFoundException("Invalid email [" + email + "]"));
+    }
+
+    @Override
+    public User resetPasswordFor(String email) {
+       return null;
+
     }
 }
