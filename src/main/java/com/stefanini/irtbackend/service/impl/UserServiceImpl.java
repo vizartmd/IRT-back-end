@@ -1,27 +1,30 @@
 package com.stefanini.irtbackend.service.impl;
 
+import com.stefanini.irtbackend.config.GenerateSecurePassword;
 import com.stefanini.irtbackend.dao.UserDao;
 import com.stefanini.irtbackend.domain.NotFoundException;
 import com.stefanini.irtbackend.domain.dto.ChangePasswordRequest;
 import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.domain.entity.User;
+import com.stefanini.irtbackend.service.EmailService;
 import com.stefanini.irtbackend.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
-    public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder, EmailService emailService) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
     }
 
     @Transactional
@@ -96,8 +99,11 @@ class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User resetPasswordFor(String email) {
-       return null;
-
+    public void resetPasswordFor(String email) {
+        User userByEmail = userDao.findByEmail(email).orElseThrow(() -> new NotFoundException("Not found user with email = " + email));
+        String temporaryPassword = GenerateSecurePassword.generatePassword(5);
+        String encodedPassword = passwordEncoder.encode(temporaryPassword);
+        userByEmail.setPassword(encodedPassword);
+        emailService.sendResetPasswordEmail(email, temporaryPassword);
     }
 }

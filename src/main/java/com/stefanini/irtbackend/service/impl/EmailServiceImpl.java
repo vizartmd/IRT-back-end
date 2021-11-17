@@ -17,14 +17,13 @@ public class EmailServiceImpl implements EmailService {
     public JavaMailSender emailSender;
 
     @Override
-    public Response sendEmail(String email) {
+    public Response sendResetPasswordEmail(String email, String password) {
         Response response = new Response();
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(email);
             message.setSubject("This is your temporary password. Please update it after sign into your account !");
 
-            String password = GenerateSecurePassword.generatePassword(5);
             message.setText("Temporary password : " + password);
 
             emailSender.send(message);

@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class TicketDaoImpl extends GenericDaoImpl<Ticket> implements TicketDao {
 
-    public TicketDaoImpl() {super(Ticket.class);}
+    public TicketDaoImpl() {
+        super(Ticket.class);
+    }
 }

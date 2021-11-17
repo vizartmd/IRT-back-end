@@ -1,7 +1,6 @@
 package com.stefanini.irtbackend.web;
 
-import com.stefanini.irtbackend.domain.entity.Response;
-import com.stefanini.irtbackend.service.EmailService;
+import com.stefanini.irtbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,15 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmailController {
 
     @Autowired
-    private EmailService emailService;
-
-    public EmailController(EmailService emailService) {
-        this.emailService = emailService;
-    }
+    private UserService userService;
 
     @PostMapping("/{email}/emails/reset-password")
-    public ResponseEntity<Response> sendEmail(@PathVariable("email") String email) {
-        return ResponseEntity.ok(emailService.sendEmail(email));
+    public ResponseEntity<Void> sendEmail(@PathVariable("email") String email) {
+        userService.resetPasswordFor(email);
+        return ResponseEntity.ok().build();
 
     }
 }

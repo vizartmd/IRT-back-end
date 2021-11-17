@@ -30,5 +30,5 @@ public interface UserService {
 
     User findByEmail(String email);
 
-    User resetPasswordFor(String email);
+    void resetPasswordFor(String email);
 }
