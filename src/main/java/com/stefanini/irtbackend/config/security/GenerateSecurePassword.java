@@ -1,4 +1,4 @@
-package com.stefanini.irtbackend.config;
+package com.stefanini.irtbackend.config.security;
 
 
 import java.security.SecureRandom;

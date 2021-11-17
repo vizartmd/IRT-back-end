@@ -61,9 +61,8 @@ public class UserController {
 
 
     @PostMapping("/{id}/change-password")
-    @PreAuthorize("hasAuthority('users:write')")
-    public ResponseEntity<Void> authenticate(@PathVariable("id") Long id, @RequestBody ChangePasswordRequest request) {
-        userService.changePassword(id, request);
+    public ResponseEntity<Void> changePasswordFor(@PathVariable("id") Long id, @RequestBody ChangePasswordRequest request) {
+        userService.changePasswordFor(id, request);
         return ResponseEntity.ok().build();
     }
 

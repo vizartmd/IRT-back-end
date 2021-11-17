@@ -4,7 +4,6 @@ import com.stefanini.irtbackend.domain.dto.ChangePasswordRequest;
 import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.domain.entity.User;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 public interface UserService {
@@ -15,8 +14,7 @@ public interface UserService {
 
     User updateWithDto(UserDto userDto);
 
-    @Transactional
-    void changePassword(Long userId, ChangePasswordRequest request);
+    void changePasswordFor(Long userId, ChangePasswordRequest request);
 
     void delete(User user);
 

@@ -1,24 +1,22 @@
 package com.stefanini.irtbackend.service.impl;
 
-import com.stefanini.irtbackend.config.GenerateSecurePassword;
-import com.stefanini.irtbackend.domain.entity.Response;
 import com.stefanini.irtbackend.service.EmailService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-@Service("emailService")
+@Service
 public class EmailServiceImpl implements EmailService {
 
-    GenerateSecurePassword generateSecurePassword;
+    private final JavaMailSender emailSender;
 
-    @Autowired
-    public JavaMailSender emailSender;
+    public EmailServiceImpl(JavaMailSender emailSender) {
+        this.emailSender = emailSender;
+    }
 
     @Override
-    public Response sendResetPasswordEmail(String email, String password) {
-        Response response = new Response();
+    public void sendResetPasswordEmail(String email, String password) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(email);
@@ -27,14 +25,8 @@ public class EmailServiceImpl implements EmailService {
             message.setText("This is your temporary password. Please update it after sign into your account ! " + "\r\n" + "Temporary password : " + password);
 
             emailSender.send(message);
-
-            response.setCode(0);
-            response.setMessage("Email send ok!");
         } catch (Exception ex) {
-            response.setCode(1);
-            response.setMessage("Error sending email:" + ex.getMessage());
+            throw new MailSendException(ex.getMessage());
         }
-
-        return response;
     }
 }
