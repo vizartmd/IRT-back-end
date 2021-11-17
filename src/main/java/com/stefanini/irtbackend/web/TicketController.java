@@ -1,5 +1,6 @@
 package com.stefanini.irtbackend.web;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.stefanini.irtbackend.domain.dto.TicketDto;
 import com.stefanini.irtbackend.domain.entity.Ticket;
 import com.stefanini.irtbackend.domain.entity.User;
@@ -7,7 +8,6 @@ import com.stefanini.irtbackend.service.TicketService;
 import com.stefanini.irtbackend.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sun.util.resources.LocaleData;
 
 import java.net.URI;
 import java.sql.Timestamp;
@@ -28,13 +28,18 @@ public class TicketController {
     }
 
     @GetMapping
-    ResponseEntity<List<TicketDto>> findAll() {
-        return ResponseEntity.ok(ticketService.getListTicketDTO());
+    String findAll() throws JsonProcessingException {
+        return ticketService.getListTicketDTO();
     }
 
     @GetMapping("/{id}")
     ResponseEntity<Ticket> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(ticketService.findById(id));
+    }
+
+    @GetMapping("/kanban")
+    String findAllTickets() throws JsonProcessingException {
+        return ticketService.getListTicketDTO();
     }
 
 //    @PostMapping("/{creator_id}/{developer_id}")
@@ -60,9 +65,9 @@ public class TicketController {
     }
 
     @PutMapping("/{id}/{status}")
-    ResponseEntity<List<TicketDto>> updateTicketStatus(@PathVariable("id") Long id, @PathVariable("status") String status) {
+    String updateTicketStatus(@PathVariable("id") Long id, @PathVariable("status") String status) throws JsonProcessingException {
         System.out.println("in updateTicketStatus, id: " + id + " status: " + status);
-        return ResponseEntity.ok(ticketService.updateTicketStatus(id, status));
+        return ticketService.updateTicketStatus(id, status);
     }
 
     @DeleteMapping("/{id}")
