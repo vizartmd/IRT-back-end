@@ -22,9 +22,9 @@ public class EmailServiceImpl implements EmailService {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(email);
-            message.setSubject("This is your temporary password. Please update it after sign into your account !");
+            message.setSubject("Password reset !");
 
-            message.setText("Temporary password : " + password);
+            message.setText("This is your temporary password. Please update it after sign into your account ! " + "\r\n" + "Temporary password : " + password);
 
             emailSender.send(message);
 

@@ -104,6 +104,8 @@ class UserServiceImpl implements UserService {
         String temporaryPassword = GenerateSecurePassword.generatePassword(5);
         String encodedPassword = passwordEncoder.encode(temporaryPassword);
         userByEmail.setPassword(encodedPassword);
+        userDao.update(userByEmail);
+
         emailService.sendResetPasswordEmail(email, temporaryPassword);
     }
 }
