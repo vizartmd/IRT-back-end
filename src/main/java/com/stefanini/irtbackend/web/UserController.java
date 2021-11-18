@@ -1,5 +1,6 @@
 package com.stefanini.irtbackend.web;
 
+import com.stefanini.irtbackend.domain.dto.ChangePasswordRequest;
 import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.domain.entity.User;
 import com.stefanini.irtbackend.domain.entity.enums.RoleName;
@@ -9,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.net.URI;
 import java.util.List;
@@ -63,6 +63,13 @@ public class UserController {
     ResponseEntity<User> create(@RequestBody User user) {
         User createdUser = userService.create(user);
         return ResponseEntity.created(URI.create("/users/" + createdUser.getId())).body(createdUser);
+    }
+
+
+    @PostMapping("/{id}/change-password")
+    public ResponseEntity<Void> changePasswordFor(@PathVariable("id") Long id, @RequestBody ChangePasswordRequest request) {
+        userService.changePasswordFor(id, request);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")

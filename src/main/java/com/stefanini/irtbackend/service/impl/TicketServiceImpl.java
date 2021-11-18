@@ -1,5 +1,7 @@
 package com.stefanini.irtbackend.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stefanini.irtbackend.dao.TicketDao;
 import com.stefanini.irtbackend.dao.UserDao;
 import com.stefanini.irtbackend.domain.NotFoundException;
@@ -68,7 +70,7 @@ class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public List<TicketDto> updateTicketStatus(Long id, String status) {
+    public String updateTicketStatus(Long id, String status) throws JsonProcessingException {
         Ticket ticket = findById(id);
         switch (status) {
             case "BACKLOG":
@@ -91,7 +93,7 @@ class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public List<TicketDto> getListTicketDTO() {
+    public String getListTicketDTO() throws JsonProcessingException {
         List<Ticket> tickets = ticketDao.findAll();
         List<TicketDto> listTicketDto = new ArrayList<>();
         for(int i = 0; i < tickets.size(); i++) {
@@ -100,7 +102,6 @@ class TicketServiceImpl implements TicketService {
             if (tickets.get(i).getClosedDate() != null){
                 ticketDTO.setClosedDate(tickets.get(i).getClosedDate().toString());
             }
-            //ticketDTO.setClosedDate(tickets.get(i).getClosedDate().toString());
             ticketDTO.setId(tickets.get(i).getId().toString());
             ticketDTO.setTitle(tickets.get(i).getTitle());
             ticketDTO.setDescription(tickets.get(i).getDescription());
@@ -108,16 +109,15 @@ class TicketServiceImpl implements TicketService {
             ticketDTO.setStatus(tickets.get(i).getStatus().toString());
             ticketDTO.setPriority(tickets.get(i).getPriority().toString());
             ticketDTO.setCreator(tickets.get(i).getCreator().getUsername());
-            String developer = null;
-            if(tickets.get(i).getDeveloper() == null) {
-                developer = "";
-            } else {
-                developer = tickets.get(i).getDeveloper().getUsername();
+            if(tickets.get(i).getDeveloper() != null) {
+                ticketDTO.setDeveloper(tickets.get(i).getDeveloper().getUsername());
             }
-            ticketDTO.setDeveloper(developer);
+            ticketDTO.setDeveloper(tickets.get(i).getDeveloper().getUsername());
             listTicketDto.add(ticketDTO);
+
         }
-        return listTicketDto;
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(listTicketDto);
     }
 
     @Override

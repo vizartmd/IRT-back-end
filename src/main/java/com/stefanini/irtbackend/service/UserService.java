@@ -1,5 +1,6 @@
 package com.stefanini.irtbackend.service;
 
+import com.stefanini.irtbackend.domain.dto.ChangePasswordRequest;
 import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.domain.entity.User;
 
@@ -12,6 +13,8 @@ public interface UserService {
     User update(User user);
 
     User updateWithDto(UserDto userDto);
+
+    void changePasswordFor(Long userId, ChangePasswordRequest request);
 
     void delete(User user);
 
@@ -26,4 +29,9 @@ public interface UserService {
     User findByEmail(String email);
 
     List<String> findAllUsernamesBySpecialty(String specialty);
+
+    void resetPasswordFor(String email);
+  
+    List<User> findAllBySpecialty(String specialty);
+
 }

@@ -12,6 +12,8 @@ public interface UserDao extends GenericDao<User> {
 
     List<String> findAllUsernamesBySpecialty(String specialty);
 
+    List<User> findAllBySpecialty(String specialty);
+
     Optional<User> findByEmail(String email);
 
 }
