@@ -10,7 +10,6 @@ import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.domain.entity.User;
 import com.stefanini.irtbackend.service.EmailService;
 import com.stefanini.irtbackend.service.UserService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -107,7 +106,7 @@ class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void changePasswordFor(Long userId, ChangePasswordRequest request) {
-        if(!request.getNewPassword().equals(request.getNewPasswordConfirmation()))
+        if (!request.getNewPassword().equals(request.getNewPasswordConfirmation()))
             throw new PasswordsMismatchException("New & confirmed passwords are not equal!");
 
         User user = userDao.findById(userId).orElseThrow(() -> new NotFoundException("Not found user with id = " + userId));
