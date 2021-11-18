@@ -122,16 +122,16 @@ class TicketServiceImpl implements TicketService {
 
     @Override
     public Ticket createTicketFromDTO(TicketDto ticketDto) throws ParseException {
-       Ticket ticket = new Ticket();
+        Ticket ticket = new Ticket();
 
-       ticket.setTitle(ticketDto.getTitle());
-       ticket.setDescription((ticketDto.getDescription()));
-       ticket.setStatus(StatusName.valueOf(ticketDto.getStatus()));
-       ticket.setPriority(PriorityName.valueOf(ticketDto.getPriority()));
-       ticket.setSpecialty(SpecialtyName.valueOf(ticketDto.getSpecialty()));
-       ticket.setCreator(userDao.findByUsername(ticketDto.getCreator()));
-       ticket.setDeveloper(userDao.findByUsername(ticketDto.getDeveloper()));
-       return ticketDao.create(ticket);
+        ticket.setTitle(ticketDto.getTitle());
+        ticket.setDescription((ticketDto.getDescription()));
+        ticket.setStatus(StatusName.valueOf(ticketDto.getStatus()));
+        ticket.setPriority(PriorityName.valueOf(ticketDto.getPriority()));
+        ticket.setSpecialty(SpecialtyName.valueOf(ticketDto.getSpecialty()));
+        ticket.setCreator(userDao.findByUsername(ticketDto.getCreator()));
+        ticket.setDeveloper(userDao.findByUsername(ticketDto.getDeveloper()));
+        return ticketDao.create(ticket);
     }
 
 }

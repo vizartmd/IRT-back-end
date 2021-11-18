@@ -44,7 +44,7 @@ public class Ticket extends AbstractEntity {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "developer_id")
-    private User developer;
+    private User developer = null;
 
     @Column(name = "closed_date")
     private LocalDate closedDate;
@@ -70,6 +70,15 @@ public class Ticket extends AbstractEntity {
         this.creator = creator;
         this.developer = developer;
         this.closedDate = closedDate;
+    }
+
+    public Ticket(String title, String description, SpecialtyName specialty, PriorityName priority, StatusName status, User creator) {
+        this.title = title;
+        this.description = description;
+        this.specialty = specialty;
+        this.priority = priority;
+        this.status = status;
+        this.creator = creator;
     }
 
     public Ticket() {
