@@ -89,7 +89,7 @@ class UserServiceImpl implements UserService {
 
     @Override
     public User findByEmail(String email) {
-        return userDao.findByEmail(email).orElseThrow(() -> new NotFoundException("Bad credentials !"));
+        return userDao.findByEmail(email).orElseThrow(() -> new NotFoundException("Bad credentials"));
     }
 
     @Override
