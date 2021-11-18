@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.stefanini.irtbackend.domain.dto.TicketDto;
 import com.stefanini.irtbackend.domain.entity.Ticket;
 import com.stefanini.irtbackend.domain.entity.User;
+import com.stefanini.irtbackend.domain.entity.enums.PriorityName;
+import com.stefanini.irtbackend.domain.entity.enums.StatusName;
 import com.stefanini.irtbackend.service.TicketService;
 import com.stefanini.irtbackend.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -74,5 +76,15 @@ public class TicketController {
     ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         ticketService.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/statuses")
+    public ResponseEntity<StatusName[]> getStatusNames() {
+        return ResponseEntity.ok(StatusName.values());
+    }
+
+    @GetMapping("/priorities")
+    public ResponseEntity<PriorityName[]> getPriorityNames() {
+        return ResponseEntity.ok(PriorityName.values());
     }
 }
