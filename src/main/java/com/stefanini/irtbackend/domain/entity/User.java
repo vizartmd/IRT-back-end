@@ -1,5 +1,6 @@
 package com.stefanini.irtbackend.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stefanini.irtbackend.domain.entity.enums.RoleName;
 import com.stefanini.irtbackend.domain.entity.enums.SpecialtyName;
 
@@ -34,9 +35,11 @@ public class User extends AbstractEntity {
     @Column(name = "user_specialty")
     private SpecialtyName specialty;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "creator")
     private Set<Ticket> createdTickets = new HashSet<>();
 
+    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinTable(name = "developer_ticket",
             joinColumns = @JoinColumn(name = "user_id"),

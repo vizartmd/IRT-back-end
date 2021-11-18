@@ -29,4 +29,6 @@ public interface UserService {
     User findByEmail(String email);
 
     void resetPasswordFor(String email);
+  
+    List<User> findAllBySpecialty(String specialty);
 }

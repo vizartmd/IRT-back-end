@@ -121,4 +121,7 @@ class UserServiceImpl implements UserService {
         userDao.update(user);
     }
 
+    public List<User> findAllBySpecialty(String specialty) {
+        return userDao.findAllBySpecialty(specialty);
+    }
 }
