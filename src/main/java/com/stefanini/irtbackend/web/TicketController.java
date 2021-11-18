@@ -2,13 +2,16 @@ package com.stefanini.irtbackend.web;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.stefanini.irtbackend.domain.dto.TicketDto;
+import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.domain.entity.Ticket;
 import com.stefanini.irtbackend.domain.entity.User;
 import com.stefanini.irtbackend.domain.entity.enums.PriorityName;
 import com.stefanini.irtbackend.domain.entity.enums.StatusName;
 import com.stefanini.irtbackend.service.TicketService;
 import com.stefanini.irtbackend.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -51,10 +54,18 @@ public class TicketController {
         return ResponseEntity.created(URI.create("/tickets/" + createdTicket.getId())).body(createdTicket);
     }
 
-    @PutMapping
-    ResponseEntity<Ticket> update(@RequestBody Ticket ticket) {
-        System.out.println("ticket: " + ticket);
-        return ResponseEntity.ok(ticketService.update(ticket));
+    @PutMapping("/{id}")
+    ResponseEntity<?> update(@RequestBody TicketDto ticketDto) {
+        Ticket ticket = null;
+        try {
+            System.out.println("11111111111");
+
+            ticket = (ticketService.updateWithDto(ticketDto));
+            System.out.println("22222222222");
+            return ResponseEntity.ok(ticket);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Duplicate entry");
+        }
     }
 
     @PutMapping("/{id}/{status}")
