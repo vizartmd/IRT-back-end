@@ -39,6 +39,7 @@ public class UserController {
     ResponseEntity<List<User>> findAll() {
         return ResponseEntity.ok(userService.findAll());
     }
+
     @GetMapping("/specialty/{specialty}")
     ResponseEntity<List<String>> findAllUsernamesBySpecialty(@PathVariable("specialty") String specialty) {
         return ResponseEntity.ok(userService.findAllUsernamesBySpecialty(specialty));
