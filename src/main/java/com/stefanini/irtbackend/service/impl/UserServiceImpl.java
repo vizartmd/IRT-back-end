@@ -86,7 +86,7 @@ class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllBySpecialty(String specialty) {
-        return userDao.findAllBySpecialty(specialty);
+    public List<String> findAllUsernamesBySpecialty(String specialty) {
+        return userDao.findAllUsernamesBySpecialty(specialty);
     }
 }

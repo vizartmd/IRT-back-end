@@ -25,5 +25,5 @@ public interface UserService {
 
     User findByEmail(String email);
 
-    List<User> findAllBySpecialty(String specialty);
+    List<String> findAllUsernamesBySpecialty(String specialty);
 }

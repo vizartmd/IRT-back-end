@@ -37,15 +37,6 @@ public class TicketController {
         return ResponseEntity.ok(ticketService.findById(id));
     }
 
-//    @PostMapping("/{creator_id}/{developer_id}")
-//    ResponseEntity<Ticket> create(@RequestBody Ticket ticket, @PathVariable(value = "creator_id") Long creator_id, @PathVariable(value = "developer_id") Long developer_id ) {
-//        User creator_user = userService.findById(creator_id);
-//        User developer_user = userService.findById(developer_id);
-//        ticket.setCreator(creator_user);
-//        ticket.setDeveloper(developer_user);//dto or service
-//        Ticket createdTicket = ticketService.create(ticket);
-//        return ResponseEntity.created(URI.create("/tickets/" + createdTicket.getId())).body(createdTicket);
-//    }
 
     @PostMapping
     ResponseEntity<Ticket> create(@RequestBody TicketDto ticketDto) throws ParseException {

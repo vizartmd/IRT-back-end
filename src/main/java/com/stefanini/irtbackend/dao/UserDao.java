@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface UserDao extends GenericDao<User> {
     User findByUsername(String username);
 
-    List<User> findAllBySpecialty(String specialty);
+    List<String> findAllUsernamesBySpecialty(String specialty);
 
     Optional<User> findByEmail(String email);
 
