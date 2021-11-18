@@ -28,7 +28,10 @@ public interface UserService {
 
     User findByEmail(String email);
 
+    List<String> findAllUsernamesBySpecialty(String specialty);
+
     void resetPasswordFor(String email);
   
     List<User> findAllBySpecialty(String specialty);
+
 }
