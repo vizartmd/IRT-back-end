@@ -7,6 +7,7 @@ import com.stefanini.irtbackend.dao.UserDao;
 import com.stefanini.irtbackend.domain.NotFoundException;
 import com.stefanini.irtbackend.domain.dto.TicketDto;
 import com.stefanini.irtbackend.domain.entity.Ticket;
+import com.stefanini.irtbackend.domain.entity.User;
 import com.stefanini.irtbackend.domain.entity.enums.PriorityName;
 import com.stefanini.irtbackend.domain.entity.enums.SpecialtyName;
 import com.stefanini.irtbackend.domain.entity.enums.StatusName;
@@ -42,6 +43,24 @@ class TicketServiceImpl implements TicketService {
     @Transactional
     @Override
     public Ticket update(Ticket ticket) {
+        return ticketDao.update(ticket);
+    }
+
+    @Override
+    public Ticket updateWithDto(TicketDto ticketDto) {
+        Long id = Long.parseLong(ticketDto.getId());
+        Ticket ticket = findById(id);
+        //System.out.println(ticket.getDeveloper());
+        //System.out.println(ticketDto.getDeveloper());
+
+        //User user = userDao.findByUsername(ticketDto.getDeveloper());
+        ticket.setTitle(ticketDto.getTitle());
+        ticket.setDescription(ticketDto.getDescription());
+        ticket.setPriority(PriorityName.valueOf(ticketDto.getPriority()));
+        ticket.setStatus(StatusName.valueOf(ticketDto.getStatus()));
+        ticket.setSpecialty(SpecialtyName.valueOf(ticketDto.getSpecialty()));
+        //ticket.setDeveloper(user);
+
         return ticketDao.update(ticket);
     }
 
