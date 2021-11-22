@@ -3,7 +3,6 @@ package com.stefanini.irtbackend.web;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.stefanini.irtbackend.domain.dto.TicketDto;
 import com.stefanini.irtbackend.domain.entity.Ticket;
-import com.stefanini.irtbackend.domain.entity.User;
 import com.stefanini.irtbackend.domain.entity.enums.PriorityName;
 import com.stefanini.irtbackend.domain.entity.enums.StatusName;
 import com.stefanini.irtbackend.service.TicketService;
@@ -12,9 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.sql.Timestamp;
 import java.text.ParseException;
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -39,20 +36,15 @@ public class TicketController {
         return ResponseEntity.ok(ticketService.findById(id));
     }
 
+    @GetMapping("/user-tickets/{developer_id}")
+    ResponseEntity<List<Ticket>> findTicketsFor(@PathVariable("developer_id") Long id) {
+        return ResponseEntity.ok(ticketService.getTicketFor(id));
+    }
+
     @GetMapping("/kanban")
     String findAllTickets() throws JsonProcessingException {
         return ticketService.getListTicketDTO();
     }
-
-//    @PostMapping("/{creator_id}/{developer_id}")
-//    ResponseEntity<Ticket> create(@RequestBody Ticket ticket, @PathVariable(value = "creator_id") Long creator_id, @PathVariable(value = "developer_id") Long developer_id ) {
-//        User creator_user = userService.findById(creator_id);
-//        User developer_user = userService.findById(developer_id);
-//        ticket.setCreator(creator_user);
-//        ticket.setDeveloper(developer_user);//dto or service
-//        Ticket createdTicket = ticketService.create(ticket);
-//        return ResponseEntity.created(URI.create("/tickets/" + createdTicket.getId())).body(createdTicket);
-//    }
 
     @PostMapping
     ResponseEntity<Ticket> create(@RequestBody TicketDto ticketDto) throws ParseException {

@@ -25,4 +25,7 @@ public interface TicketService {
     String updateTicketStatus(Long id, String status) throws JsonProcessingException;
 
     String getListTicketDTO() throws JsonProcessingException;
+
+    List<Ticket> getTicketFor(Long id);
+
 }

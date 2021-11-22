@@ -17,7 +17,7 @@ public class EmailController {
 
     @PostMapping("/{email}/emails/reset-password")
     public ResponseEntity<Void> sendEmail(@PathVariable("email") String email) {
-        userService.resetPasswordFor(email);
+        userService.sendForgotPasswordVerificationCode(email);
         return ResponseEntity.ok().build();
 
     }
