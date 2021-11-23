@@ -93,9 +93,6 @@ public class Ticket extends AbstractEntity {
     }
 
     public User getCreator() {
-        if (creator.getUsername() == null) {
-            creator.setUsername("");
-        }
         return creator;
     }
 
@@ -144,9 +141,6 @@ public class Ticket extends AbstractEntity {
     }
 
     public User getDeveloper() {
-        if (developer.getUsername() == null) {
-            developer.setUsername("");
-        }
         return developer;
     }
 
