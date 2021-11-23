@@ -72,6 +72,15 @@ public class Ticket extends AbstractEntity {
         this.closedDate = closedDate;
     }
 
+    public Ticket(String title, String description, SpecialtyName specialty, PriorityName priority, StatusName status, User creator) {
+        this.title = title;
+        this.description = description;
+        this.specialty = specialty;
+        this.priority = priority;
+        this.status = status;
+        this.creator = creator;
+    }
+
     public Ticket() {
     }
 
@@ -84,9 +93,6 @@ public class Ticket extends AbstractEntity {
     }
 
     public User getCreator() {
-        if (creator.getUsername() == null) {
-            creator.setUsername("");
-        }
         return creator;
     }
 
@@ -135,9 +141,6 @@ public class Ticket extends AbstractEntity {
     }
 
     public User getDeveloper() {
-        if (developer.getUsername() == null) {
-            developer.setUsername("");
-        }
         return developer;
     }
 
