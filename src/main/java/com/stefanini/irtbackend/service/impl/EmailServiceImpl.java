@@ -16,13 +16,13 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendResetPasswordEmail(String email, String password) {
+    public void sendVerificationCodeEmail(String email, String verificationCode) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(email);
             message.setSubject("Password reset !");
 
-            message.setText("This is your temporary password. Please update it after sign into your account ! " + "\r\n" + "Temporary password : " + password);
+            message.setText("This is your verification code. Please use it to recover your password ! " + "\r\n" + "Verification code : " + verificationCode);
 
             emailSender.send(message);
         } catch (Exception ex) {

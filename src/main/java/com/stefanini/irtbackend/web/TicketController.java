@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.stefanini.irtbackend.domain.dto.TicketDto;
 import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.domain.entity.Ticket;
-import com.stefanini.irtbackend.domain.entity.User;
 import com.stefanini.irtbackend.domain.entity.enums.PriorityName;
 import com.stefanini.irtbackend.domain.entity.enums.StatusName;
 import com.stefanini.irtbackend.service.TicketService;
@@ -15,9 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.sql.Timestamp;
 import java.text.ParseException;
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -40,6 +37,11 @@ public class TicketController {
     @GetMapping("/{id}")
     ResponseEntity<Ticket> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(ticketService.findById(id));
+    }
+
+    @GetMapping("/user-tickets/{developer_id}")
+    ResponseEntity<List<Ticket>> findTicketsFor(@PathVariable("developer_id") Long id) {
+        return ResponseEntity.ok(ticketService.getTicketFor(id));
     }
 
     @GetMapping("/kanban")

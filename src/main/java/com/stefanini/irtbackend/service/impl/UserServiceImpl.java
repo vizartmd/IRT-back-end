@@ -1,10 +1,12 @@
 package com.stefanini.irtbackend.service.impl;
 
-import com.stefanini.irtbackend.config.security.GenerateSecurePassword;
+import com.stefanini.irtbackend.config.security.RandomStringGenerator;
 import com.stefanini.irtbackend.dao.UserDao;
 import com.stefanini.irtbackend.domain.NotFoundException;
 import com.stefanini.irtbackend.domain.PasswordsMismatchException;
 import com.stefanini.irtbackend.domain.WrongPasswordException;
+import com.stefanini.irtbackend.domain.WrongVerificationCodeException;
+import com.stefanini.irtbackend.domain.dto.ChangeForgottenPasswordRequest;
 import com.stefanini.irtbackend.domain.dto.ChangePasswordRequest;
 import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.domain.entity.User;
@@ -98,13 +100,12 @@ class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public void resetPasswordFor(String email) {
+    public void sendForgotPasswordVerificationCode(String email) {
         User userByEmail = userDao.findByEmail(email).orElseThrow(() -> new NotFoundException("Not found user with email = " + email));
-        String temporaryPassword = GenerateSecurePassword.generatePassword(5);
-        String encodedPassword = passwordEncoder.encode(temporaryPassword);
-        userByEmail.setPassword(encodedPassword);
+        String verificationCode = RandomStringGenerator.generate(5);
+        userByEmail.setVerificationCode(verificationCode);
         userDao.update(userByEmail);
-        emailService.sendResetPasswordEmail(email, temporaryPassword);
+        emailService.sendVerificationCodeEmail(email, verificationCode);
     }
 
     @Override
@@ -120,6 +121,23 @@ class UserServiceImpl implements UserService {
 
         if (!passwordEncoder.matches(currentPassword, userPassword))
             throw new WrongPasswordException("Wrong current password entered!");
+
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userDao.update(user);
+    }
+
+    @Override
+    @Transactional
+    public void changeForgottenPassword(ChangeForgottenPasswordRequest request) {
+        if (!request.getNewPassword().equals(request.getNewPasswordConfirmation()))
+            throw new PasswordsMismatchException("New & confirmed passwords are not equal!");
+
+        User user = userDao.findByEmail(request.getEmail()).orElseThrow(() -> new NotFoundException("Not found user with email = " + request.getEmail()));
+
+        String verificationCode = request.getVerificationCode();
+
+        if (!verificationCode.equals(user.getVerificationCode()))
+            throw new WrongVerificationCodeException("Wrong validation code!");
 
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         userDao.update(user);
