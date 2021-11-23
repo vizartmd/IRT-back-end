@@ -14,6 +14,8 @@ public interface TicketService {
 
     Ticket update(Ticket ticket);
 
+    Ticket updateWithDto(TicketDto ticketDto);
+
     void delete(Ticket ticket);
 
     Ticket findById(Long id);
@@ -28,9 +30,8 @@ public interface TicketService {
 
     String getListTicketDTO() throws JsonProcessingException;
 
-//    String getAllTicketsCreators() throws JsonProcessingException;
-//
-//    String getAllTicketsDevelopers() throws JsonProcessingException;
-
     String updateTicketDeveloper(Long id, String developer) throws JsonProcessingException;
+
+    List<Ticket> getTicketFor(Long id);
+
 }

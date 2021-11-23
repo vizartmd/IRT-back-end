@@ -1,8 +1,11 @@
 package com.stefanini.irtbackend.service;
 
+import com.stefanini.irtbackend.domain.dto.ChangeForgottenPasswordRequest;
+import com.stefanini.irtbackend.domain.dto.ChangePasswordRequest;
 import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.domain.entity.User;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 public interface UserService {
@@ -12,6 +15,8 @@ public interface UserService {
     User update(User user);
 
     User updateWithDto(UserDto userDto);
+
+    void changePasswordFor(Long userId, ChangePasswordRequest request);
 
     void delete(User user);
 
@@ -24,6 +29,14 @@ public interface UserService {
     List<User> findAll();
 
     User findByEmail(String email);
+
+    void sendForgotPasswordVerificationCode(String email);
+
+    void changeForgottenPassword(ChangeForgottenPasswordRequest request);
+
+    List<String> findAllUsernamesBySpecialty(String specialty);
+
+//    void resetPasswordFor(String email);
 
     List<User> findAllBySpecialty(String specialty);
 }

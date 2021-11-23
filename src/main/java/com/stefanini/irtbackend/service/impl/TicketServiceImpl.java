@@ -12,13 +12,10 @@ import com.stefanini.irtbackend.domain.entity.enums.PriorityName;
 import com.stefanini.irtbackend.domain.entity.enums.SpecialtyName;
 import com.stefanini.irtbackend.domain.entity.enums.StatusName;
 import com.stefanini.irtbackend.service.TicketService;
-import com.stefanini.irtbackend.service.UserService;
 import org.springframework.stereotype.Service;
-
 
 import javax.transaction.Transactional;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -49,6 +46,24 @@ class TicketServiceImpl implements TicketService {
         return ticketDao.update(ticket);
     }
 
+    @Override
+    public Ticket updateWithDto(TicketDto ticketDto) {
+        Long id = Long.parseLong(ticketDto.getId());
+        Ticket ticket = findById(id);
+        //System.out.println(ticket.getDeveloper());
+        //System.out.println(ticketDto.getDeveloper());
+
+        //User user = userDao.findByUsername(ticketDto.getDeveloper());
+        ticket.setTitle(ticketDto.getTitle());
+        ticket.setDescription(ticketDto.getDescription());
+        ticket.setPriority(PriorityName.valueOf(ticketDto.getPriority()));
+        ticket.setStatus(StatusName.valueOf(ticketDto.getStatus()));
+        ticket.setSpecialty(SpecialtyName.valueOf(ticketDto.getSpecialty()));
+        //ticket.setDeveloper(user);
+
+        return ticketDao.update(ticket);
+    }
+
     @Transactional
     @Override
     public void delete(Ticket ticket) {
@@ -66,6 +81,12 @@ class TicketServiceImpl implements TicketService {
     public void deleteById(Long id) {
         Ticket ticket = ticketDao.findById(id).orElseThrow(() -> new NotFoundException("Not found ticket with id = " + id));
         ticketDao.delete(ticket);
+    }
+
+    @Override
+    @Transactional
+    public List<Ticket> getTicketFor(Long id) {
+        return ticketDao.findAllTicketsFor(id);
     }
 
     @Override
