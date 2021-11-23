@@ -95,6 +95,10 @@ class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<String> findAllUsernamesBySpecialty(String specialty) {
+        return userDao.findAllUsernamesBySpecialty(specialty);
+    }
+
     @Transactional
     public void sendForgotPasswordVerificationCode(String email) {
         User userByEmail = userDao.findByEmail(email).orElseThrow(() -> new NotFoundException("Not found user with email = " + email));

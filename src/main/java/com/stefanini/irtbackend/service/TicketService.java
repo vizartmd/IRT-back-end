@@ -12,6 +12,8 @@ public interface TicketService {
 
     Ticket update(Ticket ticket);
 
+    Ticket updateWithDto(TicketDto ticketDto);
+
     void delete(Ticket ticket);
 
     Ticket findById(Long id);

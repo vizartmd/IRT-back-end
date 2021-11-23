@@ -34,5 +34,9 @@ public interface UserService {
 
     void changeForgottenPassword(ChangeForgottenPasswordRequest request);
 
+    List<String> findAllUsernamesBySpecialty(String specialty);
+
+    void resetPasswordFor(String email);
+
     List<User> findAllBySpecialty(String specialty);
 }
