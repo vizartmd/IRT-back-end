@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/tickets")
@@ -30,9 +31,23 @@ public class TicketController {
     }
 
     @GetMapping
-    String findAll() throws JsonProcessingException {
-        return ticketService.getListTicketDTO();
+    List<Ticket> findAll() {
+        return ticketService.findAll();
     }
+
+//    @GetMapping("/creators")
+//    String getAllTicketsCreators() throws JsonProcessingException {
+//        System.out.println("In getAllTicketsCreators controller!");
+//        System.out.println("ticketService.getAllTicketsCreators().toString(): " + ticketService.getAllTicketsCreators().toString());
+//        return ticketService.getAllTicketsCreators();
+//    }
+//
+//    @GetMapping("/developers")
+//    String getAllTicketsDevelopers() throws JsonProcessingException {
+//        System.out.println("In getAllTicketsDevelopers controller!");
+//        System.out.println("ticketService.getAllTicketsDevelopers().toString(): " + ticketService.getAllTicketsDevelopers().toString());
+//        return ticketService.getAllTicketsDevelopers();
+//    }
 
     @GetMapping("/{id}")
     ResponseEntity<Ticket> findById(@PathVariable("id") Long id) {
@@ -74,6 +89,11 @@ public class TicketController {
     String updateTicketStatus(@PathVariable("id") Long id, @PathVariable("status") String status) throws JsonProcessingException {
         System.out.println("in updateTicketStatus, id: " + id + " status: " + status);
         return ticketService.updateTicketStatus(id, status);
+    }
+    @PutMapping("/add/{id}/{developer}")
+    String updateTicketDeveloper(@PathVariable("id") Long id, @PathVariable("developer") String developer) throws JsonProcessingException {
+        System.out.println("in updateTicketDeveloper, id: " + id + " developer: " + developer);
+        return ticketService.updateTicketDeveloper(id, developer);
     }
 
     @DeleteMapping("/{id}")

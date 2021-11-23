@@ -64,7 +64,6 @@
             <artifactId>spring-context-support</artifactId>
             <version>5.2.8.RELEASE</version>
         </dependency>
-
         <!-- security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
