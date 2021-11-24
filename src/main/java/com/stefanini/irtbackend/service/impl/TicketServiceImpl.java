@@ -50,16 +50,19 @@ class TicketServiceImpl implements TicketService {
     public Ticket updateWithDto(TicketDto ticketDto) {
         Long id = Long.parseLong(ticketDto.getId());
         Ticket ticket = findById(id);
-        //System.out.println(ticket.getDeveloper());
-        //System.out.println(ticketDto.getDeveloper());
 
-        //User user = userDao.findByUsername(ticketDto.getDeveloper());
+        if (!ticketDto.getDeveloper().equals("NOT SET")){
+            User user = userDao.findByUsername(ticketDto.getDeveloper());
+            ticket.setDeveloper(user);
+        } else {
+            ticket.setDeveloper(null);
+        }
+
         ticket.setTitle(ticketDto.getTitle());
         ticket.setDescription(ticketDto.getDescription());
         ticket.setPriority(PriorityName.valueOf(ticketDto.getPriority()));
         ticket.setStatus(StatusName.valueOf(ticketDto.getStatus()));
         ticket.setSpecialty(SpecialtyName.valueOf(ticketDto.getSpecialty()));
-        //ticket.setDeveloper(user);
 
         return ticketDao.update(ticket);
     }
@@ -74,6 +77,29 @@ class TicketServiceImpl implements TicketService {
     @Transactional
     public Ticket findById(Long id) {
         return ticketDao.findById(id).orElseThrow(() -> new NotFoundException("Not found ticket with id = " + id));
+    }
+
+    @Override
+    public String findDtoById(Long id) throws JsonProcessingException {
+        TicketDto ticketDto = new TicketDto();
+        Ticket ticket = findById(id);
+
+        ticketDto.setCreatedDate(ticket.getCreatedDate().toString());
+        if (ticket.getClosedDate() != null){
+            ticketDto.setClosedDate(ticket.getClosedDate().toString());
+        }
+        ticketDto.setId(ticket.getId().toString());
+        ticketDto.setTitle(ticket.getTitle());
+        ticketDto.setDescription(ticket.getDescription());
+        ticketDto.setSpecialty(ticket.getSpecialty().toString());
+        ticketDto.setStatus(ticket.getStatus().toString());
+        ticketDto.setPriority(ticket.getPriority().toString());
+        ticketDto.setCreator(ticket.getCreator().getUsername());
+        if (ticket.getDeveloper() != null){
+            ticketDto.setDeveloper(ticket.getDeveloper().getUsername());
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(ticketDto);
     }
 
     @Transactional
