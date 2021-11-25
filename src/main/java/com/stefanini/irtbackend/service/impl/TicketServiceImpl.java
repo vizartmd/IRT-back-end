@@ -18,13 +18,10 @@ import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
-class TicketServiceImpl implements TicketService {
+public class TicketServiceImpl implements TicketService {
 
     private final TicketDao ticketDao;
     private final UserDao userDao;
@@ -147,10 +144,10 @@ class TicketServiceImpl implements TicketService {
     public String getListTicketDTO() throws JsonProcessingException {
         List<Ticket> tickets = ticketDao.findAll();
         List<TicketDto> listTicketDto = new ArrayList<>();
-        for(Ticket ticket : tickets) {
+        for (Ticket ticket : tickets) {
             TicketDto ticketDTO = new TicketDto();
             ticketDTO.setCreatedDate(ticket.getCreatedDate().toString());
-            if (ticket.getClosedDate() != null){
+            if (ticket.getClosedDate() != null) {
                 ticketDTO.setClosedDate(ticket.getClosedDate().toString());
             }
             ticketDTO.setId(ticket.getId().toString());
@@ -160,7 +157,7 @@ class TicketServiceImpl implements TicketService {
             ticketDTO.setStatus(ticket.getStatus().toString());
             ticketDTO.setPriority(ticket.getPriority().toString());
             ticketDTO.setCreator(ticket.getCreator().getUsername());
-            if (ticket.getDeveloper() != null){
+            if (ticket.getDeveloper() != null) {
                 ticketDTO.setDeveloper(ticket.getDeveloper().getUsername());
             }
             listTicketDto.add(ticketDTO);

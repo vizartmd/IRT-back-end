@@ -27,7 +27,7 @@ public class User extends AbstractEntity {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column
+    @Column()
     private String verificationCode;
 
     @Enumerated(value = EnumType.STRING)
