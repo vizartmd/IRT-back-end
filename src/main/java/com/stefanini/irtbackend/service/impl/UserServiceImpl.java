@@ -19,7 +19,8 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {
+
 
     private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
