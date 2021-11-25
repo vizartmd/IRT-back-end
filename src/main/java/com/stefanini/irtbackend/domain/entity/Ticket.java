@@ -15,7 +15,7 @@ import java.util.Set;
 @Table(name = "ticket")
 public class Ticket extends AbstractEntity {
 
-    @Column(name = "title", unique = true, nullable = false)
+    @Column(name = "title", unique = true)
     private String title;
 
     @Column(name = "description")
