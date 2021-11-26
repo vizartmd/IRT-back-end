@@ -46,7 +46,8 @@ public class Ticket extends AbstractEntity {
     @JoinColumn(name = "developer_id")
     private User developer;
 
-    @Column(name = "closed_date")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "closed_date", nullable = true)
     private LocalDate closedDate;
 
     public Ticket(String title, String description, SpecialtyName specialty, PriorityName priority, StatusName status, Set<Action> actionHistory, User creator, User developer) {
