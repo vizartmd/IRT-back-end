@@ -35,19 +35,6 @@ public class TicketController {
         return ticketService.findAll();
     }
 
-//    @GetMapping("/creators")
-//    String getAllTicketsCreators() throws JsonProcessingException {
-//        System.out.println("In getAllTicketsCreators controller!");
-//        System.out.println("ticketService.getAllTicketsCreators().toString(): " + ticketService.getAllTicketsCreators().toString());
-//        return ticketService.getAllTicketsCreators();
-//    }
-//
-//    @GetMapping("/developers")
-//    String getAllTicketsDevelopers() throws JsonProcessingException {
-//        System.out.println("In getAllTicketsDevelopers controller!");
-//        System.out.println("ticketService.getAllTicketsDevelopers().toString(): " + ticketService.getAllTicketsDevelopers().toString());
-//        return ticketService.getAllTicketsDevelopers();
-//    }
 
     @GetMapping("/{id}")
     ResponseEntity<Ticket> findById(@PathVariable("id") Long id) {
@@ -57,6 +44,12 @@ public class TicketController {
     String findDtoById(@PathVariable("id") Long id) throws JsonProcessingException {
         return ticketService.findDtoById(id);
     }
+
+    @GetMapping("/exist-title/{title}")
+    ResponseEntity<Boolean> existTicketWithTitle(@PathVariable("title") String title) {
+        return ResponseEntity.ok(ticketService.existTicketWithTitle(title));
+    }
+
 
     @GetMapping("/user-tickets/{developer_id}")
     ResponseEntity<List<Ticket>> findTicketsFor(@PathVariable("developer_id") Long id) {
