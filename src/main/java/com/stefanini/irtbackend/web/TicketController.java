@@ -2,7 +2,6 @@ package com.stefanini.irtbackend.web;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.stefanini.irtbackend.domain.dto.TicketDto;
-import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.domain.entity.Ticket;
 import com.stefanini.irtbackend.domain.entity.enums.PriorityName;
 import com.stefanini.irtbackend.domain.entity.enums.StatusName;
@@ -10,13 +9,11 @@ import com.stefanini.irtbackend.service.TicketService;
 import com.stefanini.irtbackend.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.text.ParseException;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/tickets")
@@ -40,6 +37,7 @@ public class TicketController {
     ResponseEntity<Ticket> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(ticketService.findById(id));
     }
+
     @GetMapping("/dto/{id}")
     String findDtoById(@PathVariable("id") Long id) throws JsonProcessingException {
         return ticketService.findDtoById(id);
@@ -84,6 +82,7 @@ public class TicketController {
         System.out.println("in updateTicketStatus, id: " + id + " status: " + status);
         return ticketService.updateTicketStatus(id, status);
     }
+
     @PutMapping("/add/{id}/{developer}")
     String updateTicketDeveloper(@PathVariable("id") Long id, @PathVariable("developer") String developer) throws JsonProcessingException {
         System.out.println("in updateTicketDeveloper, id: " + id + " developer: " + developer);

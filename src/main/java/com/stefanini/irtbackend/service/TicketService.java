@@ -3,11 +3,9 @@ package com.stefanini.irtbackend.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.stefanini.irtbackend.domain.dto.TicketDto;
 import com.stefanini.irtbackend.domain.entity.Ticket;
-import com.stefanini.irtbackend.domain.entity.User;
 
 import java.text.ParseException;
 import java.util.List;
-import java.util.Set;
 
 public interface TicketService {
     Ticket create(Ticket ticket);

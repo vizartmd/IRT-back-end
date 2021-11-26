@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -43,9 +44,11 @@ public class UserController {
 
     @GetMapping("/specialty/{specialty}")
     ResponseEntity<List<String>> findAllUsernamesBySpecialty(@PathVariable("specialty") String specialty) {
-        return ResponseEntity.ok(userService.findAllUsernamesBySpecialty(specialty));
+        List<String> resultList = new ArrayList<>();
+        resultList.add("NOT SET");
+        resultList.addAll(userService.findAllUsernamesBySpecialty(specialty));
+        return ResponseEntity.ok(resultList);
     }
-
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('users:read')")
@@ -65,7 +68,6 @@ public class UserController {
         User createdUser = userService.create(user);
         return ResponseEntity.created(URI.create("/users/" + createdUser.getId())).body(createdUser);
     }
-
 
     @PostMapping("/{id}/change-password")
     public ResponseEntity<Void> changePasswordFor(@PathVariable("id") Long id, @RequestBody ChangePasswordRequest request) {

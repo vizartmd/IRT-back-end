@@ -40,7 +40,6 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
     }
 
 
-
     public List<String> findAllUsernamesBySpecialty(String specialty) {
         SpecialtyName sn = SpecialtyName.valueOf(specialty);
         Query query = entityManager.createQuery("SELECT u.username FROM User u WHERE u.specialty=:specialty");
