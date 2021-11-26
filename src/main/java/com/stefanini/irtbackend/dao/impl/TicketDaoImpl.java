@@ -19,7 +19,9 @@ public class TicketDaoImpl extends GenericDaoImpl<Ticket> implements TicketDao {
 
     public List<Ticket> findAllTicketsFor(Long id) {
         List<Ticket> tickets = findAll();
-        tickets = tickets.stream().filter(ticket -> ticket.getDeveloper().getId().equals(id)).collect(Collectors.toList());
+        tickets = tickets.stream().filter(ticket -> ticket.getDeveloper()!=null)
+                .filter(ticket -> ticket.getDeveloper().getId().equals(id)).collect(Collectors.toList());
+
         return tickets;
     }
 
