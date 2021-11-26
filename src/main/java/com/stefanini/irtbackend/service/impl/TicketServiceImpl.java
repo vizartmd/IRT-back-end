@@ -21,7 +21,7 @@ import java.util.List;
 
 
 @Service
-class TicketServiceImpl implements TicketService {
+public class TicketServiceImpl implements TicketService {
 
     private final TicketDao ticketDao;
     private final UserDao userDao;
@@ -47,6 +47,14 @@ class TicketServiceImpl implements TicketService {
     public Ticket updateWithDto(TicketDto ticketDto) {
         Long id = Long.parseLong(ticketDto.getId());
         Ticket ticket = findById(id);
+
+        if (!ticketDto.getDeveloper().equals("NOT SET")){
+            User user = userDao.findByUsername(ticketDto.getDeveloper());
+            ticket.setDeveloper(user);
+        } else {
+            ticket.setDeveloper(null);
+        }
+
         ticket.setTitle(ticketDto.getTitle());
         ticket.setDescription(ticketDto.getDescription());
         ticket.setPriority(PriorityName.valueOf(ticketDto.getPriority()));
@@ -71,6 +79,29 @@ class TicketServiceImpl implements TicketService {
     @Override
     public Boolean existTicketWithTitle(String title) {
         return ticketDao.existTicketWithTitle(title);
+        }
+
+    public String findDtoById(Long id) throws JsonProcessingException {
+        TicketDto ticketDto = new TicketDto();
+        Ticket ticket = findById(id);
+
+        ticketDto.setCreatedDate(ticket.getCreatedDate().toString());
+        if (ticket.getClosedDate() != null){
+            ticketDto.setClosedDate(ticket.getClosedDate().toString());
+        }
+        ticketDto.setId(ticket.getId().toString());
+        ticketDto.setTitle(ticket.getTitle());
+        ticketDto.setDescription(ticket.getDescription());
+        ticketDto.setSpecialty(ticket.getSpecialty().toString());
+        ticketDto.setStatus(ticket.getStatus().toString());
+        ticketDto.setPriority(ticket.getPriority().toString());
+        ticketDto.setCreator(ticket.getCreator().getUsername());
+        if (ticket.getDeveloper() != null){
+            ticketDto.setDeveloper(ticket.getDeveloper().getUsername());
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(ticketDto);
+
     }
 
     @Transactional
@@ -118,10 +149,10 @@ class TicketServiceImpl implements TicketService {
     public String getListTicketDTO() throws JsonProcessingException {
         List<Ticket> tickets = ticketDao.findAll();
         List<TicketDto> listTicketDto = new ArrayList<>();
-        for(Ticket ticket : tickets) {
+        for (Ticket ticket : tickets) {
             TicketDto ticketDTO = new TicketDto();
             ticketDTO.setCreatedDate(ticket.getCreatedDate().toString());
-            if (ticket.getClosedDate() != null){
+            if (ticket.getClosedDate() != null) {
                 ticketDTO.setClosedDate(ticket.getClosedDate().toString());
             }
             ticketDTO.setId(ticket.getId().toString());
@@ -131,7 +162,7 @@ class TicketServiceImpl implements TicketService {
             ticketDTO.setStatus(ticket.getStatus().toString());
             ticketDTO.setPriority(ticket.getPriority().toString());
             ticketDTO.setCreator(ticket.getCreator().getUsername());
-            if (ticket.getDeveloper() != null){
+            if (ticket.getDeveloper() != null) {
                 ticketDTO.setDeveloper(ticket.getDeveloper().getUsername());
             }
             listTicketDto.add(ticketDTO);

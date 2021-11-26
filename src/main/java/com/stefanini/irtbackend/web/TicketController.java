@@ -40,6 +40,10 @@ public class TicketController {
     ResponseEntity<Ticket> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(ticketService.findById(id));
     }
+    @GetMapping("/dto/{id}")
+    String findDtoById(@PathVariable("id") Long id) throws JsonProcessingException {
+        return ticketService.findDtoById(id);
+    }
 
     @GetMapping("/exist-title/{title}")
     ResponseEntity<Boolean> existTicketWithTitle(@PathVariable("title") String title) {
@@ -68,10 +72,7 @@ public class TicketController {
     ResponseEntity<?> update(@RequestBody TicketDto ticketDto) {
         Ticket ticket = null;
         try {
-            System.out.println("11111111111");
-
             ticket = (ticketService.updateWithDto(ticketDto));
-            System.out.println("22222222222");
             return ResponseEntity.ok(ticket);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Duplicate entry");
