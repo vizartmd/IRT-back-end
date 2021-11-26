@@ -20,6 +20,9 @@ public interface TicketService {
 
     Ticket findById(Long id);
 
+
+    Boolean existTicketWithTitle(String title);
+
     String findDtoById(Long id) throws JsonProcessingException;
 
     void deleteById(Long id);

@@ -7,4 +7,6 @@ import java.util.List;
 public interface TicketDao extends GenericDao<Ticket> {
 
     public List<Ticket> findAllTicketsFor(Long id);
+
+    Boolean existTicketWithTitle(String title);
 }

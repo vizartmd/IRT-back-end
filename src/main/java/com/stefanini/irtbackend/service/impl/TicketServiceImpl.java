@@ -13,18 +13,15 @@ import com.stefanini.irtbackend.domain.entity.enums.SpecialtyName;
 import com.stefanini.irtbackend.domain.entity.enums.StatusName;
 import com.stefanini.irtbackend.service.TicketService;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+
 
 @Service
-class TicketServiceImpl implements TicketService {
+public class TicketServiceImpl implements TicketService {
 
     private final TicketDao ticketDao;
     private final UserDao userDao;
@@ -80,6 +77,11 @@ class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    public Boolean existTicketWithTitle(String title) {
+        return ticketDao.existTicketWithTitle(title);
+        }
+
+    @Override
     public String findDtoById(Long id) throws JsonProcessingException {
         TicketDto ticketDto = new TicketDto();
         Ticket ticket = findById(id);
@@ -100,6 +102,7 @@ class TicketServiceImpl implements TicketService {
         }
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(ticketDto);
+
     }
 
     @Transactional
@@ -147,10 +150,10 @@ class TicketServiceImpl implements TicketService {
     public String getListTicketDTO() throws JsonProcessingException {
         List<Ticket> tickets = ticketDao.findAll();
         List<TicketDto> listTicketDto = new ArrayList<>();
-        for(Ticket ticket : tickets) {
+        for (Ticket ticket : tickets) {
             TicketDto ticketDTO = new TicketDto();
             ticketDTO.setCreatedDate(ticket.getCreatedDate().toString());
-            if (ticket.getClosedDate() != null){
+            if (ticket.getClosedDate() != null) {
                 ticketDTO.setClosedDate(ticket.getClosedDate().toString());
             }
             ticketDTO.setId(ticket.getId().toString());
@@ -160,7 +163,7 @@ class TicketServiceImpl implements TicketService {
             ticketDTO.setStatus(ticket.getStatus().toString());
             ticketDTO.setPriority(ticket.getPriority().toString());
             ticketDTO.setCreator(ticket.getCreator().getUsername());
-            if (ticket.getDeveloper() != null){
+            if (ticket.getDeveloper() != null) {
                 ticketDTO.setDeveloper(ticket.getDeveloper().getUsername());
             }
             listTicketDto.add(ticketDTO);
@@ -168,30 +171,6 @@ class TicketServiceImpl implements TicketService {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(listTicketDto);
     }
-
-//    @Override
-//    public String getAllTicketsCreators() throws JsonProcessingException {
-//        List<Ticket> tickets = ticketDao.findAll();
-//        Set<String> creators = new HashSet<>();
-//        for (int i = 0; i < tickets.size(); i++) {
-//            creators.add(tickets.get(i).getCreator().getUsername());
-//        }
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        return objectMapper.writeValueAsString(creators);
-//    }
-//
-//    @Override
-//    public String getAllTicketsDevelopers() throws JsonProcessingException {
-//        List<Ticket> tickets = ticketDao.findAll();
-//        Set<String> developers = new HashSet<>();
-//        for (Ticket t : tickets) {
-//            if(t.getDeveloper() != null) {
-//                developers.add(t.getDeveloper().getUsername());
-//            }
-//        }
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        return objectMapper.writeValueAsString(developers);
-//    }
 
     @Override
     public String updateTicketDeveloper(Long id, String developer) throws JsonProcessingException {
@@ -217,7 +196,9 @@ class TicketServiceImpl implements TicketService {
         ticket.setPriority(PriorityName.valueOf(ticketDto.getPriority()));
         ticket.setSpecialty(SpecialtyName.valueOf(ticketDto.getSpecialty()));
         ticket.setCreator(userDao.findByUsername(ticketDto.getCreator()));
-        ticket.setDeveloper(userDao.findByUsername(ticketDto.getDeveloper()));
+        if(ticketDto.getDeveloper() != null){
+            ticket.setDeveloper(userDao.findByUsername(ticketDto.getDeveloper()));
+        }
         return ticketDao.create(ticket);
     }
 
