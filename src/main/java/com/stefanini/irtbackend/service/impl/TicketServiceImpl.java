@@ -81,6 +81,7 @@ public class TicketServiceImpl implements TicketService {
         return ticketDao.existTicketWithTitle(title);
         }
 
+    @Override
     public String findDtoById(Long id) throws JsonProcessingException {
         TicketDto ticketDto = new TicketDto();
         Ticket ticket = findById(id);
