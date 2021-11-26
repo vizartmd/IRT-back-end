@@ -50,7 +50,6 @@ public class UserController {
         return ResponseEntity.ok(resultList);
     }
 
-
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('users:read')")
     ResponseEntity<User> findById(@PathVariable("id") Long id) {
@@ -69,7 +68,6 @@ public class UserController {
         User createdUser = userService.create(user);
         return ResponseEntity.created(URI.create("/users/" + createdUser.getId())).body(createdUser);
     }
-
 
     @PostMapping("/{id}/change-password")
     public ResponseEntity<Void> changePasswordFor(@PathVariable("id") Long id, @RequestBody ChangePasswordRequest request) {

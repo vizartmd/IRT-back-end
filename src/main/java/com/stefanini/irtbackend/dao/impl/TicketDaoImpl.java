@@ -2,7 +2,6 @@ package com.stefanini.irtbackend.dao.impl;
 
 import com.stefanini.irtbackend.dao.TicketDao;
 import com.stefanini.irtbackend.domain.entity.Ticket;
-import com.stefanini.irtbackend.domain.entity.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
@@ -31,7 +30,7 @@ public class TicketDaoImpl extends GenericDaoImpl<Ticket> implements TicketDao {
 
         try {
             query.getSingleResult();
-        } catch (NoResultException nre){
+        } catch (NoResultException nre) {
             return false;
         }
 
