@@ -13,15 +13,12 @@ import com.stefanini.irtbackend.domain.entity.enums.SpecialtyName;
 import com.stefanini.irtbackend.domain.entity.enums.StatusName;
 import com.stefanini.irtbackend.service.TicketService;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+
 
 @Service
 class TicketServiceImpl implements TicketService {
@@ -50,16 +47,11 @@ class TicketServiceImpl implements TicketService {
     public Ticket updateWithDto(TicketDto ticketDto) {
         Long id = Long.parseLong(ticketDto.getId());
         Ticket ticket = findById(id);
-        //System.out.println(ticket.getDeveloper());
-        //System.out.println(ticketDto.getDeveloper());
-
-        //User user = userDao.findByUsername(ticketDto.getDeveloper());
         ticket.setTitle(ticketDto.getTitle());
         ticket.setDescription(ticketDto.getDescription());
         ticket.setPriority(PriorityName.valueOf(ticketDto.getPriority()));
         ticket.setStatus(StatusName.valueOf(ticketDto.getStatus()));
         ticket.setSpecialty(SpecialtyName.valueOf(ticketDto.getSpecialty()));
-        //ticket.setDeveloper(user);
 
         return ticketDao.update(ticket);
     }
@@ -74,6 +66,11 @@ class TicketServiceImpl implements TicketService {
     @Transactional
     public Ticket findById(Long id) {
         return ticketDao.findById(id).orElseThrow(() -> new NotFoundException("Not found ticket with id = " + id));
+    }
+
+    @Override
+    public Boolean existTicketWithTitle(String title) {
+        return ticketDao.existTicketWithTitle(title);
     }
 
     @Transactional
@@ -143,30 +140,6 @@ class TicketServiceImpl implements TicketService {
         return objectMapper.writeValueAsString(listTicketDto);
     }
 
-//    @Override
-//    public String getAllTicketsCreators() throws JsonProcessingException {
-//        List<Ticket> tickets = ticketDao.findAll();
-//        Set<String> creators = new HashSet<>();
-//        for (int i = 0; i < tickets.size(); i++) {
-//            creators.add(tickets.get(i).getCreator().getUsername());
-//        }
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        return objectMapper.writeValueAsString(creators);
-//    }
-//
-//    @Override
-//    public String getAllTicketsDevelopers() throws JsonProcessingException {
-//        List<Ticket> tickets = ticketDao.findAll();
-//        Set<String> developers = new HashSet<>();
-//        for (Ticket t : tickets) {
-//            if(t.getDeveloper() != null) {
-//                developers.add(t.getDeveloper().getUsername());
-//            }
-//        }
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        return objectMapper.writeValueAsString(developers);
-//    }
-
     @Override
     public String updateTicketDeveloper(Long id, String developer) throws JsonProcessingException {
         Ticket ticket = findById(id);
@@ -191,7 +164,9 @@ class TicketServiceImpl implements TicketService {
         ticket.setPriority(PriorityName.valueOf(ticketDto.getPriority()));
         ticket.setSpecialty(SpecialtyName.valueOf(ticketDto.getSpecialty()));
         ticket.setCreator(userDao.findByUsername(ticketDto.getCreator()));
-        ticket.setDeveloper(userDao.findByUsername(ticketDto.getDeveloper()));
+        if(ticketDto.getDeveloper() != null){
+            ticket.setDeveloper(userDao.findByUsername(ticketDto.getDeveloper()));
+        }
         return ticketDao.create(ticket);
     }
 

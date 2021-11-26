@@ -20,6 +20,8 @@ public interface TicketService {
 
     Ticket findById(Long id);
 
+    Boolean existTicketWithTitle(String title);
+
     void deleteById(Long id);
 
     List<Ticket> findAll();
