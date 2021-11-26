@@ -13,6 +13,7 @@ import com.stefanini.irtbackend.domain.entity.enums.SpecialtyName;
 import com.stefanini.irtbackend.domain.entity.enums.StatusName;
 import com.stefanini.irtbackend.service.TicketService;
 import org.springframework.stereotype.Service;
+
 import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -48,7 +49,7 @@ public class TicketServiceImpl implements TicketService {
         Long id = Long.parseLong(ticketDto.getId());
         Ticket ticket = findById(id);
 
-        if (!ticketDto.getDeveloper().equals("NOT SET")){
+        if (!ticketDto.getDeveloper().equals("NOT SET")) {
             User user = userDao.findByUsername(ticketDto.getDeveloper());
             ticket.setDeveloper(user);
         } else {
@@ -79,7 +80,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public Boolean existTicketWithTitle(String title) {
         return ticketDao.existTicketWithTitle(title);
-        }
+    }
 
     @Override
     public String findDtoById(Long id) throws JsonProcessingException {
@@ -87,7 +88,7 @@ public class TicketServiceImpl implements TicketService {
         Ticket ticket = findById(id);
 
         ticketDto.setCreatedDate(ticket.getCreatedDate().toString());
-        if (ticket.getClosedDate() != null){
+        if (ticket.getClosedDate() != null) {
             ticketDto.setClosedDate(ticket.getClosedDate().toString());
         }
         ticketDto.setId(ticket.getId().toString());
@@ -97,7 +98,7 @@ public class TicketServiceImpl implements TicketService {
         ticketDto.setStatus(ticket.getStatus().toString());
         ticketDto.setPriority(ticket.getPriority().toString());
         ticketDto.setCreator(ticket.getCreator().getUsername());
-        if (ticket.getDeveloper() != null){
+        if (ticket.getDeveloper() != null) {
             ticketDto.setDeveloper(ticket.getDeveloper().getUsername());
         }
         ObjectMapper objectMapper = new ObjectMapper();
@@ -196,7 +197,7 @@ public class TicketServiceImpl implements TicketService {
         ticket.setPriority(PriorityName.valueOf(ticketDto.getPriority()));
         ticket.setSpecialty(SpecialtyName.valueOf(ticketDto.getSpecialty()));
         ticket.setCreator(userDao.findByUsername(ticketDto.getCreator()));
-        if(ticketDto.getDeveloper() != null){
+        if (ticketDto.getDeveloper() != null) {
             ticket.setDeveloper(userDao.findByUsername(ticketDto.getDeveloper()));
         }
         return ticketDao.create(ticket);
