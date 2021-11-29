@@ -142,6 +142,7 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         userDao.update(user);
+        user.setVerificationCode(" ");
     }
 
     public List<User> findAllBySpecialty(String specialty) {
