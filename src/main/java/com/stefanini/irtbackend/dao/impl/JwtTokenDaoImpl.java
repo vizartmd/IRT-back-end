@@ -2,7 +2,6 @@ package com.stefanini.irtbackend.dao.impl;
 
 import com.stefanini.irtbackend.dao.JwtTokenDao;
 import com.stefanini.irtbackend.domain.entity.JwtToken;
-import com.stefanini.irtbackend.domain.entity.Ticket;
 import org.springframework.stereotype.Repository;
 
 @Repository
