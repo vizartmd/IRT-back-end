@@ -1,15 +1,11 @@
 package com.stefanini.irtbackend.web;
 
-import com.stefanini.irtbackend.domain.dto.TicketDto;
 import com.stefanini.irtbackend.domain.entity.JwtToken;
-import com.stefanini.irtbackend.domain.entity.Ticket;
 import com.stefanini.irtbackend.service.JwtTokenService;
-import com.stefanini.irtbackend.service.TicketService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
-import java.text.ParseException;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")

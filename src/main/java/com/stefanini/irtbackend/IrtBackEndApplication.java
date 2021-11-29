@@ -13,5 +13,4 @@ public class IrtBackEndApplication {
         SpringApplication.run(IrtBackEndApplication.class, args);
     }
 
-
 }
