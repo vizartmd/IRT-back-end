@@ -1,7 +1,6 @@
 package com.stefanini.irtbackend.config.security.jwt;
 
 import com.stefanini.irtbackend.config.security.jwt.exception.JwtAuthenticationException;
-import com.stefanini.irtbackend.dao.impl.JwtTokenDaoImpl;
 import com.stefanini.irtbackend.domain.entity.JwtToken;
 import com.stefanini.irtbackend.service.JwtTokenService;
 import io.jsonwebtoken.*;
@@ -63,9 +62,9 @@ public class JwtTokenProvider {
         } else {
             validityToken = jwtToken.getCounter();
         }
-        System.out.println("validityToken: " +  validityToken);
+        System.out.println("validityToken: " + validityToken);
         Date validity = new Date(now.getTime() + validityToken * 1000);
-        System.out.println("validityInMilliseconds * 1000: " +  validityInMilliseconds * 1000);
+        System.out.println("validityInMilliseconds * 1000: " + validityInMilliseconds * 1000);
 
         return Jwts.builder()
                 .setClaims(claims)
