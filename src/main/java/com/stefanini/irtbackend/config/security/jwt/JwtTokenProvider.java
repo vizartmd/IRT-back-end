@@ -1,8 +1,6 @@
 package com.stefanini.irtbackend.config.security.jwt;
 
 import com.stefanini.irtbackend.config.security.jwt.exception.JwtAuthenticationException;
-import com.stefanini.irtbackend.domain.entity.JwtToken;
-import com.stefanini.irtbackend.service.JwtTokenService;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
