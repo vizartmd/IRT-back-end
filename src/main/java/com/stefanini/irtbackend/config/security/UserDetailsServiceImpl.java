@@ -2,7 +2,6 @@ package com.stefanini.irtbackend.config.security;
 
 import com.stefanini.irtbackend.dao.UserDao;
 import com.stefanini.irtbackend.domain.entity.User;
-import com.stefanini.irtbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

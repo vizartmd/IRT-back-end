@@ -1,6 +1,6 @@
 package com.stefanini.irtbackend.web.auth;
 
-import com.stefanini.irtbackend.domain.dto.AuthenticationRequestDTO;
+import com.stefanini.irtbackend.domain.dto.AuthenticationRequest;
 import com.stefanini.irtbackend.domain.dto.UserDto;
 import com.stefanini.irtbackend.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,7 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserDto> authenticate(@RequestBody AuthenticationRequestDTO request) {
+    public ResponseEntity<UserDto> authenticate(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 

@@ -2,11 +2,16 @@ package com.stefanini.irtbackend.dao.impl;
 
 import com.stefanini.irtbackend.dao.UserDao;
 import com.stefanini.irtbackend.domain.entity.User;
+import com.stefanini.irtbackend.domain.entity.enums.SpecialtyName;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import java.util.List;
+import java.util.Optional;
+
 
 @Repository
 public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
@@ -27,10 +32,27 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
     }
 
     @Override
-    public User findByEmail(String email) {
-        Query query = entityManager.createQuery("SELECT u FROM User u WHERE u.email=:email");
+    public Optional<User> findByEmail(String email) {
+        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.email=:email", User.class);
         query.setParameter("email", email);
 
-        return (User) query.getSingleResult();
+        return query.getResultList().stream().findFirst();
+    }
+
+
+    public List<String> findAllUsernamesBySpecialty(String specialty) {
+        SpecialtyName sn = SpecialtyName.valueOf(specialty);
+        Query query = entityManager.createQuery("SELECT u.username FROM User u WHERE u.specialty=:specialty");
+        query.setParameter("specialty", sn);
+
+        return (List<String>) query.getResultList();
+    }
+
+    public List<User> findAllBySpecialty(String specialty) {
+        SpecialtyName sn = SpecialtyName.valueOf(specialty);
+        Query query = entityManager.createQuery("SELECT u FROM User u WHERE u.specialty=:specialty");
+        query.setParameter("specialty", sn);
+
+        return (List<User>) query.getResultList();
     }
 }

@@ -11,7 +11,7 @@
     <groupId>com.stefanini</groupId>
     <artifactId>irt-back-end</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>irt-back-end</name>
     <description>Issue Reporting Tool</description>
     <properties>
@@ -53,9 +53,13 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>5.2.8.RELEASE</version>
+        </dependency>
         <!-- security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -92,7 +96,19 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.4.1</version>
-
+              <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>spring-boot</classifier>
+                            <mainClass>
+                                com.stefanini.irtbackend.IrtBackEndApplication
+                            </mainClass>
+                        </configuration>
+                    </execution>
+               </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -1,5 +1,6 @@
 package com.stefanini.irtbackend.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stefanini.irtbackend.domain.entity.enums.RoleName;
 import com.stefanini.irtbackend.domain.entity.enums.SpecialtyName;
 
@@ -26,6 +27,9 @@ public class User extends AbstractEntity {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Column()
+    private String verificationCode;
+
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
     private RoleName role;
@@ -34,9 +38,11 @@ public class User extends AbstractEntity {
     @Column(name = "user_specialty")
     private SpecialtyName specialty;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "creator")
     private Set<Ticket> createdTickets = new HashSet<>();
 
+    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinTable(name = "developer_ticket",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -70,6 +76,13 @@ public class User extends AbstractEntity {
         this.email = email;
     }
 
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
 
     public String getUsername() {
         return username;
