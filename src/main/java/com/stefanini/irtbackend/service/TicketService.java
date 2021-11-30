@@ -1,6 +1,6 @@
 package com.stefanini.irtbackend.service;
 
-import com.stefanini.irtbackend.domain.dto.TicketDto;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.stefanini.irtbackend.domain.entity.Ticket;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public interface TicketService {
 
     List<Ticket> findAll();
 
-    List<TicketDto> updateTicketStatus(Long id, String status);
+    String updateTicketStatus(Long id, String status) throws JsonProcessingException;
 
-    List<TicketDto> getListTicketDTO();
+    String getListTicketDTO() throws JsonProcessingException;
 }
