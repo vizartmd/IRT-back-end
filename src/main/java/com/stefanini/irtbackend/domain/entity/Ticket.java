@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stefanini.irtbackend.domain.entity.enums.PriorityName;
 import com.stefanini.irtbackend.domain.entity.enums.SpecialtyName;
 import com.stefanini.irtbackend.domain.entity.enums.StatusName;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -46,7 +45,8 @@ public class Ticket extends AbstractEntity {
     @JoinColumn(name = "developer_id")
     private User developer;
 
-    @Column(name = "closed_date")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "closed_date", nullable = true)
     private LocalDate closedDate;
 
     public Ticket(String title, String description, SpecialtyName specialty, PriorityName priority, StatusName status, Set<Action> actionHistory, User creator, User developer) {
@@ -72,6 +72,15 @@ public class Ticket extends AbstractEntity {
         this.closedDate = closedDate;
     }
 
+    public Ticket(String title, String description, SpecialtyName specialty, PriorityName priority, StatusName status, User creator) {
+        this.title = title;
+        this.description = description;
+        this.specialty = specialty;
+        this.priority = priority;
+        this.status = status;
+        this.creator = creator;
+    }
+
     public Ticket() {
     }
 
@@ -84,9 +93,6 @@ public class Ticket extends AbstractEntity {
     }
 
     public User getCreator() {
-        if (creator.getUsername() == null) {
-            creator.setUsername("");
-        }
         return creator;
     }
 
@@ -135,9 +141,6 @@ public class Ticket extends AbstractEntity {
     }
 
     public User getDeveloper() {
-        if (developer.getUsername() == null) {
-            developer.setUsername("");
-        }
         return developer;
     }
 
