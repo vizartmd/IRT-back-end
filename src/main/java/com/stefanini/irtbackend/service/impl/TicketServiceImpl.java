@@ -171,7 +171,6 @@ public class TicketServiceImpl implements TicketService {
         }
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(listTicketDto);
-
     }
 
     @Override
