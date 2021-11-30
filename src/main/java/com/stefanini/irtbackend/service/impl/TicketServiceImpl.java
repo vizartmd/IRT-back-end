@@ -153,6 +153,7 @@ public class TicketServiceImpl implements TicketService {
         List<TicketDto> listTicketDto = new ArrayList<>();
         for (Ticket ticket : tickets) {
             TicketDto ticketDTO = new TicketDto();
+
             ticketDTO.setCreatedDate(ticket.getCreatedDate().toString());
             if (ticket.getClosedDate() != null) {
                 ticketDTO.setClosedDate(ticket.getClosedDate().toString());
@@ -168,6 +169,7 @@ public class TicketServiceImpl implements TicketService {
                 ticketDTO.setDeveloper(ticket.getDeveloper().getUsername());
             }
             listTicketDto.add(ticketDTO);
+
         }
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(listTicketDto);
