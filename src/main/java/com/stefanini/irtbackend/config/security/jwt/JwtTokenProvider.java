@@ -1,6 +1,8 @@
 package com.stefanini.irtbackend.config.security.jwt;
 
 import com.stefanini.irtbackend.config.security.jwt.exception.JwtAuthenticationException;
+import com.stefanini.irtbackend.domain.entity.JwtToken;
+import com.stefanini.irtbackend.service.JwtTokenService;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,11 +17,13 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class JwtTokenProvider {
 
     private final UserDetailsService userDetailsService;
+    private final JwtTokenService jwtTokenService;
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -30,8 +34,9 @@ public class JwtTokenProvider {
     @Value("${jwt.expiration}")
     private long validityInMilliseconds;
 
-    public JwtTokenProvider(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
+    public JwtTokenProvider(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService, JwtTokenService jwtTokenService) {
         this.userDetailsService = userDetailsService;
+        this.jwtTokenService = jwtTokenService;
     }
 
     @PostConstruct
@@ -43,7 +48,23 @@ public class JwtTokenProvider {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("role", role);
         Date now = new Date();
-        Date validity = new Date(now.getTime() + validityInMilliseconds * 1000);
+        List<JwtToken> jwtTokens = jwtTokenService.findAll();
+        JwtToken jwtToken = null;
+        for (int i = 0; i < jwtTokens.size(); i++) {
+            if (i == jwtTokens.size() - 1) {
+                jwtToken = jwtTokens.get(i);
+                System.out.println("jwtTokens.toString(): " + jwtTokens.toString());
+            }
+        }
+        Long validityToken;
+        if (jwtToken == null) {
+            validityToken = validityInMilliseconds;
+        } else {
+            validityToken = jwtToken.getCounter();
+        }
+        System.out.println("validityToken: " + validityToken);
+        Date validity = new Date(now.getTime() + validityToken * 1000);
+        System.out.println("validityInMilliseconds * 1000: " + validityInMilliseconds * 1000);
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -51,7 +72,6 @@ public class JwtTokenProvider {
                 .setExpiration(validity)
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
-
     }
 
     public boolean validateToken(String token) throws JwtAuthenticationException {

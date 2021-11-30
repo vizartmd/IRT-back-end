@@ -27,6 +27,9 @@ public class User extends AbstractEntity {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Column()
+    private String verificationCode;
+
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
     private RoleName role;
@@ -73,6 +76,13 @@ public class User extends AbstractEntity {
         this.email = email;
     }
 
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
 
     public String getUsername() {
         return username;
