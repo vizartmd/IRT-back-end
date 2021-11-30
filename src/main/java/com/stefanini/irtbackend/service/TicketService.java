@@ -1,7 +1,7 @@
 package com.stefanini.irtbackend.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.stefanini.irtbackend.domain.dto.TicketDto;
+
 import com.stefanini.irtbackend.domain.entity.Ticket;
 
 import java.text.ParseException;
@@ -18,7 +18,6 @@ public interface TicketService {
     void delete(Ticket ticket);
 
     Ticket findById(Long id);
-
 
     Boolean existTicketWithTitle(String title);
 
@@ -39,3 +38,4 @@ public interface TicketService {
     List<Ticket> getTicketFor(Long id);
 
 }
+

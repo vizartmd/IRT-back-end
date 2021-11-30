@@ -1,6 +1,5 @@
 package com.stefanini.irtbackend.web;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.stefanini.irtbackend.domain.dto.TicketDto;
 import com.stefanini.irtbackend.domain.entity.Ticket;
 import com.stefanini.irtbackend.domain.entity.enums.PriorityName;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.text.ParseException;
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/tickets")
@@ -30,8 +30,13 @@ public class TicketController {
     @GetMapping
     List<Ticket> findAll() {
         return ticketService.findAll();
+
     }
 
+    @GetMapping("/kanban")
+    String findAllTickets() throws JsonProcessingException {
+        return ticketService.getListTicketDTO();
+    } 
 
     @GetMapping("/{id}")
     ResponseEntity<Ticket> findById(@PathVariable("id") Long id) {
