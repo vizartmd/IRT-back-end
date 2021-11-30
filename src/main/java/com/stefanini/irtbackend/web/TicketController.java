@@ -1,5 +1,6 @@
 package com.stefanini.irtbackend.web;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.stefanini.irtbackend.domain.dto.TicketDto;
 import com.stefanini.irtbackend.domain.entity.Ticket;
 import com.stefanini.irtbackend.domain.entity.enums.PriorityName;
@@ -58,12 +59,6 @@ public class TicketController {
     ResponseEntity<List<Ticket>> findTicketsFor(@PathVariable("developer_id") Long id) {
         return ResponseEntity.ok(ticketService.getTicketFor(id));
     }
-
-    @GetMapping("/kanban")
-    String findAllTickets() throws JsonProcessingException {
-        return ticketService.getListTicketDTO();
-    }
-
 
     @PostMapping
     ResponseEntity<Ticket> create(@RequestBody TicketDto ticketDto) throws ParseException {
