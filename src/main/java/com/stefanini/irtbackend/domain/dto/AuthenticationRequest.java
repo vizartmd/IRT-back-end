@@ -1,6 +1,6 @@
 package com.stefanini.irtbackend.domain.dto;
 
-public class AuthenticationRequestDTO {
+public class AuthenticationRequest {
     private String email;
     private String password;
 

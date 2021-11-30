@@ -2,5 +2,11 @@ package com.stefanini.irtbackend.dao;
 
 import com.stefanini.irtbackend.domain.entity.Ticket;
 
-public interface TicketDao extends GenericDao<Ticket>{
+import java.util.List;
+
+public interface TicketDao extends GenericDao<Ticket> {
+
+    public List<Ticket> findAllTicketsFor(Long id);
+
+    Boolean existTicketWithTitle(String title);
 }
