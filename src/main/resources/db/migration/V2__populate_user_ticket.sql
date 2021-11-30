@@ -40,7 +40,7 @@ insert into user ( created_date, email, first_name, last_name, password, role, u
 
 
 insert into ticket (created_date, closed_date, description, ticket_priority, ticket_specialty, ticket_status, title, creator_id, developer_id)
-        values('2021-11-18', '2021-11-20', 'Implement registration and authentication. Only the admin should have the permission to sign up a user', 'MEDIUM', 'FRONTEND', 'FINISHED', 'Registration and Authentication', '1', '9');
+        values('2021-11-18', null, 'Implement registration and authentication. Only the admin should have the permission to sign up a user', 'MEDIUM', 'FRONTEND', 'FINISHED', 'Registration and Authentication', '1', '9');
 
 insert into ticket (created_date, closed_date, description, ticket_priority, ticket_specialty, ticket_status, title, creator_id, developer_id)
         values('2021-11-20', null, 'Create entities for User, Email, Ticket and Action', 'LOW', 'BACKEND', 'BACKLOG', 'Create project entities', '2', null);
@@ -55,7 +55,7 @@ insert into ticket (created_date, closed_date, description, ticket_priority, tic
         values('2021-10-20', null, 'Create a user list with all the users. There should be three buttons, one to view the user, other one to edit the user, and one to delete the user. Add filtration and pagination to the table ', 'HIGH', 'FRONTEND', 'BACKLOG', 'Create user list', '4', null);
 
 insert into ticket (created_date, closed_date, description, ticket_priority, ticket_specialty, ticket_status, title, creator_id, developer_id)
-        values('2021-11-09', '2021-11-14', 'Create the services for User, Email, Ticket and Action', 'MEDIUM', 'BACKEND', 'FINISHED', 'Create project services', '4', '11');
+        values('2021-11-09', null, 'Create the services for User, Email, Ticket and Action', 'MEDIUM', 'BACKEND', 'FINISHED', 'Create project services', '4', '11');
 
 insert into ticket (created_date, closed_date, description, ticket_priority, ticket_specialty, ticket_status, title, creator_id, developer_id)
         values('2021-11-02', null, 'Create unit tests for methods from User and Ticket services', 'HIGH', 'FRONTEND', 'BACKLOG', 'Create unit test', '3', null);
