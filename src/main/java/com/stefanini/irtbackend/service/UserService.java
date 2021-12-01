@@ -35,7 +35,7 @@ public interface UserService {
 
     List<String> findAllUsernamesBySpecialty(String specialty);
 
-//    void resetPasswordFor(String email);
+    List<String> findAllUsernamesByRole(String role);
 
-    List<User> findAllBySpecialty(String specialty);
+
 }

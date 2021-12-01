@@ -15,4 +15,6 @@ public interface UserDao extends GenericDao<User> {
 
     Optional<User> findByEmail(String email);
 
+    List<String> findAllUsernamesByRole(String role);
+
 }
