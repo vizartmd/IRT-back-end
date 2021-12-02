@@ -2,6 +2,7 @@ package com.stefanini.irtbackend.dao.impl;
 
 import com.stefanini.irtbackend.dao.UserDao;
 import com.stefanini.irtbackend.domain.entity.User;
+import com.stefanini.irtbackend.domain.entity.enums.RoleName;
 import com.stefanini.irtbackend.domain.entity.enums.SpecialtyName;
 import org.springframework.stereotype.Repository;
 
@@ -37,6 +38,15 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
         query.setParameter("email", email);
 
         return query.getResultList().stream().findFirst();
+    }
+
+    @Override
+    public List<String> findAllUsernamesByRole(String role) {
+        RoleName rn = RoleName.valueOf(role);
+        Query query = entityManager.createQuery("SELECT u.username FROM User u WHERE u.role=:role");
+        query.setParameter("role", rn);
+
+        return (List<String>) query.getResultList();
     }
 
 

@@ -50,6 +50,13 @@ public class UserController {
         return ResponseEntity.ok(resultList);
     }
 
+    @GetMapping("/role/{role}")
+    ResponseEntity<List<String>> findAllUsernamesByRole(@PathVariable("role") String role) {
+        List<String> resultList = new ArrayList<>();
+        resultList.addAll(userService.findAllUsernamesByRole(role));
+        return ResponseEntity.ok(resultList);
+    }
+
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('users:read')")
     ResponseEntity<User> findById(@PathVariable("id") Long id) {
