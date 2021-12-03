@@ -20,7 +20,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource("classpath:db.properties")
+@PropertySource("classpath:application.properties")
 public class DatabaseConfig {
 
     @Resource
@@ -30,7 +30,7 @@ public class DatabaseConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(env.getRequiredProperty("db.entity.package"));
+        em.setPackagesToScan(env.getRequiredProperty("application.entity.package"));
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setJpaProperties(getHibernateProperties());
 
@@ -48,7 +48,7 @@ public class DatabaseConfig {
     @Bean
     public DataSource dataSource() {
         SimpleDriverDataSource ds = new SimpleDriverDataSource();
-        ds.setUrl(env.getRequiredProperty("db.url"));
+        ds.setUrl(env.getRequiredProperty("spring_datasource_url"));
         Class<Driver> driverClass;
         try {
             driverClass = (Class<Driver>) Class.forName("com.mysql.cj.jdbc.Driver");
@@ -56,15 +56,15 @@ public class DatabaseConfig {
         } catch (ClassNotFoundException | ClassCastException e) {
             e.printStackTrace();
         }
-        ds.setUsername(env.getRequiredProperty("db.username"));
-        ds.setPassword(env.getRequiredProperty("db.password"));
+        ds.setUsername(env.getRequiredProperty("spring_datasource_username"));
+        ds.setPassword(env.getRequiredProperty("spring_datasource_password"));
         return ds;
     }
 
     public Properties getHibernateProperties() {
         try {
             Properties properties = new Properties();
-            InputStream is = getClass().getClassLoader().getResourceAsStream("hibernate.properties");
+            InputStream is = getClass().getClassLoader().getResourceAsStream("application.properties");
             properties.load(is);
 
             return properties;
