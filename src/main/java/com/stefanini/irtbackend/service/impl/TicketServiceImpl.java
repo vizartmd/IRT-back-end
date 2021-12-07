@@ -183,6 +183,7 @@ public class TicketServiceImpl implements TicketService {
         if (user != null && ticket != null) {
             user.getProcessingTickets().add(ticket);
             ticket.setDeveloper(user);
+            ticket.setStatus(StatusName.ASSIGNED);
         }
         userDao.update(user);
         ticketDao.update(ticket);
