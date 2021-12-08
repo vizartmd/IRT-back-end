@@ -37,7 +37,7 @@ public class TicketController {
     @GetMapping("/kanban")
     String findAllTickets() throws JsonProcessingException {
         return ticketService.getListTicketDTO();
-    } 
+    }
 
     @GetMapping("/{id}")
     ResponseEntity<Ticket> findById(@PathVariable("id") Long id) {

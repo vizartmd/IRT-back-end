@@ -134,8 +134,8 @@ public class TicketServiceImpl implements TicketService {
             case "ASSIGNED":
                 ticket.setStatus(StatusName.ASSIGNED);
                 break;
-            case "FINISHED":
-                ticket.setStatus(StatusName.FINISHED);
+            case "IN_REVIEW":
+                ticket.setStatus(StatusName.IN_REVIEW);
                 break;
             case "CLOSED":
                 ticket.setStatus(StatusName.CLOSED);
